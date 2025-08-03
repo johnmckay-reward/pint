@@ -1,0 +1,7 @@
+{
+  "name": "pint",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
