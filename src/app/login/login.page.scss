@@ -1,0 +1,121 @@
+/*
+ * Pint? App: Login Page Styles
+ * Description: Styles for the login page, ensuring a clean, welcoming, and on-brand look.
+ */
+
+ion-content {
+  // Use the creamy off-white for the background as a default.
+  --background: var(--ion-color-tertiary);
+
+  // Dark mode background
+  &.dark {
+    --background: #161616; // A slightly softer black for dark mode
+  }
+}
+
+.login-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; // Pushes content to top and bottom
+  height: 100%;
+  text-align: center;
+}
+
+// -------- Logo and Branding --------
+
+.logo-section {
+  margin-top: 15vh; // Pushes the logo down from the top edge
+}
+
+.pint-icon {
+  width: 100px;
+  height: auto;
+  margin-bottom: 16px;
+}
+
+.app-title {
+  font-size: 3.5rem;
+  font-weight: 700;
+  color: var(--ion-color-secondary);
+  margin: 0;
+  // Use the custom heading font defined in global.scss
+  font-family: 'Roboto Slab', serif; 
+}
+
+.tagline {
+  font-size: 1.1rem;
+  color: var(--ion-color-secondary-shade);
+  margin-top: 8px;
+}
+
+// -------- Action Buttons --------
+
+.actions-section {
+  margin-bottom: 5vh; // Pushes the buttons up from the bottom edge
+}
+
+.login-button {
+  --border-radius: 12px;
+  height: 50px;
+  font-size: 1rem;
+  font-weight: 500;
+  text-transform: none; // Overrides global style if needed
+  margin-bottom: 16px;
+  --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out;
+
+  &:active {
+    transform: scale(0.98); // Provides visual feedback on tap
+  }
+
+  ion-icon {
+    font-size: 1.4rem;
+  }
+}
+
+// Google Button Specifics
+.google-button {
+  --background: #ffffff;
+  --color: #000000;
+  --border-color: #e0e0e0;
+  --border-width: 1px;
+  --border-style: solid;
+}
+
+// Apple Button Specifics
+.apple-button {
+  --background: #000000;
+  --color: #ffffff;
+
+  // For dark mode, Apple button can have a light border
+  body.dark & {
+    --background: #ffffff;
+    --color: #000000;
+  }
+}
+
+
+// -------- Terms and Conditions --------
+
+.terms-text {
+  font-size: 0.8rem;
+  color: var(--ion-color-medium);
+  margin-top: 24px;
+
+  a {
+    color: var(--ion-color-primary);
+    text-decoration: none;
+    font-weight: 500;
+  }
+}
+
+// -------- Dark Mode Adjustments --------
+
+body.dark {
+  .app-title {
+    color: var(--ion-color-primary);
+  }
+  .tagline {
+    color: var(--ion-color-tertiary-shade);
+  }
+}

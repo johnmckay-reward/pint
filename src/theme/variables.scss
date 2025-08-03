@@ -1,2 +1,125 @@
-// For information on how to create your own theme, please see:
-// http://ionicframework.com/docs/theming/
+/* Ionic Variables and Theming. For more info, please see:
+http://ionicframework.com/docs/theming/ */
+
+/**
+ * "Pint?" App Theme - Cosy Pub
+ * -------------------------------------------
+ * Primary:   A warm, inviting amber ale color.
+ * Secondary: A rich, dark oak wood color.
+ * Tertiary:  A creamy, off-white like the head on a pint.
+ */
+:root {
+  /** primary **/
+  --ion-color-primary: #eaa221;
+  --ion-color-primary-rgb: 234, 162, 33;
+  --ion-color-primary-contrast: #000000;
+  --ion-color-primary-contrast-rgb: 0, 0, 0;
+  --ion-color-primary-shade: #ce8f1d;
+  --ion-color-primary-tint: #ecab37;
+
+  /** secondary **/
+  --ion-color-secondary: #4a2c2a;
+  --ion-color-secondary-rgb: 74, 44, 42;
+  --ion-color-secondary-contrast: #ffffff;
+  --ion-color-secondary-contrast-rgb: 255, 255, 255;
+  --ion-color-secondary-shade: #412725;
+  --ion-color-secondary-tint: #5c413f;
+
+  /** tertiary **/
+  --ion-color-tertiary: #f4f1de;
+  --ion-color-tertiary-rgb: 244, 241, 222;
+  --ion-color-tertiary-contrast: #4a2c2a;
+  --ion-color-tertiary-contrast-rgb: 74, 44, 42;
+  --ion-color-tertiary-shade: #d7d4c3;
+  --ion-color-tertiary-tint: #f5f2e1;
+
+  /** success **/
+  --ion-color-success: #2dd36f;
+  --ion-color-success-rgb: 45, 211, 111;
+  --ion-color-success-contrast: #ffffff;
+  --ion-color-success-contrast-rgb: 255, 255, 255;
+  --ion-color-success-shade: #28ba62;
+  --ion-color-success-tint: #42d77d;
+
+  /** warning **/
+  --ion-color-warning: #ffc409;
+  --ion-color-warning-rgb: 255, 196, 9;
+  --ion-color-warning-contrast: #000000;
+  --ion-color-warning-contrast-rgb: 0, 0, 0;
+  --ion-color-warning-shade: #e0ac08;
+  --ion-color-warning-tint: #ffca22;
+
+  /** danger **/
+  --ion-color-danger: #eb445a;
+  --ion-color-danger-rgb: 235, 68, 90;
+  --ion-color-danger-contrast: #ffffff;
+  --ion-color-danger-contrast-rgb: 255, 255, 255;
+  --ion-color-danger-shade: #cf3c4f;
+  --ion-color-danger-tint: #ed576b;
+
+  /** dark **/
+  --ion-color-dark: #222428;
+  --ion-color-dark-rgb: 34, 36, 40;
+  --ion-color-dark-contrast: #ffffff;
+  --ion-color-dark-contrast-rgb: 255, 255, 255;
+  --ion-color-dark-shade: #1e2023;
+  --ion-color-dark-tint: #383a3e;
+
+  /** medium **/
+  --ion-color-medium: #92949c;
+  --ion-color-medium-rgb: 146, 148, 156;
+  --ion-color-medium-contrast: #ffffff;
+  --ion-color-medium-contrast-rgb: 255, 255, 255;
+  --ion-color-medium-shade: #808289;
+  --ion-color-medium-tint: #9d9fa6;
+
+  /** light **/
+  --ion-color-light: #f4f5f8;
+  --ion-color-light-rgb: 244, 245, 248;
+  --ion-color-light-contrast: #000000;
+  --ion-color-light-contrast-rgb: 0, 0, 0;
+  --ion-color-light-shade: #d7d8da;
+  --ion-color-light-tint: #f5f6f9;
+}
+
+/*
+ * App Dark Theme
+ * -------------------------------------------
+ */
+
+body.dark {
+  --ion-color-primary: #ecab37;
+  --ion-color-primary-rgb: 236,171,55;
+  --ion-color-primary-contrast: #000000;
+  --ion-color-primary-contrast-rgb: 0,0,0;
+  --ion-color-primary-shade: #d09630;
+  --ion-color-primary-tint: #eeb34b;
+  
+  --ion-color-secondary: #5c413f;
+  --ion-color-secondary-rgb: 92,65,63;
+  --ion-color-secondary-contrast: #ffffff;
+  --ion-color-secondary-contrast-rgb: 255,255,255;
+  --ion-color-secondary-shade: #513937;
+  --ion-color-secondary-tint: #6c5452;
+
+  --ion-color-tertiary: #d7d4c3;
+  --ion-color-tertiary-rgb: 215,212,195;
+  --ion-color-tertiary-contrast: #000000;
+  --ion-color-tertiary-contrast-rgb: 0,0,0;
+  --ion-color-tertiary-shade: #bcb9ab;
+  --ion-color-tertiary-tint: #dad7c8;
+
+  --ion-color-light: #222428;
+  --ion-color-medium: #989aa2;
+  --ion-color-dark: #f4f5f8;
+
+  --ion-background-color: #121212;
+  --ion-background-color-rgb: 18,18,18;
+
+  --ion-text-color: #ffffff;
+  --ion-text-color-rgb: 255,255,255;
+
+  --ion-item-background: #1e1e1e;
+  --ion-toolbar-background: #1f1f1f;
+  --ion-tab-bar-background: #1f1f1f;
+}

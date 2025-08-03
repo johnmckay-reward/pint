@@ -1,0 +1,40 @@
+<!-- 
+  Pint? App: Login Page
+  Description: This is the first screen a user sees. It provides options for social sign-in.
+-->
+<ion-content [fullscreen]="true" class="ion-padding">
+  <div class="login-container">
+
+    <!-- Logo and Branding Section -->
+    <div class="logo-section">
+      <!-- Pint Glass SVG Icon -->
+      <svg class="pint-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+        <path fill="var(--ion-color-primary)" d="M416 160H96a16 16 0 00-16 16v256a16 16 0 0016 16h320a16 16 0 0016-16V176a16 16 0 00-16-16zm-20 256H116V180h280z"/>
+        <path fill="var(--ion-color-primary)" d="M384 64H128V48a16 16 0 0116-16h224a16 16 0 0116 16zM128 128h256v32H128z"/>
+        <path fill="var(--ion-color-tertiary)" d="M128 64h256v32H128z"/>
+        <path fill="var(--ion-color-primary-tint)" d="M384 128h32v288h-32z"/>
+      </svg>
+      
+      <h1 class="app-title">Pint?</h1>
+      <p class="tagline">Find your friends. Find a pub.</p>
+    </div>
+
+    <!-- Sign-in Actions Section -->
+    <div class="actions-section">
+      <ion-button expand="block" class="login-button google-button" (click)="signInWithGoogle()">
+        <ion-icon slot="start" name="logo-google"></ion-icon>
+        Sign in with Google
+      </ion-button>
+
+      <ion-button expand="block" class="login-button apple-button" (click)="signInWithApple()">
+        <ion-icon slot="start" name="logo-apple"></ion-icon>
+        Sign in with Apple
+      </ion-button>
+
+      <p class="terms-text">
+        By continuing, you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.
+      </p>
+    </div>
+
+  </div>
+</ion-content>

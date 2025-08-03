@@ -35,3 +35,84 @@
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import "@ionic/angular/css/palettes/dark.system.css";
+
+/*
+ * App Custom Global Styles
+ * ----------------------------------------------------------------------------
+ * These styles are for the "Pint?" app and supplement the base Ionic styles.
+ */
+
+/* 1. Import Custom Google Fonts
+------------------------------------------- */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&family=Roboto+Slab:wght@700&display=swap');
+
+
+/* 2. Base Typography & Headings
+------------------------------------------- */
+
+// Use 'Poppins' as the default font for its friendly and clean appearance.
+html, body {
+  font-family: 'Poppins', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// Use 'Roboto Slab' for all headings to give a more distinct, branded feel.
+h1, h2, h3, h4, h5, h6, .ion-text-h1, .ion-text-h2, .ion-text-h3, ion-title {
+  font-family: 'Roboto Slab', serif;
+  font-weight: 700; // Use the bold weight we imported.
+}
+
+// Make the main toolbar title a bit more prominent.
+ion-toolbar ion-title {
+  font-size: 1.4rem;
+  padding-inline: 30px; // Add some extra space around the title
+}
+
+
+/* 3. Component Overrides
+------------------------------------------- */
+
+// Give all buttons a more modern, slightly rounded look.
+ion-button {
+  --border-radius: 12px;
+  text-transform: none; // Use normal sentence case instead of default ALL-CAPS.
+  font-weight: 500;
+  height: 48px;
+}
+
+// Style for cards, which we can use for Pint invites or user profiles.
+// This gives them a distinct background and shadow.
+ion-card {
+  --background: var(--ion-color-tertiary);
+  border-radius: 16px;
+  box-shadow: 0 4px 8px rgba(0,0,0, 0.08);
+}
+
+// Add a title style specific to our cards
+ion-card-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--ion-color-secondary);
+}
+
+// Ensure cards adapt for dark mode by using a darker background.
+body.dark ion-card {
+    --background: var(--ion-item-background); // Use a standard dark theme variable
+    box-shadow: none; // Shadows are less necessary on dark backgrounds
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+body.dark ion-card-title {
+    color: var(--ion-color-tertiary);
+}
+
+
+/* 4. Layout Helpers
+------------------------------------------- */
+
+// A simple helper class to add consistent horizontal padding to page content.
+.content-padding {
+  --padding-start: 16px;
+  --padding-end: 16px;
+}
