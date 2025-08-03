@@ -1,0 +1,68 @@
+<!-- 
+  Pint? App: Dashboard Page
+  Description: The main landing screen after login. Shows nearby pint sessions and allows users to initiate their own.
+-->
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-title>Pint?</ion-title>
+    <!-- User profile avatar on the right -->
+    <ion-buttons slot="end">
+      <ion-button (click)="goToProfile()">
+        <ion-avatar class="header-avatar">
+          <img src="https://placehold.co/80x80/f4f1de/4a2c2a?text=Me" />
+        </ion-avatar>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <!-- Section 1: Initiate a Pint -->
+  <div class="initiate-section ion-padding">
+    <ion-card class="initiate-card" (click)="initiatePint()">
+      <ion-card-content>
+        <div class="card-content-wrapper">
+          <div class="text-content">
+            <ion-card-title>Fancy a Pint?</ion-card-title>
+            <p>Tap here to pick a pub and get a round started.</p>
+          </div>
+          <div class="icon-content">
+            <ion-icon name="beer-outline" class="beer-icon"></ion-icon>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <!-- Section 2: Nearby Pints Happening Now -->
+  <div class="list-header ion-padding-horizontal">
+    <h2>Happening Nearby</h2>
+    <p class="subtitle">Updated just now</p>
+  </div>
+
+  <!-- Conditional rendering: Show message if no pints are nearby -->
+  <div *ngIf="nearbyPints.length === 0" class="empty-state ion-padding">
+    <ion-icon name="moon-outline" class="empty-icon"></ion-icon>
+    <h3>All quiet... for now.</h3>
+    <p>Why not be the first to start a session?</p>
+  </div>
+
+  <!-- List of active pint sessions -->
+  <ion-list *ngIf="nearbyPints.length > 0" class="ion-no-padding">
+    <ion-item *ngFor="let pint of nearbyPints" lines="full" button detail="true" (click)="viewPintSession(pint.id)">
+      <ion-avatar slot="start" class="pint-avatar">
+        <img [src]="pint.initiator.avatar" />
+      </ion-avatar>
+      <ion-label>
+        <h3>{{ pint.pubName }}</h3>
+        <p>Started by {{ pint.initiator.name }}</p>
+      </ion-label>
+      <div class="pint-details" slot="end">
+        <span class="distance">{{ pint.distance }}</span>
+        <span class="time">{{ pint.timeAgo }}</span>
+      </div>
+    </ion-item>
+  </ion-list>
+
+</ion-content>

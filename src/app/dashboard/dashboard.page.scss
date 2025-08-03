@@ -1,0 +1,167 @@
+/*
+ * Pint? App: Dashboard Page Styles
+ * Description: Styles for the main dashboard screen.
+ */
+
+ion-toolbar {
+  --background: var(--ion-color-tertiary);
+}
+
+ion-content {
+  --background: var(--ion-color-tertiary);
+}
+
+.header-avatar {
+  width: 32px;
+  height: 32px;
+  border: 2px solid var(--ion-color-primary);
+}
+
+// -------- Initiate Card --------
+
+.initiate-section {
+  padding-bottom: 0;
+}
+
+.initiate-card {
+  --background: var(--ion-color-primary);
+  color: var(--ion-color-primary-contrast);
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+  margin: 0; // Remove default card margins
+
+  &:active {
+    transform: scale(0.99);
+  }
+
+  .card-content-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  ion-card-title {
+    color: var(--ion-color-primary-contrast);
+    font-size: 1.5rem;
+  }
+
+  p {
+    font-size: 0.9rem;
+    opacity: 0.9;
+    line-height: 1.4;
+  }
+
+  .beer-icon {
+    font-size: 4rem;
+    opacity: 0.2;
+  }
+}
+
+// -------- List Header --------
+
+.list-header {
+  margin-top: 24px;
+  margin-bottom: 8px;
+
+  h2 {
+    margin: 0;
+    font-size: 1.3rem;
+    color: var(--ion-color-secondary);
+  }
+
+  .subtitle {
+    margin: 4px 0 0;
+    font-size: 0.8rem;
+    color: var(--ion-color-medium);
+  }
+}
+
+// -------- Pint List --------
+
+ion-list {
+  background: transparent;
+}
+
+ion-item {
+  --background: transparent;
+  --padding-start: 16px;
+  --inner-padding-end: 16px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+
+  .pint-avatar {
+    width: 48px;
+    height: 48px;
+  }
+
+  ion-label h3 {
+    font-weight: 600;
+    color: var(--ion-color-secondary);
+  }
+
+  ion-label p {
+    color: var(--ion-color-medium);
+    font-size: 0.9rem;
+  }
+}
+
+.pint-details {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  font-size: 0.8rem;
+
+  .distance {
+    font-weight: 600;
+    color: var(--ion-color-primary-shade);
+  }
+
+  .time {
+    color: var(--ion-color-medium);
+  }
+}
+
+// -------- Empty State --------
+
+.empty-state {
+  text-align: center;
+  margin-top: 10vh;
+  color: var(--ion-color-medium);
+
+  .empty-icon {
+    font-size: 4rem;
+    opacity: 0.8;
+  }
+
+  h3 {
+    margin-top: 16px;
+    font-family: 'Poppins', sans-serif; // Use body font for a softer feel
+    font-weight: 500;
+    color: var(--ion-color-secondary);
+  }
+
+  p {
+    font-size: 0.9rem;
+  }
+}
+
+
+// -------- Dark Mode Adjustments --------
+
+body.dark {
+  ion-toolbar, ion-content {
+    --background: #161616;
+  }
+
+  .initiate-card {
+    --background: var(--ion-color-primary-shade);
+  }
+
+  .list-header h2, ion-label h3 {
+    color: var(--ion-color-tertiary);
+  }
+
+  .empty-state h3 {
+    color: var(--ion-color-tertiary);
+  }
+}
