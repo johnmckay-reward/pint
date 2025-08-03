@@ -1,0 +1,53 @@
+<!-- 
+  Pint? App: Edit Profile Page
+  Description: Allows an existing user to update their profile information.
+-->
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/profile"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Edit Profile</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <div class="edit-profile-container">
+
+    <!-- Profile Picture Section -->
+    <div class="profile-picture-wrapper" (click)="selectProfilePicture()">
+      <img [src]="profilePictureUrl" *ngIf="profilePictureUrl; else placeholder" class="profile-picture" />
+
+      <ng-template #placeholder>
+        <div class="picture-placeholder">
+          <ion-icon name="camera-outline" class="camera-icon"></ion-icon>
+          <p>Change photo</p>
+        </div>
+      </ng-template>
+    </div>
+
+    <!-- User Details Form -->
+    <div class="form-section">
+      <ion-list class="ion-no-padding">
+        <ion-item lines="full">
+          <ion-label position="stacked">Display Name</ion-label>
+          <ion-input [(ngModel)]="displayName" placeholder="e.g. John Doe"></ion-input>
+        </ion-item>
+
+        <ion-item lines="full">
+          <ion-label position="stacked">My usual is...</ion-label>
+          <ion-input [(ngModel)]="favouriteTipple" placeholder="A crisp lager, a fruity cider..."></ion-input>
+        </ion-item>
+      </ion-list>
+    </div>
+
+  </div>
+</ion-content>
+
+<ion-footer class="ion-no-border">
+  <ion-toolbar>
+    <ion-button expand="block" (click)="saveChanges()" [disabled]="!displayName">
+      Save Changes
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>

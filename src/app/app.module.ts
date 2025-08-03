@@ -10,6 +10,7 @@ import { LoginPageRoutingModule } from './login/login-routing.module';
 import { OnboardingPageRoutingModule } from './onboarding/onboarding-routing.module';
 import { DashboardPageModule } from './dashboard/dashboard.module';
 import { ProfilePageModule } from './profile/profile.module';
+import { EditProfilePageModule } from './edit-profile/edit-profile.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -18,7 +19,9 @@ import { ProfilePageModule } from './profile/profile.module';
     LoginPageRoutingModule,
     OnboardingPageRoutingModule,
     DashboardPageModule,
-    ProfilePageModule],
+    ProfilePageModule,
+    EditProfilePageModule
+  ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
 })

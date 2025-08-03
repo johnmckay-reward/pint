@@ -50,7 +50,7 @@ export class ProfilePage implements OnInit {
   editProfile(): void {
     console.log('Navigating to edit profile page...');
     // This could navigate to the onboarding page again, or a new 'edit-profile' page.
-    this.navCtrl.navigateForward('/onboarding');
+    this.navCtrl.navigateForward('/edit-profile');
   }
 
   /**
