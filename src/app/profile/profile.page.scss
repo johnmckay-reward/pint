@@ -1,0 +1,147 @@
+/*
+ * Pint? App: Profile Page Styles
+ * Description: Styles for the user profile screen.
+ */
+
+ion-toolbar {
+  --background: var(--ion-color-tertiary);
+}
+
+ion-content {
+  --background: #f9f9f9; // A slightly different off-white for contrast
+}
+
+// -------- Profile Header --------
+
+.profile-header {
+  background: var(--ion-color-tertiary);
+  text-align: center;
+  padding-bottom: 24px;
+  border-bottom-left-radius: 30px;
+  border-bottom-right-radius: 30px;
+}
+
+.profile-avatar {
+  width: 100px;
+  height: 100px;
+  margin: 0 auto 16px;
+  border: 4px solid var(--ion-color-primary);
+}
+
+.display-name {
+  margin: 0;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--ion-color-secondary);
+}
+
+.favourite-tipple {
+  margin: 4px 0 0;
+  font-size: 1rem;
+  color: var(--ion-color-secondary-shade);
+  font-style: italic;
+}
+
+// -------- Stats Section --------
+
+.stats-container {
+  display: flex;
+  justify-content: space-around;
+  background: #ffffff;
+  margin: -20px 24px 24px; // Negative margin pulls it up into the header curve
+  padding: 16px;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  position: relative; // To position it above the content flow
+  z-index: 10;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-basis: 33%;
+}
+
+.stat-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--ion-color-primary-shade);
+}
+
+.stat-label {
+  font-size: 0.8rem;
+  color: var(--ion-color-medium);
+  margin-top: 4px;
+}
+
+.stat-divider {
+  width: 1px;
+  background-color: #e0e0e0;
+}
+
+// -------- Action List --------
+
+.action-list {
+  background: transparent;
+  padding: 0 16px;
+
+  ion-list-header h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--ion-color-medium);
+  }
+
+  ion-item {
+    --background: #ffffff;
+    --border-radius: 12px;
+    margin-bottom: 8px;
+    --detail-icon-opacity: 1;
+
+    ion-icon {
+      margin-right: 16px;
+    }
+  }
+
+  // Special styling for the last item in the list
+  .logout-button {
+    --border-radius: 12px;
+    margin-top: 16px;
+  }
+}
+
+// -------- Dark Mode Adjustments --------
+
+body.dark {
+  ion-content {
+    --background: #000000;
+  }
+
+  ion-toolbar, .profile-header {
+    --background: #161616;
+  }
+
+  .display-name {
+    color: var(--ion-color-tertiary);
+  }
+
+  .favourite-tipple {
+    color: var(--ion-color-tertiary-shade);
+  }
+
+  .stats-container {
+    background: var(--ion-item-background);
+    box-shadow: none;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .stat-divider {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+
+  .action-list {
+    ion-item {
+      --background: var(--ion-item-background);
+    }
+  }
+}

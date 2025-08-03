@@ -9,6 +9,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { LoginPageRoutingModule } from './login/login-routing.module';
 import { OnboardingPageRoutingModule } from './onboarding/onboarding-routing.module';
 import { DashboardPageModule } from './dashboard/dashboard.module';
+import { ProfilePageModule } from './profile/profile.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -16,7 +17,8 @@ import { DashboardPageModule } from './dashboard/dashboard.module';
     AppRoutingModule,
     LoginPageRoutingModule,
     OnboardingPageRoutingModule,
-    DashboardPageModule],
+    DashboardPageModule,
+    ProfilePageModule],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
 })

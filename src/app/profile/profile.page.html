@@ -1,0 +1,70 @@
+<!-- 
+  Pint? App: Profile Page
+  Description: Displays the user's profile information, stats, and provides account-related actions.
+-->
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/dashboard"></ion-back-button>
+    </ion-buttons>
+    <ion-title>My Profile</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="editProfile()">
+        <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <!-- Profile Header Section -->
+  <div class="profile-header ion-padding">
+    <ion-avatar class="profile-avatar">
+      <img [src]="user.avatar" />
+    </ion-avatar>
+    <h2 class="display-name">{{ user.name }}</h2>
+    <p class="favourite-tipple">"{{ user.tipple }}"</p>
+  </div>
+
+  <!-- Stats Section -->
+  <div class="stats-container">
+    <div class="stat-item">
+      <span class="stat-value">{{ user.stats.pintsStarted }}</span>
+      <span class="stat-label">Pints Started</span>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat-item">
+      <span class="stat-value">{{ user.stats.pintsJoined }}</span>
+      <span class="stat-label">Pints Joined</span>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat-item">
+      <span class="stat-value">{{ user.stats.favouritePubs }}</span>
+      <span class="stat-label">Fave Pubs</span>
+    </div>
+  </div>
+
+  <!-- Action List Section -->
+  <ion-list class="action-list" lines="full">
+    <ion-list-header>
+      <h3>Account</h3>
+    </ion-list-header>
+
+    <ion-item button detail="true" (click)="goToSettings()">
+      <ion-icon name="settings-outline" slot="start" color="medium"></ion-icon>
+      <ion-label>Settings</ion-label>
+    </ion-item>
+
+    <ion-item button detail="true" (click)="goToHelp()">
+      <ion-icon name="help-circle-outline" slot="start" color="medium"></ion-icon>
+      <ion-label>Help & Support</ion-label>
+    </ion-item>
+
+    <ion-item button class="logout-button" (click)="logout()">
+      <ion-icon name="log-out-outline" slot="start" color="danger"></ion-icon>
+      <ion-label color="danger">Log Out</ion-label>
+    </ion-item>
+  </ion-list>
+
+</ion-content>
