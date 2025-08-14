@@ -1,20 +1,33 @@
-// Import the Express library
 const express = require('express');
+const sequelize = require('./db'); // Import the sequelize instance
 
-// Create an instance of an Express application
 const app = express();
-
-// Define the port the server will run on.
-// It's good practice to use an environment variable for the port, with a fallback.
 const PORT = process.env.PORT || 3000;
 
-// Define a simple route for the root URL ('/')
-// When a GET request is made to the root, it will respond with a JSON message.
-app.get('/', (req, res) => {
-  res.json({ message: 'Welcome to the Pint? API! 🍻' });
-});
+// --- Add this block to test the database connection ---
+async function assertDatabaseConnectionOk() {
+  console.log('Checking database connection...');
+  try {
+    await sequelize.authenticate();
+    console.log('Database connection OK! ✅');
+  } catch (error) {
+    console.log('Unable to connect to the database:');
+    console.error(error.message);
+    process.exit(1);
+  }
+}
+// ----------------------------------------------------
 
-// Start the server and make it listen for incoming connections on the specified port.
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
-});
+async function init() {
+  await assertDatabaseConnectionOk(); // Run the connection check
+
+  app.get('/', (req, res) => {
+    res.json({ message: 'Welcome to the Pint? API! 🍻' });
+  });
+
+  app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
+  });
+}
+
+init(); // Run the init function
