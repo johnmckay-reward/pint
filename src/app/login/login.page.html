@@ -5,19 +5,29 @@
 <ion-content [fullscreen]="true" class="ion-padding">
   <div class="login-container">
 
-    <!-- Logo and Branding Section -->
-    <div class="logo-section">
-      <!-- Pint Glass SVG Icon -->
-      <svg class="pint-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-        <path fill="var(--ion-color-primary)" d="M416 160H96a16 16 0 00-16 16v256a16 16 0 0016 16h320a16 16 0 0016-16V176a16 16 0 00-16-16zm-20 256H116V180h280z"/>
-        <path fill="var(--ion-color-primary)" d="M384 64H128V48a16 16 0 0116-16h224a16 16 0 0116 16zM128 128h256v32H128z"/>
-        <path fill="var(--ion-color-tertiary)" d="M128 64h256v32H128z"/>
-        <path fill="var(--ion-color-primary-tint)" d="M384 128h32v288h-32z"/>
-      </svg>
-      
-      <h1 class="app-title">Pint?</h1>
-      <p class="tagline">Find your friends. Find a pub.</p>
-    </div>
+<div class="logo-section">
+  <svg class="pint-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+    <defs>
+      <linearGradient id="beerGradient" x1="0.5" y1="0" x2="0.5" y2="1">
+        <stop offset="0%" stop-color="var(--ion-color-tertiary-tint)"/>
+        <stop offset="100%" stop-color="var(--ion-color-tertiary)"/>
+      </linearGradient>
+    </defs>
+
+    <path fill="var(--ion-color-primary)" d="M400 224h48v128h-48z"/>
+    
+    <path fill="var(--ion-color-primary)" d="M398.6 128H113.4a16 16 0 00-15.9 18.2L112 448h288l14.5-301.8A16 16 0 00398.6 128z"/>
+    
+    <path fill="url(#beerGradient)" d="M130.3 192h251.4l-11.4 224H141.7z"/>
+
+    <path d="M112 192h288" stroke="var(--ion-color-primary-tint)" stroke-width="4" />
+    
+    <path fill="var(--ion-color-light)" d="M112 192 C 160 150, 200 180, 256 160 C 310 140, 350 150, 400 192 Z"/>
+  </svg>
+  
+  <h1 class="app-title">Pint?</h1>
+  <p class="tagline">Find your friends. Find a pub.</p>
+</div>
 
     <!-- Sign-in Actions Section -->
     <div class="actions-section">

@@ -1,0 +1,38 @@
+<!-- 
+  Pint? App: Manage Account Page
+  Description: Provides options for sensitive account actions, primarily account deletion.
+-->
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/settings"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Manage Account</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="ion-padding">
+
+    <div class="warning-section">
+      <ion-icon name="warning-outline" color="danger"></ion-icon>
+      <h3>Delete your account</h3>
+      <p>
+        This is a permanent action. When you delete your account, all of your profile data,
+        pint history, and connections will be permanently removed.
+      </p>
+      <p>
+        <strong>This cannot be undone.</strong>
+      </p>
+    </div>
+
+  </div>
+</ion-content>
+
+<ion-footer class="ion-no-border">
+  <ion-toolbar>
+    <ion-button expand="block" color="danger" (click)="confirmDeleteAccount()">
+      Delete My Account
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>

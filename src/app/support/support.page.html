@@ -1,0 +1,73 @@
+<!-- 
+  Pint? App: Help Page
+  Description: Provides answers to frequently asked questions and a contact method.
+-->
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/profile"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Help & Support</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <ion-list-header>
+    <h2>Frequently Asked Questions</h2>
+  </ion-list-header>
+
+  <div class="faq-list">
+    <!-- Question 1 -->
+    <ion-card class="faq-card">
+      <ion-card-header>
+        <ion-card-title>How do I start a "Pint?" session?</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p>
+          Easy! From the main dashboard, tap the big "Fancy a Pint?" card. You'll then be shown a map of nearby pubs. Simply select your chosen pub, and we'll notify other users nearby.
+        </p>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Question 2 -->
+    <ion-card class="faq-card">
+      <ion-card-header>
+        <ion-card-title>How do notifications work?</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p>
+          When someone starts a session, we check if the pub they chose is within the notification radius you set in your preferences. If it is, you'll get a push notification. You can adjust this radius and the notification sound in <strong>Settings > Notification Preferences</strong>.
+        </p>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Question 3 -->
+    <ion-card class="faq-card">
+      <ion-card-header>
+        <ion-card-title>How do I edit my profile?</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p>
+          Navigate to your profile by tapping your avatar on the dashboard. From there, tap the pencil icon in the top-right corner to open the 'Edit Profile' screen where you can change your photo, name, and favourite tipple.
+        </p>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <!-- Contact Section -->
+  <ion-card class="contact-card">
+    <ion-card-header>
+      <ion-card-title>Still need help?</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p>
+        If your question isn't answered here, please get in touch with our support team.
+      </p>
+      <ion-button expand="block" (click)="contactSupport()" class="support-button">
+        Contact Support
+        <ion-icon slot="end" name="mail-outline"></ion-icon>
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>

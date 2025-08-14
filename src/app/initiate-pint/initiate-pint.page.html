@@ -1,0 +1,52 @@
+<!-- 
+  Pint? App: Initiate Pint Page
+  Description: Step 1 of the initiation flow. User selects a pub from a map or list.
+-->
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/dashboard"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Choose a Pub</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <!-- The Google Map takes up the full screen -->
+  <google-map 
+    #map
+    [center]="mapCenter" 
+    [zoom]="mapZoom" 
+    width="100%" 
+    height="100%">
+    
+    <!-- Loop through nearby pubs and place a marker for each -->
+    <map-marker 
+      *ngFor="let pub of nearbyPubs"
+      [position]="pub.position"
+      [title]="pub.name"
+      (mapClick)="selectPub(pub)">
+    </map-marker>
+
+  </google-map>
+
+  <!-- Draggable Sheet for Pub List -->
+  <div class="bottom-sheet">
+    <div class="handle-bar"></div>
+    <ion-list-header>
+      <h3>Pubs Near You</h3>
+    </ion-list-header>
+    <ion-list class="pub-list" lines="full">
+      <ion-item *ngFor="let pub of nearbyPubs" button (click)="selectPub(pub)">
+        <ion-thumbnail slot="start">
+          <img [src]="pub.photo" />
+        </ion-thumbnail>
+        <ion-label>
+          <h2>{{ pub.name }}</h2>
+          <p>{{ pub.address }}</p>
+        </ion-label>
+        <ion-note slot="end">{{ pub.distance }}</ion-note>
+      </ion-item>
+    </ion-list>
+  </div>
+</ion-content>

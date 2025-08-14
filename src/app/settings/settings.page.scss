@@ -1,0 +1,76 @@
+/*
+ * Pint? App: Settings Page Styles
+ * Description: Styles for the app settings screen.
+ */
+
+ion-toolbar {
+  --background: var(--ion-color-tertiary);
+}
+
+ion-content {
+  --background: #f9f9f9; // Consistent with profile page background
+}
+
+.settings-list {
+  background: transparent;
+  padding: 0 16px;
+  margin-bottom: 16px;
+
+  ion-list-header {
+    padding-left: 0;
+    h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--ion-color-medium);
+    }
+  }
+
+  ion-item {
+    --background: #ffffff;
+    --border-radius: 12px;
+    margin-bottom: 8px;
+    --detail-icon-opacity: 1;
+
+    &:first-of-type {
+      border-top-left-radius: 12px;
+      border-top-right-radius: 12px;
+    }
+    &:last-of-type {
+      border-bottom-left-radius: 12px;
+      border-bottom-right-radius: 12px;
+    }
+  }
+}
+
+// Style for the toggle
+ion-toggle {
+  --handle-background: var(--ion-color-primary);
+}
+
+// App version text at the bottom
+.app-version {
+  text-align: center;
+  margin-top: 24px;
+  p {
+    color: var(--ion-color-medium);
+    font-size: 0.8rem;
+  }
+}
+
+// -------- Dark Mode Adjustments --------
+
+body.dark {
+  ion-content {
+    --background: #000000;
+  }
+
+  ion-toolbar {
+    --background: #161616;
+  }
+
+  .settings-list {
+    ion-item {
+      --background: var(--ion-item-background);
+    }
+  }
+}

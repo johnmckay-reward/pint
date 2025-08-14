@@ -1,0 +1,73 @@
+/*
+ * Pint? App: Manage Account Page Styles
+ * Description: Styles for the account management screen, focusing on clarity for destructive actions.
+ */
+
+ion-toolbar {
+  --background: var(--ion-color-tertiary);
+}
+
+ion-content {
+  --background: var(--ion-color-tertiary);
+}
+
+.warning-section {
+  border: 1px solid var(--ion-color-danger-shade);
+  color: var(--ion-color-danger-shade);
+  border-radius: 16px;
+  padding: 16px;
+  text-align: center;
+  margin-top: 2vh;
+
+  ion-icon {
+    font-size: 3rem;
+  }
+
+  h3 {
+    margin-top: 8px;
+    font-family: 'Roboto Slab', serif;
+    font-size: 1.4rem;
+  }
+
+  p {
+    line-height: 1.5;
+    font-size: 0.9rem;
+  }
+}
+
+ion-footer {
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: rgba(0, 0, 0, 0.07);
+  }
+
+  ion-toolbar {
+    --padding-start: 16px;
+    --padding-end: 16px;
+    --padding-bottom: 16px;
+    --padding-top: 8px;
+  }
+}
+
+// -------- Dark Mode Adjustments --------
+
+body.dark {
+  ion-toolbar, ion-content {
+    --background: #161616;
+  }
+
+  .warning-section {
+    background: rgba(235, 68, 90, 0.15); // Use transparent version of danger color
+    border-color: rgba(235, 68, 90, 0.5);
+    color: #ff8998;
+  }
+
+  ion-footer::before {
+    background: rgba(255, 255, 255, 0.1);
+  }
+}

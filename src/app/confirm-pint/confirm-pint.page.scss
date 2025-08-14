@@ -1,0 +1,106 @@
+/*
+ * Pint? App: Confirm Pint Page Styles
+ * Description: Styles for the final confirmation screen.
+ */
+
+ion-toolbar {
+  --background: var(--ion-color-tertiary);
+}
+
+ion-content {
+  --background: var(--ion-color-tertiary);
+}
+
+.confirmation-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.pub-card {
+  width: 100%;
+  max-width: 400px;
+  margin: 0;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+
+  .pub-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
+
+  ion-card-header {
+    padding-bottom: 8px;
+  }
+
+  ion-card-title {
+    font-size: 1.8rem;
+  }
+
+  ion-card-subtitle {
+    font-size: 1rem;
+  }
+
+  .question-text {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--ion-color-medium);
+    margin-bottom: 12px;
+  }
+
+  ion-segment {
+    --background: #e0e0e0;
+    --border-radius: 10px;
+  }
+
+  ion-segment-button {
+    --indicator-color: var(--ion-color-primary);
+    --color-checked: var(--ion-color-primary-contrast);
+  }
+}
+
+// -------- Footer Button --------
+
+ion-footer {
+  ion-toolbar {
+    --padding-start: 16px;
+    --padding-end: 16px;
+    --padding-bottom: 16px;
+    --padding-top: 8px;
+  }
+}
+
+.confirm-button {
+  --background: var(--ion-color-primary);
+  --color: var(--ion-color-primary-contrast);
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+
+// -------- Empty State --------
+
+.empty-state {
+  text-align: center;
+  margin-top: 30vh;
+  color: var(--ion-color-medium);
+}
+
+// -------- Dark Mode Adjustments --------
+
+body.dark {
+  ion-toolbar,
+  ion-content {
+    --background: #161616;
+  }
+
+  .pub-card {
+    --background: var(--ion-item-background);
+    box-shadow: none;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+
+    ion-segment {
+      --background: #333;
+    }
+  }
+}

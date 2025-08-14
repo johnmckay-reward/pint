@@ -1,0 +1,113 @@
+/*
+ * Pint? App: Notification Preferences Page Styles
+ * Description: Styles for the notification customization screen.
+ */
+
+ion-toolbar {
+  --background: var(--ion-color-tertiary);
+}
+
+ion-content {
+  --background: #f9f9f9;
+}
+
+.prefs-list {
+  background: transparent;
+  padding: 0 16px;
+  margin-bottom: 16px;
+
+  ion-list-header {
+    padding-left: 0;
+    h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--ion-color-medium);
+    }
+  }
+
+  ion-item {
+    --background: #ffffff;
+    --border-radius: 12px;
+    --padding-start: 16px;
+    --inner-padding-end: 16px;
+
+    .item-description {
+      font-size: 0.8rem;
+      color: var(--ion-color-medium);
+      white-space: normal;
+      margin-top: 4px;
+      margin-bottom: 16px;
+    }
+  }
+}
+
+// -------- Range Slider Styling --------
+
+.range-container {
+  width: 100%;
+  padding-top: 8px;
+}
+
+ion-range {
+  --bar-background: #e0e0e0;
+  --bar-background-active: var(--ion-color-primary);
+  --knob-background: var(--ion-color-primary-shade);
+  --pin-background: var(--ion-color-primary-shade);
+  --pin-color: var(--ion-color-tertiary);
+  padding: 0;
+}
+
+.range-value {
+  text-align: center;
+  font-size: 1.2rem;
+  color: var(--ion-color-secondary);
+  margin-top: -8px; // Pulls the text up closer to the slider
+  margin-bottom: 8px;
+}
+
+// -------- Footer --------
+
+ion-footer {
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: rgba(0, 0, 0, 0.07);
+  }
+
+  ion-toolbar {
+    --padding-start: 16px;
+    --padding-end: 16px;
+    --padding-bottom: 16px;
+    --padding-top: 8px;
+  }
+}
+
+// -------- Dark Mode Adjustments --------
+
+body.dark {
+  ion-content {
+    --background: #000000;
+  }
+
+  ion-toolbar {
+    --background: #161616;
+  }
+
+  .prefs-list {
+    ion-item {
+      --background: var(--ion-item-background);
+    }
+  }
+
+  .range-value {
+    color: var(--ion-color-tertiary);
+  }
+
+  ion-footer::before {
+    background: rgba(255, 255, 255, 0.1);
+  }
+}

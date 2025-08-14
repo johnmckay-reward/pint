@@ -1,0 +1,63 @@
+<!-- 
+  Pint? App: Notification Preferences Page
+  Description: Allows users to customize notification settings like radius and sound.
+-->
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/settings"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Notification Preferences</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-list class="prefs-list" lines="full">
+    <ion-list-header>
+      <h3>Proximity</h3>
+    </ion-list-header>
+    <ion-item>
+      <ion-label position="stacked">Notification Radius</ion-label>
+      <p class="item-description">Only get notified about pints within this distance.</p>
+      <div class="range-container">
+        <ion-range 
+          min="1" 
+          max="10" 
+          step="1" 
+          snaps="true" 
+          [(ngModel)]="notificationRadius" 
+          (ionChange)="onRadiusChange()">
+          <ion-label slot="start">1km</ion-label>
+          <ion-label slot="end">10km</ion-label>
+        </ion-range>
+        <div class="range-value">
+          <strong>{{ notificationRadius }} km</strong>
+        </div>
+      </div>
+    </ion-item>
+  </ion-list>
+
+  <ion-list class="prefs-list" lines="full">
+    <ion-list-header>
+      <h3>Sound</h3>
+    </ion-list-header>
+    <ion-item>
+      <ion-label>Notification Sound</ion-label>
+      <ion-select [(ngModel)]="notificationSound" (ionChange)="onSoundChange()" interface="action-sheet">
+        <ion-select-option value="default">Default</ion-select-option>
+        <ion-select-option value="cheers">Cheers</ion-select-option>
+        <ion-select-option value="pub_chatter">Pub Chatter</ion-select-option>
+        <ion-select-option value="none">None</ion-select-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
+
+</ion-content>
+
+<ion-footer class="ion-no-border">
+  <ion-toolbar>
+    <ion-button expand="block" (click)="savePreferences()">
+      Save Preferences
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>

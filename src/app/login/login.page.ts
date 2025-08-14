@@ -26,7 +26,7 @@ export class LoginPage implements OnInit {
     console.log('Attempting to sign in with Google...');
     // TODO: Implement Firebase Google Sign-In logic here.
     // On success, navigate to the main app page.
-    // this.navCtrl.navigateRoot('/tabs/dashboard'); 
+    // this.navCtrl.navigateRoot('/dashboard'); 
   }
 
   /**
@@ -38,6 +38,6 @@ export class LoginPage implements OnInit {
     console.log('Attempting to sign in with Apple...');
     // TODO: Implement Firebase Apple Sign-In logic here.
     // On success, navigate to the main app page.
-    // this.navCtrl.navigateRoot('/tabs/dashboard');
+    // this.navCtrl.navigateRoot('/dashboard');
   }
 }

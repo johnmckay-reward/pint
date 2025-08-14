@@ -1,0 +1,58 @@
+<!-- 
+  Pint? App: Confirm Pint Page
+  Description: Step 2 of the initiation flow. User confirms their choice and sends the invite.
+-->
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/initiate-pint"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Confirm Your Pint</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <!-- Check if a pub has been selected before trying to display it -->
+  <div *ngIf="selectedPub" class="confirmation-container">
+
+    <ion-card class="pub-card">
+      <img [src]="selectedPub.photo" class="pub-image" />
+      <ion-card-header>
+        <ion-card-title>{{ selectedPub.name }}</ion-card-title>
+        <ion-card-subtitle>{{ selectedPub.address }}</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <p class="question-text">When will you be there?</p>
+        <ion-segment [(ngModel)]="eta" value="now">
+          <ion-segment-button value="now">
+            <ion-label>Now</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="15m">
+            <ion-label>In 15 mins</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="30m">
+            <ion-label>In 30 mins</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+      </ion-card-content>
+    </ion-card>
+
+  </div>
+
+  <!-- Show a message if the page was loaded without pub data -->
+  <div *ngIf="!selectedPub" class="empty-state">
+    <h3>No pub selected</h3>
+    <p>Please go back and choose a pub first.</p>
+    <ion-button (click)="goBack()">Go Back</ion-button>
+  </div>
+
+</ion-content>
+
+<ion-footer class="ion-no-border">
+  <ion-toolbar>
+    <ion-button expand="block" size="large" class="confirm-button" (click)="sendInvite()">
+      Start the Pint!
+      <ion-icon slot="end" name="send-outline"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>

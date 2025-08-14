@@ -57,6 +57,6 @@ export class OnboardingPage implements OnInit {
     // After saving, navigate to the main dashboard.
     // The 'navigateRoot' method clears the navigation stack, so the user can't
     // go back to the onboarding or login pages.
-    this.navCtrl.navigateRoot('/tabs/dashboard');
+    this.navCtrl.navigateRoot('/dashboard');
   }
 }

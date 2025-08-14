@@ -1,0 +1,68 @@
+<!-- 
+  Pint? App: Settings Page
+  Description: Provides user-configurable settings for notifications, account, and legal information.
+-->
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/profile"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Settings</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <!-- Notification Settings -->
+  <ion-list class="settings-list" lines="full">
+    <ion-list-header>
+      <h3>Notifications</h3>
+    </ion-list-header>
+
+    <ion-item>
+      <ion-label>Push Notifications</ion-label>
+      <ion-toggle slot="end" [(ngModel)]="notificationsEnabled" (ionChange)="onToggleChange()"></ion-toggle>
+    </ion-item>
+
+    <ion-item button detail="true" (click)="manageNotificationPrefs()" [disabled]="!notificationsEnabled">
+      <ion-label>Notification Preferences</ion-label>
+      <ion-note slot="end" color="medium">Radius, Sound</ion-note>
+    </ion-item>
+  </ion-list>
+
+  <!-- Account Settings -->
+  <ion-list class="settings-list" lines="full">
+    <ion-list-header>
+      <h3>Account</h3>
+    </ion-list-header>
+
+    <ion-item button detail="true" (click)="editProfile()">
+      <ion-label>Edit Profile</ion-label>
+    </ion-item>
+
+    <ion-item button detail="true" (click)="manageAccount()">
+      <ion-label>Manage Account</ion-label>
+    </ion-item>
+  </ion-list>
+
+  <!-- Legal Information -->
+  <ion-list class="settings-list" lines="full">
+    <ion-list-header>
+      <h3>Legal</h3>
+    </ion-list-header>
+
+    <ion-item button detail="true" (click)="viewPrivacyPolicy()">
+      <ion-label>Privacy Policy</ion-label>
+    </ion-item>
+
+    <ion-item button detail="true" (click)="viewTermsOfService()">
+      <ion-label>Terms of Service</ion-label>
+    </ion-item>
+  </ion-list>
+
+  <!-- App Version Info -->
+  <div class="app-version ion-padding-horizontal">
+    <p>Version 1.0.0 (Build 1)</p>
+  </div>
+
+</ion-content>

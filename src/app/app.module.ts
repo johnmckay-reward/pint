@@ -11,6 +11,13 @@ import { OnboardingPageRoutingModule } from './onboarding/onboarding-routing.mod
 import { DashboardPageModule } from './dashboard/dashboard.module';
 import { ProfilePageModule } from './profile/profile.module';
 import { EditProfilePageModule } from './edit-profile/edit-profile.module';
+import { SettingsPageModule } from './settings/settings.module';
+import { ManageAccountPageModule } from './manage-account/manage-account.module';
+import { NotificationPreferencesPageModule } from './notification-preferences/notification-preferences.module';
+import { SupportPageModule } from './support/support.module';
+import { InitiatePintPageModule } from './initiate-pint/initiate-pint.module';
+import { ConfirmPintPageModule } from './confirm-pint/confirm-pint.module';
+import { PintDetailsPageModule } from './pint-details/pint-details.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -20,7 +27,14 @@ import { EditProfilePageModule } from './edit-profile/edit-profile.module';
     OnboardingPageRoutingModule,
     DashboardPageModule,
     ProfilePageModule,
-    EditProfilePageModule
+    EditProfilePageModule,
+    SettingsPageModule,
+    ManageAccountPageModule,
+    NotificationPreferencesPageModule,
+    SupportPageModule,
+    InitiatePintPageModule,
+    ConfirmPintPageModule,
+    PintDetailsPageModule
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
