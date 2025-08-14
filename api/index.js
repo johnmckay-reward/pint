@@ -1,10 +1,10 @@
 const express = require('express');
-const sequelize = require('./db'); // Import the sequelize instance
+const sequelize = require('./db');
+const User = require('./models/user'); // Import the User model
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// --- Add this block to test the database connection ---
 async function assertDatabaseConnectionOk() {
   console.log('Checking database connection...');
   try {
@@ -16,10 +16,14 @@ async function assertDatabaseConnectionOk() {
     process.exit(1);
   }
 }
-// ----------------------------------------------------
 
 async function init() {
-  await assertDatabaseConnectionOk(); // Run the connection check
+  await assertDatabaseConnectionOk();
+  
+  // Sync all defined models to the database.
+  // { force: true } will drop the table if it already exists. Be careful with this in production.
+  await sequelize.sync(); 
+  console.log('All models were synchronized successfully. 🔄');
 
   app.get('/', (req, res) => {
     res.json({ message: 'Welcome to the Pint? API! 🍻' });
@@ -30,4 +34,4 @@ async function init() {
   });
 }
 
-init(); // Run the init function
+init();
