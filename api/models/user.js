@@ -30,7 +30,7 @@ const User = sequelize.define('User', {
     allowNull: true
   },
   profilePictureUrl: {
-    type: DataTypes.STRING,
+    type: DataTypes.TEXT,
     allowNull: true
   }
 }, {

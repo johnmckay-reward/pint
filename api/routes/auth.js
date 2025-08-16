@@ -8,7 +8,7 @@ const router = express.Router();
 // POST /auth/register - Register a new user
 router.post('/register', async (req, res) => {
   try {
-    const { email, password, displayName } = req.body;
+    const { email, password, displayName, favouriteTipple, profilePictureUrl } = req.body;
 
     // 1. Check if user already exists
     const existingUser = await User.findOne({ where: { email } });
@@ -17,7 +17,7 @@ router.post('/register', async (req, res) => {
     }
 
     // 2. Create the new user (password is automatically hashed by the model hook)
-    const user = await User.create({ email, password, displayName });
+    const user = await User.create({ email, password, displayName, favouriteTipple, profilePictureUrl });
 
     // 3. Generate a JWT for the new user
     const token = jwt.sign(
@@ -33,7 +33,9 @@ router.post('/register', async (req, res) => {
       user: {
         id: user.id,
         displayName: user.displayName,
-        email: user.email
+        email: user.email,
+        favouriteTipple: user.favouriteTipple,
+        profilePictureUrl: user.profilePictureUrl
       }
     });
 
@@ -73,7 +75,9 @@ router.post('/login', async (req, res) => {
       user: {
         id: user.id,
         displayName: user.displayName,
-        email: user.email
+        email: user.email,
+        favouriteTipple: user.favouriteTipple,
+        profilePictureUrl: user.profilePictureUrl
       }
     });
 

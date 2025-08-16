@@ -1,13 +1,17 @@
 const express = require('express');
+const cors = require('cors');
+
 // Import everything from the models/index.js file
 const { sequelize, User, PintSession } = require('./models');
 const userRoutes = require('./routes/users');
 const pintSessionRoutes = require('./routes/pintSessions');
 const authRoutes = require('./routes/auth');
 
+
 const app = express();
 
 app.use(express.json());
+app.use(cors());
 
 const PORT = process.env.PORT || 3000;
 
