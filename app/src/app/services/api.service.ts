@@ -3,6 +3,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
+
+import { Preferences } from '@capacitor/preferences';
 
 // Define the structure of the authentication response
 export interface AuthResponse {
@@ -49,7 +52,14 @@ export class ApiService {
    * @returns Observable with the auth token and user data.
    */
   login(credentials: object): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>(`${this.apiUrl}/auth/login`, credentials);
+    return this.http.post<AuthResponse>(`${this.apiUrl}/auth/login`, credentials).pipe(
+      tap(async (response: AuthResponse) => {
+        await Preferences.set({
+          key: 'authResponse',
+          value: JSON.stringify(response)
+        });
+      })
+    );
   }
 
   /**
@@ -58,7 +68,14 @@ export class ApiService {
    * @returns Observable with the auth token and user data.
    */
   register(userData: object): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>(`${this.apiUrl}/auth/register`, userData);
+    return this.http.post<AuthResponse>(`${this.apiUrl}/auth/register`, userData).pipe(
+      tap(async (response: AuthResponse) => {
+        await Preferences.set({
+          key: 'authResponse',
+          value: JSON.stringify(response)
+        });
+      })
+    );
   }
 
   /**
