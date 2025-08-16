@@ -1,0 +1,169 @@
+/*
+ * Pint? App: Register Page Styles
+ * Description: Styles for the register page, consistent with the login page design.
+ */
+:host {
+  --ion-color-primary-rgb-_01: rgba(var(--ion-color-primary-rgb), 0.1);
+  --ion-color-secondary-rgb-005: rgba(var(--ion-color-secondary-rgb), 0.05);
+  --ion-color-secondary-rgb-08: rgba(var(--ion-color-secondary-rgb), 0.8);
+}
+
+ion-content {
+  --background: var(--ion-color-tertiary);
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  height: 100%;
+  text-align: center;
+}
+
+/* -------- Logo and Branding -------- */
+.logo-section {
+  margin-top: 8vh;
+  margin-bottom: 2vh;
+}
+
+.app-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--ion-color-secondary);
+  margin: 0;
+  font-family: 'Roboto Slab', serif;
+}
+
+.tagline {
+  font-size: 1rem;
+  color: var(--ion-color-secondary-rgb-08);
+  margin-top: 8px;
+}
+
+/* -------- Profile Picture Section -------- */
+.profile-picture-section {
+  margin-bottom: 2vh;
+  display: flex;
+  justify-content: center;
+}
+
+.avatar-container {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  cursor: pointer;
+  overflow: hidden;
+  border: 4px solid var(--ion-color-tertiary-shade);
+}
+
+.avatar-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.edit-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 35%;
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.avatar-container:hover .edit-overlay {
+  opacity: 1;
+}
+
+.edit-overlay ion-icon {
+  font-size: 1.5rem;
+}
+
+/* -------- Form Section -------- */
+.form-section {
+  padding-bottom: 5vh;
+}
+
+ion-list {
+  background: transparent;
+  padding: 0;
+  margin-bottom: 24px;
+}
+
+.input-item {
+  --background: var(--ion-color-secondary-rgb-005);
+  --padding-start: 16px;
+  --highlight-height: 0;
+  border-radius: 12px;
+  margin-bottom: 16px;
+  border: 1px solid transparent;
+  transition: border-color 0.2s ease-in-out;
+}
+
+.input-item.ion-focused {
+  border-color: var(--ion-color-primary-rgb-01);
+}
+
+.input-item ion-icon {
+  margin-right: 8px;
+}
+
+.error-message {
+  text-align: left;
+  font-size: 0.8rem;
+  color: var(--ion-color-danger);
+  padding-left: 16px;
+  margin-top: -12px;
+  margin-bottom: 12px;
+}
+
+.register-button {
+  --background: var(--ion-color-primary);
+  --background-activated: var(--ion-color-primary-shade);
+  --color: var(--ion-color-primary-contrast);
+  --box-shadow: 0 4px 12px rgba(var(--ion-color-primary-rgb), 0.3);
+  font-weight: 700;
+  height: 50px;
+}
+
+.signin-prompt {
+  margin-top: 24px;
+  font-size: 0.9rem;
+  color: var(--ion-color-medium);
+}
+
+.signin-prompt a {
+  color: var(--ion-color-primary);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+
+/* -------- Dark Mode Adjustments -------- */
+body.dark {
+  ion-content {
+    --background: #121212;
+  }
+  .app-title {
+    color: var(--ion-color-primary-tint);
+  }
+  .tagline {
+    color: var(--ion-color-tertiary-shade);
+  }
+  .input-item {
+    --background: rgba(255, 255, 255, 0.08);
+  }
+  .input-item.ion-focused {
+    border-color: rgba(var(--ion-color-primary-rgb), 0.5);
+  }
+  .avatar-container {
+    border-color: var(--ion-color-dark-shade);
+  }
+}

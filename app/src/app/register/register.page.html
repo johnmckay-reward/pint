@@ -1,0 +1,108 @@
+<!--
+  Pint? App: Register Page
+  Description: A screen for new users to create an account.
+-->
+<ion-content [fullscreen]="true" class="ion-padding">
+  <div class="form-container">
+
+    <!-- Logo and Branding Section -->
+    <div class="logo-section">
+      <h1 class="app-title">Create Account</h1>
+      <p class="tagline">Join the community.</p>
+    </div>
+
+    <!-- Profile Picture Upload -->
+    <div class="profile-picture-section">
+      <div class="avatar-container" (click)="fileInput.click()">
+        <img [src]="profileImagePreview || 'https://placehold.co/120x120/f4f1de/4a2c2a?text=Photo'" alt="Profile Picture">
+        <div class="edit-overlay">
+          <ion-icon name="camera-outline"></ion-icon>
+        </div>
+      </div>
+      <input type="file" accept="image/*" (change)="onFileSelected($event)" #fileInput style="display: none;" />
+    </div>
+
+    <!-- Registration Form Section -->
+    <div class="form-section">
+      <form [formGroup]="registerForm" (ngSubmit)="register()">
+        <ion-list>
+          <!-- Display Name Input -->
+          <ion-item class="input-item" lines="none">
+            <ion-icon name="person-outline" slot="start" color="medium"></ion-icon>
+            <ion-input
+              label="Display Name"
+              labelPlacement="floating"
+              type="text"
+              formControlName="displayName"
+              required
+              autocomplete="name"
+              inputmode="text">
+            </ion-input>
+          </ion-item>
+          <div *ngIf="registerForm.get('displayName')?.invalid && registerForm.get('displayName')?.touched" class="error-message">
+            A display name is required.
+          </div>
+
+          <!-- Email Input -->
+          <ion-item class="input-item" lines="none">
+            <ion-icon name="mail-outline" slot="start" color="medium"></ion-icon>
+            <ion-input
+              label="Email"
+              labelPlacement="floating"
+              type="email"
+              formControlName="email"
+              required
+              autocomplete="email"
+              inputmode="email">
+            </ion-input>
+          </ion-item>
+          <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched" class="error-message">
+            Please enter a valid email.
+          </div>
+
+          <!-- Password Input -->
+          <ion-item class="input-item" lines="none">
+            <ion-icon name="lock-closed-outline" slot="start" color="medium"></ion-icon>
+            <ion-input
+              label="Password"
+              labelPlacement="floating"
+              type="password"
+              formControlName="password"
+              required>
+            </ion-input>
+          </ion-item>
+          <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched" class="error-message">
+            Password must be at least 6 characters.
+          </div>
+
+          <!-- Favourite Tipple Input -->
+          <ion-item class="input-item" lines="none">
+            <ion-icon name="beer-outline" slot="start" color="medium"></ion-icon>
+            <ion-input
+              label="Favourite Tipple (Optional)"
+              labelPlacement="floating"
+              type="text"
+              formControlName="favouriteTipple"
+              inputmode="text">
+            </ion-input>
+          </ion-item>
+        </ion-list>
+
+        <!-- Register Button -->
+        <ion-button
+          class="register-button"
+          expand="block"
+          type="submit"
+          [disabled]="registerForm.invalid">
+          Sign Up
+        </ion-button>
+      </form>
+
+      <!-- Login Link -->
+      <div class="signin-prompt">
+        Already have an account? <a (click)="navigateToLogin()">Sign In</a>
+      </div>
+    </div>
+
+  </div>
+</ion-content>
