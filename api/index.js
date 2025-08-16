@@ -3,6 +3,7 @@ const express = require('express');
 const { sequelize, User, PintSession } = require('./models');
 const userRoutes = require('./routes/users');
 const pintSessionRoutes = require('./routes/pintSessions');
+const authRoutes = require('./routes/auth');
 
 const app = express();
 
@@ -30,6 +31,7 @@ async function init() {
   await sequelize.sync({ force: true });
   console.log('All models were synchronized successfully. 🔄');
 
+  app.use('/auth', authRoutes);
   app.use('/users', userRoutes);
   app.use('/sessions', pintSessionRoutes);
 

@@ -1,13 +1,24 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../db');
+const bcrypt = require('bcryptjs'); // Import bcrypt
 
-// Define the User model
 const User = sequelize.define('User', {
-  // Model attributes are defined here
   id: {
     type: DataTypes.UUID,
     defaultValue: DataTypes.UUIDV4,
     primaryKey: true,
+    allowNull: false
+  },
+  email: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    unique: true,
+    validate: {
+      isEmail: true
+    }
+  },
+  password: {
+    type: DataTypes.STRING,
     allowNull: false
   },
   displayName: {
@@ -16,15 +27,23 @@ const User = sequelize.define('User', {
   },
   favouriteTipple: {
     type: DataTypes.STRING,
-    allowNull: true // A user might not have a favourite
+    allowNull: true
   },
   profilePictureUrl: {
     type: DataTypes.STRING,
     allowNull: true
   }
 }, {
-  // Other model options go here
-  tableName: 'users'
+  tableName: 'users',
+  hooks: {
+    // This hook runs automatically before a new user is created.
+    beforeCreate: async (user) => {
+      if (user.password) {
+        const salt = await bcrypt.genSalt(10);
+        user.password = await bcrypt.hash(user.password, salt);
+      }
+    }
+  }
 });
 
 module.exports = User;
