@@ -18,6 +18,8 @@ import { SupportPageModule } from './support/support.module';
 import { InitiatePintPageModule } from './initiate-pint/initiate-pint.module';
 import { ConfirmPintPageModule } from './confirm-pint/confirm-pint.module';
 import { PintDetailsPageModule } from './pint-details/pint-details.module';
+import { ReactiveFormsModule } from '@angular/forms';
+import { provideHttpClient } from '@angular/common/http';
 
 @NgModule({
   declarations: [AppComponent],
@@ -36,7 +38,7 @@ import { PintDetailsPageModule } from './pint-details/pint-details.module';
     ConfirmPintPageModule,
     PintDetailsPageModule
   ],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, provideHttpClient()],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

@@ -2,120 +2,135 @@
  * Pint? App: Login Page Styles
  * Description: Styles for the login page, ensuring a clean, welcoming, and on-brand look.
  */
+:host {
+  --ion-color-primary-rgb-_01: rgba(var(--ion-color-primary-rgb), 0.1);
+  --ion-color-secondary-rgb-005: rgba(var(--ion-color-secondary-rgb), 0.05);
+  --ion-color-secondary-rgb-08: rgba(var(--ion-color-secondary-rgb), 0.8);
+}
 
 ion-content {
-  // Use the creamy off-white for the background as a default.
   --background: var(--ion-color-tertiary);
-
-  // Dark mode background
-  &.dark {
-    --background: #161616; // A slightly softer black for dark mode
-  }
 }
 
 .login-container {
   display: flex;
   flex-direction: column;
-  justify-content: space-between; // Pushes content to top and bottom
+  justify-content: space-between;
   height: 100%;
   text-align: center;
 }
 
-// -------- Logo and Branding --------
-
+/* -------- Logo and Branding -------- */
 .logo-section {
-  margin-top: 15vh; // Pushes the logo down from the top edge
+  margin-top: 10vh;
+  transition: margin-top 0.3s ease-in-out;
 }
 
 .pint-icon {
-  width: 100px;
+  width: 90px;
   height: auto;
   margin-bottom: 16px;
 }
 
 .app-title {
-  font-size: 3.5rem;
+  font-size: 2.5rem;
   font-weight: 700;
   color: var(--ion-color-secondary);
   margin: 0;
-  // Use the custom heading font defined in global.scss
-  font-family: 'Roboto Slab', serif; 
+  font-family: 'Roboto Slab', serif;
 }
 
 .tagline {
-  font-size: 1.1rem;
-  color: var(--ion-color-secondary-shade);
+  font-size: 1rem;
+  color: var(--ion-color-secondary-rgb-08);
   margin-top: 8px;
 }
 
-// -------- Action Buttons --------
+/* Adjust logo position when keyboard is open */
+:host(.keyboard-visible) .logo-section {
+  margin-top: 2vh;
+}
 
-.actions-section {
-  margin-bottom: 5vh; // Pushes the buttons up from the bottom edge
+
+/* -------- Form Section -------- */
+.form-section {
+  padding-bottom: 5vh;
+}
+
+ion-list {
+  background: transparent;
+  padding: 0;
+  margin-bottom: 24px;
+}
+
+.input-item {
+  --background: var(--ion-color-secondary-rgb-005);
+  --padding-start: 16px;
+  --highlight-height: 0;
+  border-radius: 12px;
+  margin-bottom: 16px;
+  border: 1px solid transparent;
+  transition: border-color 0.2s ease-in-out;
+}
+
+.input-item.ion-focused {
+  border-color: var(--ion-color-primary-rgb-01);
+}
+
+.input-item ion-icon {
+  margin-right: 8px;
+}
+
+.error-message {
+  text-align: left;
+  font-size: 0.8rem;
+  color: var(--ion-color-danger);
+  padding-left: 16px;
+  margin-top: -12px;
+  margin-bottom: 12px;
 }
 
 .login-button {
-  --border-radius: 12px;
+  --background: var(--ion-color-primary);
+  --background-activated: var(--ion-color-primary-shade);
+  --color: var(--ion-color-primary-contrast);
+  --box-shadow: 0 4px 12px rgba(var(--ion-color-primary-rgb), 0.3);
+  font-weight: 700;
   height: 50px;
-  font-size: 1rem;
-  font-weight: 500;
-  text-transform: none; // Overrides global style if needed
-  margin-bottom: 16px;
-  --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s ease-in-out;
-
-  &:active {
-    transform: scale(0.98); // Provides visual feedback on tap
-  }
-
-  ion-icon {
-    font-size: 1.4rem;
-  }
 }
 
-// Google Button Specifics
-.google-button {
-  --background: #ffffff;
-  --color: #000000;
-  --border-color: #e0e0e0;
-  --border-width: 1px;
-  --border-style: solid;
-}
-
-// Apple Button Specifics
-.apple-button {
-  --background: #000000;
-  --color: #ffffff;
-
-  // For dark mode, Apple button can have a light border
-  body.dark & {
-    --background: #ffffff;
-    --color: #000000;
-  }
-}
-
-
-// -------- Terms and Conditions --------
-
-.terms-text {
-  font-size: 0.8rem;
-  color: var(--ion-color-medium);
+.signup-prompt {
   margin-top: 24px;
-
-  a {
-    color: var(--ion-color-primary);
-    text-decoration: none;
-    font-weight: 500;
-  }
+  font-size: 0.9rem;
+  color: var(--ion-color-medium);
 }
 
-// -------- Dark Mode Adjustments --------
+.signup-prompt a {
+  color: var(--ion-color-primary);
+  font-weight: 700;
+  text-decoration: none;
+}
 
+
+/* -------- Dark Mode Adjustments -------- */
 body.dark {
-  .app-title {
-    color: var(--ion-color-primary);
+  ion-content {
+    --background: #121212;
   }
+
+  .app-title {
+    color: var(--ion-color-primary-tint);
+  }
+
   .tagline {
     color: var(--ion-color-tertiary-shade);
+  }
+
+  .input-item {
+    --background: rgba(255, 255, 255, 0.08);
+  }
+
+  .input-item.ion-focused {
+    border-color: rgba(var(--ion-color-primary-rgb), 0.5);
   }
 }

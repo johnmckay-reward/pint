@@ -1,49 +1,80 @@
-<!-- 
+<!--
   Pint? App: Login Page
-  Description: This is the first screen a user sees. It provides options for social sign-in.
+  Description: A screen for users to sign in using their email and password.
 -->
 <ion-content [fullscreen]="true" class="ion-padding">
   <div class="login-container">
 
-<div class="logo-section">
-  <svg class="pint-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-    <defs>
-      <linearGradient id="beerGradient" x1="0.5" y1="0" x2="0.5" y2="1">
-        <stop offset="0%" stop-color="var(--ion-color-tertiary-tint)"/>
-        <stop offset="100%" stop-color="var(--ion-color-tertiary)"/>
-      </linearGradient>
-    </defs>
+    <!-- Logo and Branding Section -->
+    <div class="logo-section">
+      <svg class="pint-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+        <defs>
+          <linearGradient id="beerGradient" x1="0.5" y1="0" x2="0.5" y2="1">
+            <stop offset="0%" stop-color="var(--ion-color-tertiary-tint)"/>
+            <stop offset="100%" stop-color="var(--ion-color-tertiary)"/>
+          </linearGradient>
+        </defs>
+        <path fill="var(--ion-color-primary)" d="M400 224h48v128h-48z"/>
+        <path fill="var(--ion-color-primary)" d="M398.6 128H113.4a16 16 0 00-15.9 18.2L112 448h288l14.5-301.8A16 16 0 00398.6 128z"/>
+        <path fill="url(#beerGradient)" d="M130.3 192h251.4l-11.4 224H141.7z"/>
+        <path d="M112 192h288" stroke="var(--ion-color-primary-tint)" stroke-width="4" />
+        <path fill="var(--ion-color-light)" d="M112 192 C 160 150, 200 180, 256 160 C 310 140, 350 150, 400 192 Z"/>
+      </svg>
+      <h1 class="app-title">Welcome Back</h1>
+      <p class="tagline">Sign in to find a pint.</p>
+    </div>
 
-    <path fill="var(--ion-color-primary)" d="M400 224h48v128h-48z"/>
-    
-    <path fill="var(--ion-color-primary)" d="M398.6 128H113.4a16 16 0 00-15.9 18.2L112 448h288l14.5-301.8A16 16 0 00398.6 128z"/>
-    
-    <path fill="url(#beerGradient)" d="M130.3 192h251.4l-11.4 224H141.7z"/>
+    <!-- Login Form Section -->
+    <div class="form-section">
+      <form [formGroup]="loginForm" (ngSubmit)="login()">
+        <ion-list>
+          <!-- Email Input -->
+          <ion-item class="input-item" lines="none">
+            <ion-icon name="mail-outline" slot="start" color="medium"></ion-icon>
+            <ion-input
+              label="Email"
+              labelPlacement="floating"
+              type="email"
+              formControlName="email"
+              required
+              autocomplete="email"
+              inputmode="email">
+            </ion-input>
+          </ion-item>
+          <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched" class="error-message">
+            Please enter a valid email.
+          </div>
 
-    <path d="M112 192h288" stroke="var(--ion-color-primary-tint)" stroke-width="4" />
-    
-    <path fill="var(--ion-color-light)" d="M112 192 C 160 150, 200 180, 256 160 C 310 140, 350 150, 400 192 Z"/>
-  </svg>
-  
-  <h1 class="app-title">Pint?</h1>
-  <p class="tagline">Find your friends. Find a pub.</p>
-</div>
+          <!-- Password Input -->
+          <ion-item class="input-item" lines="none">
+            <ion-icon name="lock-closed-outline" slot="start" color="medium"></ion-icon>
+            <ion-input
+              label="Password"
+              labelPlacement="floating"
+              type="password"
+              formControlName="password"
+              required>
+            </ion-input>
+          </ion-item>
+          <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" class="error-message">
+            Password is required.
+          </div>
+        </ion-list>
 
-    <!-- Sign-in Actions Section -->
-    <div class="actions-section">
-      <ion-button expand="block" class="login-button google-button" (click)="signInWithGoogle()">
-        <ion-icon slot="start" name="logo-google"></ion-icon>
-        Sign in with Google
-      </ion-button>
+        <!-- Login Button -->
+        <ion-button
+          class="login-button"
+          expand="block"
+          type="submit"
+          [disabled]="loginForm.invalid">
+          Sign In
+        </ion-button>
+      </form>
 
-      <ion-button expand="block" class="login-button apple-button" (click)="signInWithApple()">
-        <ion-icon slot="start" name="logo-apple"></ion-icon>
-        Sign in with Apple
-      </ion-button>
-
-      <p class="terms-text">
-        By continuing, you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.
-      </p>
+      <!-- Registration Link -->
+      <div class="signup-prompt">
+        Don't have an account? <a (click)="navigateToRegister()">Sign Up</a>
+      </div>
     </div>
 
   </div>
