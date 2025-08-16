@@ -1,8 +1,13 @@
 const express = require('express');
-const sequelize = require('./db');
-const User = require('./models/user'); // Import the User model
+// Import everything from the models/index.js file
+const { sequelize, User, PintSession } = require('./models');
+const userRoutes = require('./routes/users');
+const pintSessionRoutes = require('./routes/pintSessions');
 
 const app = express();
+
+app.use(express.json());
+
 const PORT = process.env.PORT || 3000;
 
 async function assertDatabaseConnectionOk() {
@@ -19,11 +24,14 @@ async function assertDatabaseConnectionOk() {
 
 async function init() {
   await assertDatabaseConnectionOk();
-  
-  // Sync all defined models to the database.
-  // { force: true } will drop the table if it already exists. Be careful with this in production.
-  await sequelize.sync(); 
+
+  // The 'force: true' option will drop tables before recreating them.
+  // Useful in development, but use with caution.
+  await sequelize.sync({ force: true });
   console.log('All models were synchronized successfully. 🔄');
+
+  app.use('/users', userRoutes);
+  app.use('/sessions', pintSessionRoutes);
 
   app.get('/', (req, res) => {
     res.json({ message: 'Welcome to the Pint? API! 🍻' });
