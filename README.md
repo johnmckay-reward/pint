@@ -95,6 +95,7 @@ cd app && npm run lint
    - JWT secrets
    - Sentry DSN for error tracking
    - CORS settings
+   - Admin user credentials for database seeding
 
 2. **Frontend Configuration** (set build-time environment variables):
    - Sentry DSN
@@ -102,40 +103,167 @@ cd app && npm run lint
    - Google Maps API key
    - Stripe publishable key
 
+### Deployment Architecture
+
+The Pint platform consists of 5 applications that should be deployed as follows:
+
+#### Subdomain Strategy
+```
+https://app.pint.com          → Main User App (Angular/Ionic)
+https://partners.pint.com     → Partner Dashboard (Angular)
+https://admin.pint.com        → Admin Dashboard (Angular - Internal Access Only)
+https://api.pint.com          → Backend API (Node.js/Express)
+https://www.pint.com          → Marketing Website (Static HTML)
+```
+
+#### Database Initialization
+
+Before first deployment, initialize the database with required data:
+
+```bash
+# Set environment variables for admin user
+export ADMIN_EMAIL=admin@yourcompany.com
+export ADMIN_PASSWORD=YourSecureAdminPassword123!
+export ADMIN_DISPLAY_NAME="Platform Administrator"
+
+# Run database seeding script
+cd api && npm run seed:prod
+```
+
+This creates:
+- Database schema (tables and relationships)
+- Default admin user with provided credentials
+- Achievement definitions for the platform
+- Proper indexes for optimal performance
+
 ### Security Checklist
 
-- [ ] All environment variables configured (no hardcoded secrets)
-- [ ] CORS restricted to production domains
-- [ ] HTTPS enabled for all endpoints
-- [ ] Database connection secured
-- [ ] JWT secrets are cryptographically secure
-- [ ] Rate limiting enabled
-- [ ] Input validation on all endpoints
+- [x] All environment variables configured (no hardcoded secrets)
+- [x] CORS restricted to production domains
+- [x] HTTPS enabled for all endpoints
+- [x] Database connection secured
+- [x] JWT secrets are cryptographically secure
+- [x] Rate limiting enabled
+- [x] Input validation on all endpoints
+- [x] Role-based access control implemented
+- [x] Admin credentials secured via environment variables
 
 ### Deployment Steps
 
 1. **Build Production Assets:**
    ```bash
+   # Main User App
    cd app && ng build --configuration=production
+   
+   # Partner Dashboard
    cd ../pint-dashboard && ng build --configuration=production
+   
+   # Admin Dashboard
+   cd ../admin-dashboard && ng build --configuration=production
    ```
 
 2. **Deploy Backend:**
-   - Configure environment variables
-   - Run database migrations
-   - Start Node.js server with PM2 or similar
+   ```bash
+   # Configure environment variables in production
+   # Run database seeding (first time only)
+   cd api && npm run seed:prod
+   
+   # Start Node.js server with PM2 or similar process manager
+   pm2 start index.js --name "pint-api"
+   ```
 
-3. **Deploy Frontend:**
-   - Serve built files via CDN or web server
-   - Configure proper routing for SPA
-   - Deploy partner dashboard at partner subdomain
-   - Deploy admin dashboard (internal access only)
+3. **Deploy Frontend Applications:**
+   ```bash
+   # Upload built files to CDN or web servers
+   # Configure proper routing for SPAs:
+   
+   # app.pint.com (Main User App)
+   # - Serve from app/dist/
+   # - Configure fallback to index.html for client-side routing
+   
+   # partners.pint.com (Partner Dashboard)
+   # - Serve from pint-dashboard/dist/
+   # - Configure fallback to index.html for client-side routing
+   
+   # admin.pint.com (Admin Dashboard - INTERNAL ACCESS ONLY)
+   # - Serve from admin-dashboard/dist/
+   # - Restrict access via IP whitelist or VPN
+   # - Configure fallback to index.html for client-side routing
+   
+   # www.pint.com (Marketing Website)
+   # - Serve from website/ directory
+   # - Static files only, no special routing needed
+   ```
+
+4. **Configure CORS in API:**
+   ```javascript
+   // In api/index.js, update CORS configuration:
+   const corsOptions = {
+     origin: [
+       'https://app.pint.com',
+       'https://partners.pint.com', 
+       'https://admin.pint.com',
+       'https://www.pint.com'
+     ],
+     credentials: true
+   };
+   ```
+
+### Post-Deployment Verification
+
+1. **Health Checks:**
+   ```bash
+   # API Health Check
+   curl https://api.pint.com/health
+   
+   # Database Connectivity
+   curl https://api.pint.com/api/health/db
+   ```
+
+2. **Admin Access Verification:**
+   - Navigate to `https://admin.pint.com`
+   - Login with the admin credentials set during seeding
+   - Verify admin dashboard functionality
+
+3. **Cross-Application Integration Test:**
+   - Test the master E2E flow across all applications
+   - Verify CORS is working correctly
+   - Check that all applications can communicate with the API
 
 ### Monitoring
 
 - **Error Tracking**: Sentry integration for both frontend and backend
 - **Performance**: Lighthouse scores, bundle size monitoring
-- **Uptime**: Configure health check endpoints
+- **Uptime**: Configure health check endpoints (`/health`, `/api/health/db`)
+- **Database**: Monitor query performance and connection pool
+- **Security**: Monitor failed authentication attempts
+
+### Backup and Recovery
+
+1. **Database Backups:**
+   ```bash
+   # Daily automated backups
+   pg_dump -h $DB_HOST -U $DB_USER $DB_NAME > backup_$(date +%Y%m%d).sql
+   ```
+
+2. **Configuration Backup:**
+   - Store environment variables in secure configuration management
+   - Backup DNS and SSL certificate configurations
+   - Document deployment procedures
+
+### Scaling Considerations
+
+- **API**: Use load balancers for multiple Node.js instances
+- **Database**: Implement read replicas for heavy read workloads
+- **CDN**: Use CDN for static assets and frontend bundles
+- **Monitoring**: Set up alerts for high CPU, memory, or response times
+
+### Emergency Procedures
+
+- **Rollback**: Keep previous builds for quick rollback if needed
+- **Database**: Have tested database rollback procedures
+- **Monitoring**: Set up alerts for critical failures
+- **Support**: Document escalation procedures for production issues
 
 ## Features
 
