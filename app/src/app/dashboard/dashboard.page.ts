@@ -19,6 +19,7 @@ export class DashboardPage implements OnInit {
   pubNameFilter = '';
   dateFilter = '';
   showFilters = false;
+  showFeaturedOnly = false;
 
   constructor(
     private navCtrl: NavController,
@@ -47,7 +48,14 @@ export class DashboardPage implements OnInit {
       ).toPromise();
       
       if (response) {
-        this.nearbyPints = response.sessions;
+        let sessions = response.sessions;
+        
+        // Apply client-side featured filter if enabled
+        if (this.showFeaturedOnly) {
+          sessions = sessions.filter(session => session.isFeatured);
+        }
+        
+        this.nearbyPints = sessions;
       } else {
         this.nearbyPints = [];
       }
@@ -74,6 +82,7 @@ export class DashboardPage implements OnInit {
   async clearFilters(): Promise<void> {
     this.pubNameFilter = '';
     this.dateFilter = '';
+    this.showFeaturedOnly = false;
     await this.loadSessions();
   }
 

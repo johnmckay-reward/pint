@@ -221,6 +221,56 @@ ion-item {
   }
 }
 
+// -------- Featured Sessions --------
+
+.featured-session {
+  position: relative;
+  background: linear-gradient(135deg, rgba(255, 193, 7, 0.1) 0%, rgba(255, 193, 7, 0.05) 100%);
+  border-left: 4px solid var(--ion-color-warning);
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255, 193, 7, 0.1) 0%, transparent 100%);
+    pointer-events: none;
+  }
+}
+
+.featured-banner {
+  position: absolute;
+  top: 8px;
+  right: 16px;
+  display: flex;
+  align-items: center;
+  background: var(--ion-color-warning);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  z-index: 1;
+  
+  ion-icon {
+    font-size: 0.875rem;
+    margin-right: 4px;
+  }
+}
+
+.private-icon {
+  font-size: 0.875rem;
+  margin-left: 8px;
+}
+
+.pub-address {
+  font-size: 0.75rem;
+  color: var(--ion-color-medium);
+  margin-top: 2px;
+}
+
 
 // -------- Dark Mode Adjustments --------
 
@@ -239,5 +289,9 @@ body.dark {
 
   .empty-state h3 {
     color: var(--ion-color-tertiary);
+  }
+  
+  .featured-session {
+    background: linear-gradient(135deg, rgba(255, 193, 7, 0.15) 0%, rgba(255, 193, 7, 0.05) 100%);
   }
 }

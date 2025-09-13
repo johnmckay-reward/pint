@@ -75,6 +75,10 @@ const routes: Routes = [
     path: 'friends',
     loadChildren: () => import('./friends/friends.module').then( m => m.FriendsPageModule)
   },
+  {
+    path: 'subscription',
+    loadChildren: () => import('./subscription/subscription.module').then( m => m.SubscriptionPageModule)
+  },
 ];
 
 @NgModule({

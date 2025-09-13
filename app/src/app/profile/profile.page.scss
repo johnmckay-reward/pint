@@ -33,6 +33,20 @@ ion-content {
   font-size: 1.8rem;
   font-weight: 700;
   color: var(--ion-color-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.premium-badge {
+  font-size: 1.2rem;
+  animation: sparkle 2s ease-in-out infinite;
+}
+
+@keyframes sparkle {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
 }
 
 .favourite-tipple {

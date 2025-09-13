@@ -1,5 +1,5 @@
 const express = require('express');
-const { PintSession, User, ChatMessage, sequelize } = require('../models');
+const { PintSession, User, ChatMessage, sequelize, Pub } = require('../models');
 const authMiddleware = require('../middleware/auth');
 const { Op } = require('sequelize');
 const AchievementsService = require('../services/achievementsService');
@@ -9,10 +9,21 @@ const router = express.Router();
 // POST /sessions - Create a new pint session
 router.post('/', authMiddleware, async (req, res) => {
   try {
-    const { pubName, eta, location } = req.body;
+    const { pubName, eta, location, isPrivate } = req.body;
 
     // Get the user ID from the JWT token instead of request body
     const initiatorId = req.user.id;
+
+    // Check if private session requires premium subscription
+    if (isPrivate) {
+      const user = await User.findByPk(initiatorId);
+      if (!user || user.subscriptionTier !== 'plus') {
+        return res.status(403).json({ 
+          error: 'Private sessions require a Pint Plus subscription',
+          requiresPremium: true
+        });
+      }
+    }
 
     // Create the session with appropriate location format
     const locationData = sequelize.getDialect() === 'postgres'
@@ -23,7 +34,8 @@ router.post('/', authMiddleware, async (req, res) => {
       pubName,
       eta,
       location: locationData,
-      initiatorId
+      initiatorId,
+      isPrivate: isPrivate || false
     });
 
     // Automatically add the initiator as the first attendee
@@ -134,13 +146,24 @@ router.get('/', async (req, res) => {
 
     const sessions = await PintSession.findAll({
       where: whereClause,
-      // "Eager load" the initiator's data along with each session
-      include: {
-        model: User,
-        as: 'initiator',
-        attributes: ['id', 'displayName', 'profilePictureUrl'] // Only include these fields
-      },
-      order: [['createdAt', 'DESC']] // Show newest first
+      // "Eager load" the initiator's data and pub data along with each session
+      include: [
+        {
+          model: User,
+          as: 'initiator',
+          attributes: ['id', 'displayName', 'profilePictureUrl'] // Only include these fields
+        },
+        {
+          model: Pub,
+          as: 'pub',
+          attributes: ['id', 'name', 'address', 'partnershipTier'],
+          required: false // LEFT JOIN - sessions without pubs will still be included
+        }
+      ],
+      order: [
+        ['isFeatured', 'DESC'], // Featured sessions first
+        ['createdAt', 'DESC'] // Then newest first
+      ]
     });
     
     res.json({
@@ -160,7 +183,7 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
     try {
         const session = await PintSession.findByPk(req.params.id, {
-            // Include both the initiator and all attendees
+            // Include both the initiator, attendees, and pub data
             include: [
                 { model: User, as: 'initiator', attributes: ['id', 'displayName', 'profilePictureUrl'] },
                 { 
@@ -168,6 +191,12 @@ router.get('/:id', async (req, res) => {
                     as: 'attendees',
                     attributes: ['id', 'displayName', 'profilePictureUrl'],
                     through: { attributes: [] } // Don't include the junction table data
+                },
+                {
+                    model: Pub,
+                    as: 'pub',
+                    attributes: ['id', 'name', 'address', 'partnershipTier'],
+                    required: false
                 }
             ]
         });

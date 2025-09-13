@@ -32,6 +32,11 @@ const User = sequelize.define('User', {
   profilePictureUrl: {
     type: DataTypes.TEXT,
     allowNull: true
+  },
+  subscriptionTier: {
+    type: DataTypes.ENUM('free', 'plus'),
+    allowNull: false,
+    defaultValue: 'free'
   }
 }, {
   tableName: 'users',

@@ -20,6 +20,24 @@ const PintSession = sequelize.define('PintSession', {
   location: {
     type: sequelize.getDialect() === 'postgres' ? DataTypes.GEOMETRY('POINT') : DataTypes.JSON,
     allowNull: false
+  },
+  isPrivate: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue: false
+  },
+  isFeatured: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue: false
+  },
+  pubId: {
+    type: DataTypes.UUID,
+    allowNull: true,
+    references: {
+      model: 'pubs',
+      key: 'id'
+    }
   }
 }, {
   tableName: 'pint_sessions'
