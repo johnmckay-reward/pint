@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { NavController } from '@ionic/angular';
 
 @Component({
@@ -8,15 +8,13 @@ import { NavController } from '@ionic/angular';
   standalone: false
 })
 export class EditProfilePage implements OnInit {
+  private navCtrl = inject(NavController);
+
 
   // Data-bound properties for the form fields
   displayName: string = '';
   favouriteTipple: string = '';
   profilePictureUrl: string | null = null;
-
-  constructor(
-    private navCtrl: NavController
-  ) { }
 
   ngOnInit() {
     // In a real app, you would fetch the current user's data from a service

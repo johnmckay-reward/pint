@@ -1,6 +1,6 @@
 // src/app/services/api.service.ts
 
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
@@ -152,10 +152,10 @@ export interface RegisterRequest {
   providedIn: 'root'
 })
 export class ApiService {
+  private http = inject(HttpClient);
+
   // The base URL of your Express API
   private apiUrl = 'http://localhost:3000';
-
-  constructor(private http: HttpClient) { }
 
   /**
    * Logs a user in.

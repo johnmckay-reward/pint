@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ApiService, AuthResponse, User } from './api.service';
 
@@ -6,13 +6,15 @@ import { ApiService, AuthResponse, User } from './api.service';
   providedIn: 'root'
 })
 export class AuthService {
+  private apiService = inject(ApiService);
+
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
   private currentUserSubject = new BehaviorSubject<User | null>(null);
 
   public isAuthenticated$: Observable<boolean> = this.isAuthenticatedSubject.asObservable();
   public currentUser$: Observable<User | null> = this.currentUserSubject.asObservable();
 
-  constructor(private apiService: ApiService) {
+  constructor() {
     this.checkAuthStatus();
   }
 

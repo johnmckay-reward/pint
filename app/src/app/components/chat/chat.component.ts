@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy, ViewChild, ElementRef, inject } from '@angular/core';
 import { ChatService, ChatMessage, ChatUser } from '../../services/chat.service';
 import { ApiService, ChatMessagesResponse } from '../../services/api.service';
 import { AuthService } from '../../services/auth.service';
@@ -12,6 +12,11 @@ import { Subscription } from 'rxjs';
   standalone: false
 })
 export class ChatComponent implements OnInit, OnDestroy {
+  private chatService = inject(ChatService);
+  private apiService = inject(ApiService);
+  private authService = inject(AuthService);
+  private toastController = inject(ToastController);
+
   @Input() sessionId!: string;
   @ViewChild('messagesContainer', { static: false }) messagesContainer!: ElementRef;
 
@@ -21,13 +26,6 @@ export class ChatComponent implements OnInit, OnDestroy {
   isLoading = true;
   
   private subscriptions: Subscription[] = [];
-
-  constructor(
-    private chatService: ChatService,
-    private apiService: ApiService,
-    private authService: AuthService,
-    private toastController: ToastController
-  ) {}
 
   async ngOnInit() {
     if (!this.sessionId) {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ApiService, User, Friendship, FriendsResponse, FriendRequestsResponse, UserSearchResponse } from '../services/api.service';
 import { ToastController, AlertController, LoadingController } from '@ionic/angular';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
@@ -11,6 +11,11 @@ import { Subject, of } from 'rxjs';
   standalone: false
 })
 export class FriendsPage implements OnInit {
+  private apiService = inject(ApiService);
+  private toastController = inject(ToastController);
+  private alertController = inject(AlertController);
+  private loadingController = inject(LoadingController);
+
   
   friends: User[] = [];
   sentRequests: Friendship[] = [];
@@ -23,13 +28,6 @@ export class FriendsPage implements OnInit {
   isSearching = false;
   
   private searchSubject = new Subject<string>();
-
-  constructor(
-    private apiService: ApiService,
-    private toastController: ToastController,
-    private alertController: AlertController,
-    private loadingController: LoadingController
-  ) {}
 
   ngOnInit() {
     this.loadData();

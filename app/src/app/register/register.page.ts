@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { AlertController, LoadingController, NavController } from '@ionic/angular';
 import { ApiService, AuthResponse, RegisterRequest } from '../services/api.service';
 import { AuthService } from '../services/auth.service';
@@ -12,18 +12,18 @@ import { finalize } from 'rxjs';
   standalone: false
 })
 export class RegisterPage implements OnInit {
+  private navCtrl = inject(NavController);
+  private apiService = inject(ApiService);
+  private authService = inject(AuthService);
+  private formBuilder = inject(FormBuilder);
+  private alertController = inject(AlertController);
+  private loadingController = inject(LoadingController);
+
   registerForm: FormGroup;
   profileImagePreview: string | null = null;
   private selectedFile: File | null = null;
 
-  constructor(
-    private navCtrl: NavController,
-    private apiService: ApiService,
-    private authService: AuthService,
-    private formBuilder: FormBuilder,
-    private alertController: AlertController,
-    private loadingController: LoadingController
-  ) {
+  constructor() {
     // Initialize the form group in the constructor
     this.registerForm = this.formBuilder.group({
       displayName: ['', Validators.required],
@@ -34,7 +34,8 @@ export class RegisterPage implements OnInit {
   }
 
   ngOnInit() {
-    // Lifecycle hook for any additional initialization
+    // Initialize any additional setup here if needed
+    console.log('RegisterPage initialized');
   }
 
   /**

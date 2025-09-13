@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { NavController, ToastController, LoadingController, AlertController } from '@ionic/angular';
 import { ApiService, CreateSessionRequest } from '../services/api.service';
@@ -24,18 +24,18 @@ interface Pub {
   standalone: false
 })
 export class ConfirmPintPage implements OnInit {
+  private router = inject(Router);
+  private navCtrl = inject(NavController);
+  private toastController = inject(ToastController);
+  private apiService = inject(ApiService);
+  private loadingController = inject(LoadingController);
+  private alertController = inject(AlertController);
+
 
   selectedPub: Pub | null = null;
   eta: string = 'now'; // Default ETA value
 
-  constructor(
-    private router: Router,
-    private navCtrl: NavController,
-    private toastController: ToastController,
-    private apiService: ApiService,
-    private loadingController: LoadingController,
-    private alertController: AlertController
-  ) {
+  constructor() {
     // Retrieve the state passed during navigation
     const navigation = this.router.getCurrentNavigation();
     if (navigation?.extras?.state) {

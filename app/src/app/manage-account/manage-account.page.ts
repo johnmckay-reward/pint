@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { NavController, AlertController } from '@ionic/angular';
 
 @Component({
@@ -8,11 +8,9 @@ import { NavController, AlertController } from '@ionic/angular';
   standalone: false
 })
 export class ManageAccountPage {
+  private navCtrl = inject(NavController);
+  private alertController = inject(AlertController);
 
-  constructor(
-    private navCtrl: NavController,
-    private alertController: AlertController
-  ) { }
 
   /**
    * @description

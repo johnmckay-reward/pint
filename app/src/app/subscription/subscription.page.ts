@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { NavController, LoadingController, AlertController, ToastController } from '@ionic/angular';
 import { ApiService, SubscriptionStatus } from '../services/api.service';
 import { loadStripe, Stripe } from '@stripe/stripe-js';
@@ -10,17 +10,15 @@ import { loadStripe, Stripe } from '@stripe/stripe-js';
   standalone: false
 })
 export class SubscriptionPage implements OnInit {
+  private navCtrl = inject(NavController);
+  private apiService = inject(ApiService);
+  private loadingController = inject(LoadingController);
+  private alertController = inject(AlertController);
+  private toastController = inject(ToastController);
+
   subscriptionStatus: SubscriptionStatus | null = null;
   isLoading = false;
   stripe: Stripe | null = null;
-
-  constructor(
-    private navCtrl: NavController,
-    private apiService: ApiService,
-    private loadingController: LoadingController,
-    private alertController: AlertController,
-    private toastController: ToastController
-  ) { }
 
   async ngOnInit() {
     // Initialize Stripe (in production, use your publishable key)

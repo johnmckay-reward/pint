@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, inject } from '@angular/core';
 import { ApiService } from '../../services/api.service';
 
 export interface Achievement {
@@ -17,12 +17,12 @@ export interface Achievement {
   standalone: false
 })
 export class AchievementsComponent implements OnInit {
+  private apiService = inject(ApiService);
+
   @Input() userId: string = '';
   
   achievements: Achievement[] = [];
   isLoading = false;
-
-  constructor(private apiService: ApiService) { }
 
   ngOnInit() {
     if (this.userId) {

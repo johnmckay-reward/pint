@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { NavController, LoadingController, AlertController } from '@ionic/angular';
 import { AuthService } from '../services/auth.service';
 import { ApiService, User } from '../services/api.service';
@@ -10,18 +10,16 @@ import { ApiService, User } from '../services/api.service';
   standalone: false // This is not a standalone component, so we set this to false.
 })
 export class ProfilePage implements OnInit {
+  private navCtrl = inject(NavController);
+  private authService = inject(AuthService);
+  private apiService = inject(ApiService);
+  private loadingController = inject(LoadingController);
+  private alertController = inject(AlertController);
+
 
   // User data. Will be loaded from the API.
   user: User | null = null;
   isLoading = false;
-
-  constructor(
-    private navCtrl: NavController,
-    private authService: AuthService,
-    private apiService: ApiService,
-    private loadingController: LoadingController,
-    private alertController: AlertController
-  ) { }
 
   ngOnInit() {
     this.loadUserProfile();
