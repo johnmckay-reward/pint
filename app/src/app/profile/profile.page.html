@@ -19,28 +19,28 @@
 <ion-content [fullscreen]="true">
 
   <!-- Profile Header Section -->
-  <div class="profile-header ion-padding">
+  <div class="profile-header ion-padding" *ngIf="user">
     <ion-avatar class="profile-avatar">
-      <img [src]="user.avatar" />
+      <img [src]="user.profilePictureUrl || 'https://placehold.co/150x150/f4f1de/4a2c2a?text=' + (user.displayName.charAt(0).toUpperCase())" />
     </ion-avatar>
-    <h2 class="display-name">{{ user.name }}</h2>
-    <p class="favourite-tipple">"{{ user.tipple }}"</p>
+    <h2 class="display-name">{{ user.displayName }}</h2>
+    <p class="favourite-tipple">"{{ user.favouriteTipple || 'No favourite tipple set' }}"</p>
   </div>
 
   <!-- Stats Section -->
   <div class="stats-container">
     <div class="stat-item">
-      <span class="stat-value">{{ user.stats.pintsStarted }}</span>
+      <span class="stat-value">0</span>
       <span class="stat-label">Pints Started</span>
     </div>
     <div class="stat-divider"></div>
     <div class="stat-item">
-      <span class="stat-value">{{ user.stats.pintsJoined }}</span>
+      <span class="stat-value">0</span>
       <span class="stat-label">Pints Joined</span>
     </div>
     <div class="stat-divider"></div>
     <div class="stat-item">
-      <span class="stat-value">{{ user.stats.favouritePubs }}</span>
+      <span class="stat-value">0</span>
       <span class="stat-label">Fave Pubs</span>
     </div>
   </div>

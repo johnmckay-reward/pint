@@ -52,15 +52,15 @@
   <ion-list *ngIf="nearbyPints.length > 0" class="ion-no-padding">
     <ion-item *ngFor="let pint of nearbyPints" lines="full" button detail="true" (click)="viewPintSession(pint.id)">
       <ion-avatar slot="start" class="pint-avatar">
-        <img [src]="pint.initiator.avatar" />
+        <img [src]="pint.initiator.profilePictureUrl || 'https://placehold.co/80x80/4a2c2a/f4f1de?text=' + (pint.initiator.displayName.charAt(0).toUpperCase())" />
       </ion-avatar>
       <ion-label>
         <h3>{{ pint.pubName }}</h3>
-        <p>Started by {{ pint.initiator.name }}</p>
+        <p>Started by {{ pint.initiator.displayName }}</p>
       </ion-label>
       <div class="pint-details" slot="end">
-        <span class="distance">{{ pint.distance }}</span>
-        <span class="time">{{ pint.timeAgo }}</span>
+        <span class="distance">0.3 mi</span>
+        <span class="time">{{ getTimeAgo(pint.createdAt) }}</span>
       </div>
     </ion-item>
   </ion-list>

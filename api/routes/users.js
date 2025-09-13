@@ -1,7 +1,25 @@
 const express = require('express');
 const { User } = require('../models');
+const authMiddleware = require('../middleware/auth');
 
 const router = express.Router();
+
+// GET /users/me - Get the current authenticated user's profile
+router.get('/me', authMiddleware, async (req, res) => {
+  try {
+    const user = await User.findByPk(req.user.id, {
+      attributes: ['id', 'displayName', 'email', 'favouriteTipple', 'profilePictureUrl']
+    });
+
+    if (!user) {
+      return res.status(404).json({ error: 'User not found.' });
+    }
+
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to retrieve user profile', details: error.message });
+  }
+});
 
 // POST /users - Create a new user
 router.post('/', async (req, res) => {

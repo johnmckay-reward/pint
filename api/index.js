@@ -35,9 +35,9 @@ async function init() {
   await sequelize.sync({ force: true });
   console.log('All models were synchronized successfully. 🔄');
 
-  app.use('/auth', authRoutes);
-  app.use('/users', userRoutes);
-  app.use('/sessions', pintSessionRoutes);
+  app.use('/api/auth', authRoutes);
+  app.use('/api/users', userRoutes);
+  app.use('/api/sessions', pintSessionRoutes);
 
   app.get('/', (req, res) => {
     res.json({ message: 'Welcome to the Pint? API! 🍻' });

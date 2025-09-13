@@ -13,16 +13,16 @@
 
 <ion-content [fullscreen]="true">
   <!-- The Google Map takes up the top half of the screen -->
-  <div class="map-container" *ngIf="pintSession">
+  <div class="map-container" *ngIf="pintSession && getMapCenter()">
     <google-map 
-      [center]="pintSession.position" 
+      [center]="getMapCenter()!" 
       [zoom]="16" 
       width="100%" 
       height="100%">
       
       <!-- Marker for the pub -->
       <map-marker 
-        [position]="pintSession.position"
+        [position]="getMapCenter()!"
         [title]="pintSession.pubName">
       </map-marker>
 
@@ -34,10 +34,10 @@
     <ion-card class="details-card">
       <ion-item lines="none" class="initiator-item" button (click)="viewProfile(pintSession.initiator.id)">
         <ion-avatar slot="start" class="initiator-avatar">
-          <img [src]="pintSession.initiator.avatar" />
+          <img [src]="pintSession.initiator.profilePictureUrl || 'https://placehold.co/80x80/4a2c2a/f4f1de?text=' + (pintSession.initiator.displayName.charAt(0).toUpperCase())" />
         </ion-avatar>
         <ion-label>
-          <h2>{{ pintSession.initiator.name }} started a pint!</h2>
+          <h2>{{ pintSession.initiator.displayName }} started a pint!</h2>
           <p>ETA: {{ pintSession.eta }}</p>
         </ion-label>
       </ion-item>
@@ -47,10 +47,10 @@
         <div class="whos-going">
           <h3>Who's Going?</h3>
           <div class="attendee-avatars">
-            <ion-avatar *ngFor="let attendee of pintSession.attendees" class="attendee-avatar">
-              <img [src]="attendee.avatar" />
+            <ion-avatar *ngFor="let attendee of pintSession.attendees?.slice(0, 4)" class="attendee-avatar">
+              <img [src]="attendee.profilePictureUrl || 'https://placehold.co/80x80/4a2c2a/f4f1de?text=' + (attendee.displayName.charAt(0).toUpperCase())" />
             </ion-avatar>
-            <div class="attendee-count" *ngIf="pintSession.attendees.length > 4">
+            <div class="attendee-count" *ngIf="pintSession.attendees && pintSession.attendees.length > 4">
               +{{ pintSession.attendees.length - 4 }}
             </div>
           </div>
