@@ -1,6 +1,7 @@
 const express = require('express');
-const { PintSession, User, sequelize } = require('../models');
+const { PintSession, User, ChatMessage, sequelize } = require('../models');
 const authMiddleware = require('../middleware/auth');
+const { Op } = require('sequelize');
 
 const router = express.Router();
 
@@ -92,10 +93,43 @@ router.get('/nearby', async (req, res) => {
   }
 });
 
-// GET /sessions - Get a list of all sessions
+// GET /sessions - Get a list of all sessions with optional filtering
 router.get('/', async (req, res) => {
   try {
+    const { pubName, date } = req.query;
+    
+    // Build where clause based on filters
+    const whereClause = {};
+    
+    // Filter by pub name (case-insensitive partial match)
+    if (pubName && pubName.trim()) {
+      whereClause.pubName = {
+        [Op.iLike]: `%${pubName.trim()}%`
+      };
+    }
+    
+    // Filter by date (sessions created on a specific date)
+    if (date) {
+      try {
+        const filterDate = new Date(date);
+        // Set to start of day (00:00:00)
+        const startOfDay = new Date(filterDate);
+        startOfDay.setHours(0, 0, 0, 0);
+        
+        // Set to end of day (23:59:59)
+        const endOfDay = new Date(filterDate);
+        endOfDay.setHours(23, 59, 59, 999);
+        
+        whereClause.createdAt = {
+          [Op.between]: [startOfDay, endOfDay]
+        };
+      } catch (dateError) {
+        return res.status(400).json({ error: 'Invalid date format. Use YYYY-MM-DD format.' });
+      }
+    }
+
     const sessions = await PintSession.findAll({
+      where: whereClause,
       // "Eager load" the initiator's data along with each session
       include: {
         model: User,
@@ -104,7 +138,15 @@ router.get('/', async (req, res) => {
       },
       order: [['createdAt', 'DESC']] // Show newest first
     });
-    res.json(sessions);
+    
+    res.json({
+      sessions,
+      count: sessions.length,
+      filters: {
+        pubName: pubName || null,
+        date: date || null
+      }
+    });
   } catch (error) {
     res.status(500).json({ error: 'Failed to retrieve sessions', details: error.message });
   }
@@ -180,6 +222,65 @@ router.post('/:id/attendees', authMiddleware, async (req, res) => {
     res.status(200).json({ message: 'Successfully joined session!' });
   } catch (error) {
     res.status(500).json({ error: 'Failed to join session', details: error.message });
+  }
+});
+
+// GET /sessions/:id/messages - Get chat messages for a session
+router.get('/:id/messages', authMiddleware, async (req, res) => {
+  try {
+    const sessionId = req.params.id;
+    const userId = req.user.id;
+
+    // Verify the session exists
+    const session = await PintSession.findByPk(sessionId, {
+      include: {
+        model: User,
+        as: 'attendees',
+        where: { id: userId },
+        required: false
+      }
+    });
+
+    if (!session) {
+      return res.status(404).json({ error: 'Session not found' });
+    }
+
+    // Check if user is an attendee or the initiator
+    const isAttendee = session.attendees?.some(attendee => attendee.id === userId);
+    const isInitiator = session.initiatorId === userId;
+    
+    if (!isAttendee && !isInitiator) {
+      return res.status(403).json({ error: 'You are not a member of this session' });
+    }
+
+    // Get messages with pagination (optional)
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 50;
+    const offset = (page - 1) * limit;
+
+    const messages = await ChatMessage.findAll({
+      where: { sessionId },
+      include: {
+        model: User,
+        as: 'sender',
+        attributes: ['id', 'displayName', 'profilePictureUrl']
+      },
+      order: [['createdAt', 'ASC']], // Oldest first for chat display
+      limit,
+      offset
+    });
+
+    res.json({
+      messages,
+      pagination: {
+        page,
+        limit,
+        hasMore: messages.length === limit
+      }
+    });
+
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to retrieve messages', details: error.message });
   }
 });
 

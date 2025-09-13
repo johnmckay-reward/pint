@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController, AlertController, LoadingController } from '@ionic/angular';
-import { ApiService, PintSession } from '../services/api.service';
+import { ApiService, PintSession, FilteredSessionsResponse } from '../services/api.service';
 import { AuthService } from '../services/auth.service';
 
 @Component({
@@ -14,6 +14,11 @@ export class DashboardPage implements OnInit {
   // Array to hold nearby pint sessions. Initially empty.
   nearbyPints: PintSession[] = [];
   isLoading = false;
+  
+  // Filter properties
+  pubNameFilter = '';
+  dateFilter = '';
+  showFilters = false;
 
   constructor(
     private navCtrl: NavController,
@@ -29,15 +34,23 @@ export class DashboardPage implements OnInit {
 
   /**
    * @description
-   * Loads real session data from the API.
+   * Loads session data from the API with optional filtering.
    */
   async loadSessions(): Promise<void> {
     this.isLoading = true;
 
     try {
-      // Try to get sessions from the API
-      // For now, get all sessions since we don't have location services set up
-      this.nearbyPints = await this.apiService.getAllSessions().toPromise() || [];
+      // Use filtered sessions method
+      const response = await this.apiService.getFilteredSessions(
+        this.pubNameFilter || undefined,
+        this.dateFilter || undefined
+      ).toPromise();
+      
+      if (response) {
+        this.nearbyPints = response.sessions;
+      } else {
+        this.nearbyPints = [];
+      }
     } catch (error) {
       console.error('Failed to load sessions:', error);
       // Fall back to mock data if API fails
@@ -46,6 +59,29 @@ export class DashboardPage implements OnInit {
     } finally {
       this.isLoading = false;
     }
+  }
+
+  /**
+   * Apply filters and reload sessions
+   */
+  async applyFilters(): Promise<void> {
+    await this.loadSessions();
+  }
+
+  /**
+   * Clear all filters and reload sessions
+   */
+  async clearFilters(): Promise<void> {
+    this.pubNameFilter = '';
+    this.dateFilter = '';
+    await this.loadSessions();
+  }
+
+  /**
+   * Toggle filter visibility
+   */
+  toggleFilters(): void {
+    this.showFilters = !this.showFilters;
   }
 
   /**

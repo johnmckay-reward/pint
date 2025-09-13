@@ -1,6 +1,7 @@
 const express = require('express');
 const { User } = require('../models');
 const authMiddleware = require('../middleware/auth');
+const { Op } = require('sequelize');
 
 const router = express.Router();
 
@@ -40,6 +41,49 @@ router.post('/', async (req, res) => {
     res.status(201).json(newUser);
   } catch (error) {
     res.status(500).json({ error: 'Failed to create user', details: error.message });
+  }
+});
+
+// GET /users/search?query=... - Search for users by display name
+router.get('/search', authMiddleware, async (req, res) => {
+  try {
+    const { query } = req.query;
+    const currentUserId = req.user.id;
+
+    if (!query || query.trim().length < 2) {
+      return res.status(400).json({ error: 'Search query must be at least 2 characters long' });
+    }
+
+    // Search for users by display name, excluding the current user
+    const users = await User.findAll({
+      where: {
+        [Op.and]: [
+          {
+            displayName: {
+              [Op.iLike]: `%${query.trim()}%` // Case-insensitive search
+            }
+          },
+          {
+            id: {
+              [Op.ne]: currentUserId // Exclude current user
+            }
+          }
+        ]
+      },
+      attributes: ['id', 'displayName', 'profilePictureUrl'],
+      limit: 20, // Limit results to prevent large responses
+      order: [['displayName', 'ASC']]
+    });
+
+    res.json({
+      users,
+      count: users.length,
+      query: query.trim()
+    });
+
+  } catch (error) {
+    console.error('Error searching users:', error);
+    res.status(500).json({ error: 'Failed to search users', details: error.message });
   }
 });
 

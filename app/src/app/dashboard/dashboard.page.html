@@ -37,8 +37,51 @@
 
   <!-- Section 2: Nearby Pints Happening Now -->
   <div class="list-header ion-padding-horizontal">
-    <h2>Happening Nearby</h2>
-    <p class="subtitle">Updated just now</p>
+    <div class="header-content">
+      <div class="header-text">
+        <h2>Happening Nearby</h2>
+        <p class="subtitle">Updated just now</p>
+      </div>
+      <ion-button fill="clear" (click)="toggleFilters()">
+        <ion-icon name="filter-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+    </div>
+  </div>
+
+  <!-- Filter Controls -->
+  <div class="filter-section" *ngIf="showFilters">
+    <ion-card class="filter-card">
+      <ion-card-header>
+        <ion-card-title>Filter Sessions</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-item lines="none" class="filter-item">
+          <ion-label position="stacked">Pub Name</ion-label>
+          <ion-input 
+            [(ngModel)]="pubNameFilter"
+            placeholder="Search by pub name..."
+            (ionInput)="applyFilters()">
+          </ion-input>
+        </ion-item>
+
+        <ion-item lines="none" class="filter-item">
+          <ion-label position="stacked">Date</ion-label>
+          <ion-datetime 
+            [(ngModel)]="dateFilter"
+            presentation="date"
+            (ionChange)="applyFilters()"
+            placeholder="Filter by date">
+          </ion-datetime>
+        </ion-item>
+
+        <div class="filter-actions">
+          <ion-button fill="clear" color="medium" (click)="clearFilters()">
+            <ion-icon name="close" slot="start"></ion-icon>
+            Clear Filters
+          </ion-button>
+        </div>
+      </ion-card-content>
+    </ion-card>
   </div>
 
   <!-- Conditional rendering: Show message if no pints are nearby -->
