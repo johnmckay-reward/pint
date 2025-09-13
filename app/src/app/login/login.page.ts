@@ -1,5 +1,5 @@
 // src/app/pages/login/login.page.ts
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { NavController, AlertController, LoadingController } from '@ionic/angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ApiService, AuthResponse, LoginRequest } from '../services/api.service';
@@ -18,17 +18,17 @@ import { finalize } from 'rxjs/operators';
   standalone: false
 })
 export class LoginPage implements OnInit {
+  private navCtrl = inject(NavController);
+  private apiService = inject(ApiService);
+  private authService = inject(AuthService);
+  private formBuilder = inject(FormBuilder);
+  private alertController = inject(AlertController);
+  private loadingController = inject(LoadingController);
+
 
   loginForm: FormGroup;
 
-  constructor(
-    private navCtrl: NavController,
-    private apiService: ApiService,
-    private authService: AuthService,
-    private formBuilder: FormBuilder,
-    private alertController: AlertController,
-    private loadingController: LoadingController
-  ) {
+  constructor() {
     // Initialize the form group in the constructor
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
@@ -37,7 +37,8 @@ export class LoginPage implements OnInit {
   }
 
   ngOnInit() {
-    // Lifecycle hook for any additional initialization
+    // Initialize any additional setup here if needed
+    console.log('LoginPage initialized');
   }
 
   /**

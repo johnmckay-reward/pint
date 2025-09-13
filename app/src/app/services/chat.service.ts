@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable, Subject, BehaviorSubject } from 'rxjs';
 import { io, Socket } from 'socket.io-client';
 import { AuthService } from './auth.service';
@@ -24,6 +24,9 @@ export interface ChatUser {
   providedIn: 'root'
 })
 export class ChatService {
+  private authService = inject(AuthService);
+  private apiService = inject(ApiService);
+
   private socket: Socket | null = null;
   private messagesSubject = new Subject<ChatMessage>();
   private userJoinedSubject = new Subject<ChatUser>();
@@ -37,8 +40,6 @@ export class ChatService {
   userLeft$ = this.userLeftSubject.asObservable();
   error$ = this.errorSubject.asObservable();
   connected$ = this.connectedSubject.asObservable();
-
-  constructor(private authService: AuthService, private apiService: ApiService) {}
 
   /**
    * Get stored authentication response (helper method)

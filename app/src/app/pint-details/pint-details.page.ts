@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NavController, ToastController, LoadingController, AlertController } from '@ionic/angular';
 import { ApiService, PintSession } from '../services/api.service';
@@ -12,20 +12,18 @@ import { finalize } from 'rxjs/operators';
   standalone: false
 })
 export class PintDetailsPage implements OnInit {
+  private route = inject(ActivatedRoute);
+  private navCtrl = inject(NavController);
+  private toastController = inject(ToastController);
+  private apiService = inject(ApiService);
+  private authService = inject(AuthService);
+  private loadingController = inject(LoadingController);
+  private alertController = inject(AlertController);
+
 
   pintSession: PintSession | null = null;
   isLoading = false;
   isJoining = false;
-
-  constructor(
-    private route: ActivatedRoute,
-    private navCtrl: NavController,
-    private toastController: ToastController,
-    private apiService: ApiService,
-    private authService: AuthService,
-    private loadingController: LoadingController,
-    private alertController: AlertController
-  ) { }
 
   ngOnInit() {
     const pintId = this.route.snapshot.paramMap.get('pintId');

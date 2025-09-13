@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { NavController } from '@ionic/angular';
 
 @Component({
@@ -8,14 +8,12 @@ import { NavController } from '@ionic/angular';
   standalone: false
 })
 export class NotificationPreferencesPage implements OnInit {
+  private navCtrl = inject(NavController);
+
 
   // Data-bound properties for the settings
   notificationRadius: number = 5; // Default value in km
   notificationSound: string = 'default';
-
-  constructor(
-    private navCtrl: NavController
-  ) { }
 
   ngOnInit() {
     // In a real app, you would load the user's saved preferences here.

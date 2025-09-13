@@ -100,8 +100,17 @@
     </ion-card>
   </div>
 
+  <!-- Loading skeleton for dashboard -->
+  <div *ngIf="isLoading" class="ion-padding">
+    <app-skeleton-loader 
+      type="list-item" 
+      [count]="4" 
+      [animated]="true">
+    </app-skeleton-loader>
+  </div>
+
   <!-- Conditional rendering: Show enhanced empty state if no pints are nearby -->
-  <div *ngIf="nearbyPints.length === 0" class="empty-state ion-padding">
+  <div *ngIf="nearbyPints.length === 0 && !isLoading" class="empty-state ion-padding">
     <app-empty-state 
       icon="moon-outline"
       [location]="currentLocation"
@@ -111,7 +120,7 @@
   </div>
 
   <!-- List of active pint sessions with enhanced accessibility -->
-  <ion-list *ngIf="nearbyPints.length > 0" class="ion-no-padding" role="list" aria-label="Active pint sessions">
+  <ion-list *ngIf="nearbyPints.length > 0 && !isLoading" class="ion-no-padding" role="list" aria-label="Active pint sessions">
     <ion-item 
       *ngFor="let pint of nearbyPints; trackBy: trackPintById" 
       lines="full" 

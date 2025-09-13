@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { NavController } from '@ionic/angular';
 
 // Interface for a Pub object
@@ -21,14 +21,12 @@ interface Pub {
   standalone: false
 })
 export class InitiatePintPage implements OnInit {
+  private navCtrl = inject(NavController);
+
 
   mapCenter!: google.maps.LatLngLiteral;
   mapZoom = 15;
   nearbyPubs: Pub[] = [];
-
-  constructor(
-    private navCtrl: NavController
-  ) {}
 
   ngOnInit() {
     // In a real app, you'd get the user's current location.

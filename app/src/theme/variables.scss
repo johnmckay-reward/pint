@@ -183,3 +183,141 @@ body.dark *:focus {
 body.dark ion-button:focus {
   box-shadow: 0 0 0 3px rgba(236, 171, 55, 0.3);
 }
+
+/* 
+  Animation and Micro-interaction Variables
+  ---------------------------------------- 
+*/
+:root {
+  /* Animation Durations */
+  --animation-fast: 200ms;
+  --animation-normal: 300ms;
+  --animation-slow: 500ms;
+  
+  /* Animation Easings */
+  --ease-in-out: cubic-bezier(0.4, 0.0, 0.2, 1);
+  --ease-out: cubic-bezier(0.0, 0.0, 0.2, 1);
+  --ease-in: cubic-bezier(0.4, 0.0, 1, 1);
+  --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  
+  /* Micro-interaction Scales */
+  --scale-hover: 1.02;
+  --scale-active: 0.98;
+  --scale-button-active: 0.96;
+}
+
+/* 
+  Global Micro-interactions
+  ------------------------ 
+*/
+ion-card, ion-item[button], ion-button, .clickable {
+  transition: transform var(--animation-fast) var(--ease-out), 
+              box-shadow var(--animation-fast) var(--ease-out);
+}
+
+ion-card:hover, ion-item[button]:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+ion-card:active, ion-item[button]:active {
+  transform: scale(var(--scale-active));
+}
+
+ion-button:active {
+  transform: scale(var(--scale-button-active));
+}
+
+/* Enhanced focus states */
+ion-button:focus-visible, ion-item[button]:focus-visible {
+  outline: 2px solid var(--ion-color-primary);
+  outline-offset: 2px;
+  border-radius: 8px;
+}
+
+/* Page transition animations */
+.page-enter {
+  transform: translateX(100%);
+  opacity: 0;
+}
+
+.page-enter-active {
+  transform: translateX(0);
+  opacity: 1;
+  transition: transform var(--animation-normal) var(--ease-out),
+              opacity var(--animation-normal) var(--ease-out);
+}
+
+.page-leave-active {
+  transform: translateX(-30%);
+  opacity: 0;
+  transition: transform var(--animation-normal) var(--ease-in),
+              opacity var(--animation-normal) var(--ease-in);
+}
+
+/* List item animations */
+.list-item-enter {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.list-item-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity var(--animation-normal) var(--ease-out),
+              transform var(--animation-normal) var(--ease-out);
+}
+
+/* Button ripple effect enhancement */
+ion-button {
+  overflow: hidden;
+  position: relative;
+}
+
+/* Loading state animations */
+.loading-fade-in {
+  animation: fadeIn var(--animation-normal) var(--ease-out);
+}
+
+.loading-fade-out {
+  animation: fadeOut var(--animation-normal) var(--ease-in);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}
+
+/* Success feedback animation */
+.success-bounce {
+  animation: successBounce var(--animation-slow) var(--ease-bounce);
+}
+
+@keyframes successBounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
+}

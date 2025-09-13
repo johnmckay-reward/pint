@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Haptics, ImpactStyle } from '@capacitor/haptics';
 import { Platform } from '@ionic/angular';
 
@@ -8,9 +8,11 @@ export type HapticType = 'light' | 'medium' | 'heavy' | 'success' | 'warning' | 
   providedIn: 'root'
 })
 export class HapticService {
+  private platform = inject(Platform);
+
   private isSupported = false;
 
-  constructor(private platform: Platform) {
+  constructor() {
     this.checkSupport();
   }
 

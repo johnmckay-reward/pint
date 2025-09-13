@@ -10,7 +10,30 @@
     "grep": {},
     "grepInvert": null,
     "maxFailures": 0,
-    "metadata": {},
+    "metadata": {
+      "ci": {
+        "commitHref": "https://github.com/johnmckay-reward/pint/commit/a1d85bfc94127e050a77d76d97417567d431f6cd",
+        "commitHash": "a1d85bfc94127e050a77d76d97417567d431f6cd",
+        "buildHref": "https://github.com/johnmckay-reward/pint/actions/runs/17701820756"
+      },
+      "gitCommit": {
+        "shortHash": "c4393fa",
+        "hash": "c4393fab89e695a90af37a99a9cac703c2f2379e",
+        "subject": "Implement Phase 7 UX enhancements: Skeleton loaders, haptic feedback, animations, and accessibility",
+        "body": "Implement Phase 7 UX enhancements: Skeleton loaders, haptic feedback, animations, and accessibility\n\nCo-authored-by: johnmckay-reward <6376610+johnmckay-reward@users.noreply.github.com>\n",
+        "author": {
+          "name": "copilot-swe-agent[bot]",
+          "email": "198982749+Copilot@users.noreply.github.com",
+          "time": 1757797624000
+        },
+        "committer": {
+          "name": "copilot-swe-agent[bot]",
+          "email": "198982749+Copilot@users.noreply.github.com",
+          "time": 1757797624000
+        },
+        "branch": "copilot/fix-25"
+      }
+    },
     "preserveOutput": "always",
     "reporter": [
       [
@@ -34,7 +57,30 @@
         "outputDir": "/home/runner/work/pint/pint/app/test-results",
         "repeatEach": 1,
         "retries": 2,
-        "metadata": {},
+        "metadata": {
+          "ci": {
+            "commitHref": "https://github.com/johnmckay-reward/pint/commit/a1d85bfc94127e050a77d76d97417567d431f6cd",
+            "commitHash": "a1d85bfc94127e050a77d76d97417567d431f6cd",
+            "buildHref": "https://github.com/johnmckay-reward/pint/actions/runs/17701820756"
+          },
+          "gitCommit": {
+            "shortHash": "c4393fa",
+            "hash": "c4393fab89e695a90af37a99a9cac703c2f2379e",
+            "subject": "Implement Phase 7 UX enhancements: Skeleton loaders, haptic feedback, animations, and accessibility",
+            "body": "Implement Phase 7 UX enhancements: Skeleton loaders, haptic feedback, animations, and accessibility\n\nCo-authored-by: johnmckay-reward <6376610+johnmckay-reward@users.noreply.github.com>\n",
+            "author": {
+              "name": "copilot-swe-agent[bot]",
+              "email": "198982749+Copilot@users.noreply.github.com",
+              "time": 1757797624000
+            },
+            "committer": {
+              "name": "copilot-swe-agent[bot]",
+              "email": "198982749+Copilot@users.noreply.github.com",
+              "time": 1757797624000
+            },
+            "branch": "copilot/fix-25"
+          }
+        },
         "id": "chromium-desktop",
         "name": "chromium-desktop",
         "testDir": "/home/runner/work/pint/pint/app/e2e",
@@ -48,7 +94,30 @@
         "outputDir": "/home/runner/work/pint/pint/app/test-results",
         "repeatEach": 1,
         "retries": 2,
-        "metadata": {},
+        "metadata": {
+          "ci": {
+            "commitHref": "https://github.com/johnmckay-reward/pint/commit/a1d85bfc94127e050a77d76d97417567d431f6cd",
+            "commitHash": "a1d85bfc94127e050a77d76d97417567d431f6cd",
+            "buildHref": "https://github.com/johnmckay-reward/pint/actions/runs/17701820756"
+          },
+          "gitCommit": {
+            "shortHash": "c4393fa",
+            "hash": "c4393fab89e695a90af37a99a9cac703c2f2379e",
+            "subject": "Implement Phase 7 UX enhancements: Skeleton loaders, haptic feedback, animations, and accessibility",
+            "body": "Implement Phase 7 UX enhancements: Skeleton loaders, haptic feedback, animations, and accessibility\n\nCo-authored-by: johnmckay-reward <6376610+johnmckay-reward@users.noreply.github.com>\n",
+            "author": {
+              "name": "copilot-swe-agent[bot]",
+              "email": "198982749+Copilot@users.noreply.github.com",
+              "time": 1757797624000
+            },
+            "committer": {
+              "name": "copilot-swe-agent[bot]",
+              "email": "198982749+Copilot@users.noreply.github.com",
+              "time": 1757797624000
+            },
+            "branch": "copilot/fix-25"
+          }
+        },
         "id": "firefox-desktop",
         "name": "firefox-desktop",
         "testDir": "/home/runner/work/pint/pint/app/e2e",
@@ -62,7 +131,30 @@
         "outputDir": "/home/runner/work/pint/pint/app/test-results",
         "repeatEach": 1,
         "retries": 2,
-        "metadata": {},
+        "metadata": {
+          "ci": {
+            "commitHref": "https://github.com/johnmckay-reward/pint/commit/a1d85bfc94127e050a77d76d97417567d431f6cd",
+            "commitHash": "a1d85bfc94127e050a77d76d97417567d431f6cd",
+            "buildHref": "https://github.com/johnmckay-reward/pint/actions/runs/17701820756"
+          },
+          "gitCommit": {
+            "shortHash": "c4393fa",
+            "hash": "c4393fab89e695a90af37a99a9cac703c2f2379e",
+            "subject": "Implement Phase 7 UX enhancements: Skeleton loaders, haptic feedback, animations, and accessibility",
+            "body": "Implement Phase 7 UX enhancements: Skeleton loaders, haptic feedback, animations, and accessibility\n\nCo-authored-by: johnmckay-reward <6376610+johnmckay-reward@users.noreply.github.com>\n",
+            "author": {
+              "name": "copilot-swe-agent[bot]",
+              "email": "198982749+Copilot@users.noreply.github.com",
+              "time": 1757797624000
+            },
+            "committer": {
+              "name": "copilot-swe-agent[bot]",
+              "email": "198982749+Copilot@users.noreply.github.com",
+              "time": 1757797624000
+            },
+            "branch": "copilot/fix-25"
+          }
+        },
         "id": "webkit-desktop",
         "name": "webkit-desktop",
         "testDir": "/home/runner/work/pint/pint/app/e2e",
@@ -76,7 +168,30 @@
         "outputDir": "/home/runner/work/pint/pint/app/test-results",
         "repeatEach": 1,
         "retries": 2,
-        "metadata": {},
+        "metadata": {
+          "ci": {
+            "commitHref": "https://github.com/johnmckay-reward/pint/commit/a1d85bfc94127e050a77d76d97417567d431f6cd",
+            "commitHash": "a1d85bfc94127e050a77d76d97417567d431f6cd",
+            "buildHref": "https://github.com/johnmckay-reward/pint/actions/runs/17701820756"
+          },
+          "gitCommit": {
+            "shortHash": "c4393fa",
+            "hash": "c4393fab89e695a90af37a99a9cac703c2f2379e",
+            "subject": "Implement Phase 7 UX enhancements: Skeleton loaders, haptic feedback, animations, and accessibility",
+            "body": "Implement Phase 7 UX enhancements: Skeleton loaders, haptic feedback, animations, and accessibility\n\nCo-authored-by: johnmckay-reward <6376610+johnmckay-reward@users.noreply.github.com>\n",
+            "author": {
+              "name": "copilot-swe-agent[bot]",
+              "email": "198982749+Copilot@users.noreply.github.com",
+              "time": 1757797624000
+            },
+            "committer": {
+              "name": "copilot-swe-agent[bot]",
+              "email": "198982749+Copilot@users.noreply.github.com",
+              "time": 1757797624000
+            },
+            "branch": "copilot/fix-25"
+          }
+        },
         "id": "mobile-chrome",
         "name": "mobile-chrome",
         "testDir": "/home/runner/work/pint/pint/app/e2e",
@@ -90,7 +205,30 @@
         "outputDir": "/home/runner/work/pint/pint/app/test-results",
         "repeatEach": 1,
         "retries": 2,
-        "metadata": {},
+        "metadata": {
+          "ci": {
+            "commitHref": "https://github.com/johnmckay-reward/pint/commit/a1d85bfc94127e050a77d76d97417567d431f6cd",
+            "commitHash": "a1d85bfc94127e050a77d76d97417567d431f6cd",
+            "buildHref": "https://github.com/johnmckay-reward/pint/actions/runs/17701820756"
+          },
+          "gitCommit": {
+            "shortHash": "c4393fa",
+            "hash": "c4393fab89e695a90af37a99a9cac703c2f2379e",
+            "subject": "Implement Phase 7 UX enhancements: Skeleton loaders, haptic feedback, animations, and accessibility",
+            "body": "Implement Phase 7 UX enhancements: Skeleton loaders, haptic feedback, animations, and accessibility\n\nCo-authored-by: johnmckay-reward <6376610+johnmckay-reward@users.noreply.github.com>\n",
+            "author": {
+              "name": "copilot-swe-agent[bot]",
+              "email": "198982749+Copilot@users.noreply.github.com",
+              "time": 1757797624000
+            },
+            "committer": {
+              "name": "copilot-swe-agent[bot]",
+              "email": "198982749+Copilot@users.noreply.github.com",
+              "time": 1757797624000
+            },
+            "branch": "copilot/fix-25"
+          }
+        },
         "id": "mobile-safari",
         "name": "mobile-safari",
         "testDir": "/home/runner/work/pint/pint/app/e2e",
@@ -104,7 +242,30 @@
         "outputDir": "/home/runner/work/pint/pint/app/test-results",
         "repeatEach": 1,
         "retries": 2,
-        "metadata": {},
+        "metadata": {
+          "ci": {
+            "commitHref": "https://github.com/johnmckay-reward/pint/commit/a1d85bfc94127e050a77d76d97417567d431f6cd",
+            "commitHash": "a1d85bfc94127e050a77d76d97417567d431f6cd",
+            "buildHref": "https://github.com/johnmckay-reward/pint/actions/runs/17701820756"
+          },
+          "gitCommit": {
+            "shortHash": "c4393fa",
+            "hash": "c4393fab89e695a90af37a99a9cac703c2f2379e",
+            "subject": "Implement Phase 7 UX enhancements: Skeleton loaders, haptic feedback, animations, and accessibility",
+            "body": "Implement Phase 7 UX enhancements: Skeleton loaders, haptic feedback, animations, and accessibility\n\nCo-authored-by: johnmckay-reward <6376610+johnmckay-reward@users.noreply.github.com>\n",
+            "author": {
+              "name": "copilot-swe-agent[bot]",
+              "email": "198982749+Copilot@users.noreply.github.com",
+              "time": 1757797624000
+            },
+            "committer": {
+              "name": "copilot-swe-agent[bot]",
+              "email": "198982749+Copilot@users.noreply.github.com",
+              "time": 1757797624000
+            },
+            "branch": "copilot/fix-25"
+          }
+        },
         "id": "tablet-ipad",
         "name": "tablet-ipad",
         "testDir": "/home/runner/work/pint/pint/app/e2e",
@@ -118,7 +279,30 @@
         "outputDir": "/home/runner/work/pint/pint/app/test-results",
         "repeatEach": 1,
         "retries": 2,
-        "metadata": {},
+        "metadata": {
+          "ci": {
+            "commitHref": "https://github.com/johnmckay-reward/pint/commit/a1d85bfc94127e050a77d76d97417567d431f6cd",
+            "commitHash": "a1d85bfc94127e050a77d76d97417567d431f6cd",
+            "buildHref": "https://github.com/johnmckay-reward/pint/actions/runs/17701820756"
+          },
+          "gitCommit": {
+            "shortHash": "c4393fa",
+            "hash": "c4393fab89e695a90af37a99a9cac703c2f2379e",
+            "subject": "Implement Phase 7 UX enhancements: Skeleton loaders, haptic feedback, animations, and accessibility",
+            "body": "Implement Phase 7 UX enhancements: Skeleton loaders, haptic feedback, animations, and accessibility\n\nCo-authored-by: johnmckay-reward <6376610+johnmckay-reward@users.noreply.github.com>\n",
+            "author": {
+              "name": "copilot-swe-agent[bot]",
+              "email": "198982749+Copilot@users.noreply.github.com",
+              "time": 1757797624000
+            },
+            "committer": {
+              "name": "copilot-swe-agent[bot]",
+              "email": "198982749+Copilot@users.noreply.github.com",
+              "time": 1757797624000
+            },
+            "branch": "copilot/fix-25"
+          }
+        },
         "id": "edge-desktop",
         "name": "edge-desktop",
         "testDir": "/home/runner/work/pint/pint/app/e2e",
@@ -136,2312 +320,18 @@
     "workers": 1,
     "webServer": null
   },
-  "suites": [
+  "suites": [],
+  "errors": [
     {
-      "title": "critical-flows.spec.ts",
-      "file": "critical-flows.spec.ts",
-      "column": 0,
-      "line": 0,
-      "specs": [],
-      "suites": [
-        {
-          "title": "Pint App - Critical User Flows",
-          "file": "critical-flows.spec.ts",
-          "line": 3,
-          "column": 6,
-          "specs": [
-            {
-              "title": "should display homepage and allow navigation",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "chromium-desktop",
-                  "projectName": "chromium-desktop",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "542ce40c4d5a94d1bfd5-4c3cc844faacc010196b",
-              "file": "critical-flows.spec.ts",
-              "line": 4,
-              "column": 7
-            },
-            {
-              "title": "should allow user registration flow",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "chromium-desktop",
-                  "projectName": "chromium-desktop",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "542ce40c4d5a94d1bfd5-809d94ef4cd9bd6bd74f",
-              "file": "critical-flows.spec.ts",
-              "line": 14,
-              "column": 7
-            },
-            {
-              "title": "should allow user login flow",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "chromium-desktop",
-                  "projectName": "chromium-desktop",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "542ce40c4d5a94d1bfd5-a602e0b3f97bc4d9ad62",
-              "file": "critical-flows.spec.ts",
-              "line": 23,
-              "column": 7
-            },
-            {
-              "title": "should display dashboard when logged in",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "chromium-desktop",
-                  "projectName": "chromium-desktop",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "542ce40c4d5a94d1bfd5-a72fe410c497c7dca337",
-              "file": "critical-flows.spec.ts",
-              "line": 32,
-              "column": 7
-            },
-            {
-              "title": "should handle session creation flow",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "chromium-desktop",
-                  "projectName": "chromium-desktop",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "542ce40c4d5a94d1bfd5-ed5a1ec92d3a405666e8",
-              "file": "critical-flows.spec.ts",
-              "line": 42,
-              "column": 7
-            },
-            {
-              "title": "should display homepage and allow navigation",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "firefox-desktop",
-                  "projectName": "firefox-desktop",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "542ce40c4d5a94d1bfd5-c18fa915ef97f4b9a29b",
-              "file": "critical-flows.spec.ts",
-              "line": 4,
-              "column": 7
-            },
-            {
-              "title": "should allow user registration flow",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "firefox-desktop",
-                  "projectName": "firefox-desktop",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "542ce40c4d5a94d1bfd5-d7e10830427e64a33f9f",
-              "file": "critical-flows.spec.ts",
-              "line": 14,
-              "column": 7
-            },
-            {
-              "title": "should allow user login flow",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "firefox-desktop",
-                  "projectName": "firefox-desktop",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "542ce40c4d5a94d1bfd5-4623d3732b46adbfd8fc",
-              "file": "critical-flows.spec.ts",
-              "line": 23,
-              "column": 7
-            },
-            {
-              "title": "should display dashboard when logged in",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "firefox-desktop",
-                  "projectName": "firefox-desktop",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "542ce40c4d5a94d1bfd5-1d9e19cfc2a0cd28c4b5",
-              "file": "critical-flows.spec.ts",
-              "line": 32,
-              "column": 7
-            },
-            {
-              "title": "should handle session creation flow",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "firefox-desktop",
-                  "projectName": "firefox-desktop",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "542ce40c4d5a94d1bfd5-e38c18359bcc26d838c6",
-              "file": "critical-flows.spec.ts",
-              "line": 42,
-              "column": 7
-            },
-            {
-              "title": "should display homepage and allow navigation",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "webkit-desktop",
-                  "projectName": "webkit-desktop",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "542ce40c4d5a94d1bfd5-700dfdbb1ea78c6ca573",
-              "file": "critical-flows.spec.ts",
-              "line": 4,
-              "column": 7
-            },
-            {
-              "title": "should allow user registration flow",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "webkit-desktop",
-                  "projectName": "webkit-desktop",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "542ce40c4d5a94d1bfd5-bf13151d5ede11c1bab5",
-              "file": "critical-flows.spec.ts",
-              "line": 14,
-              "column": 7
-            },
-            {
-              "title": "should allow user login flow",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "webkit-desktop",
-                  "projectName": "webkit-desktop",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "542ce40c4d5a94d1bfd5-4c8623689937844c597b",
-              "file": "critical-flows.spec.ts",
-              "line": 23,
-              "column": 7
-            },
-            {
-              "title": "should display dashboard when logged in",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "webkit-desktop",
-                  "projectName": "webkit-desktop",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "542ce40c4d5a94d1bfd5-71f6a561e63b40bb4190",
-              "file": "critical-flows.spec.ts",
-              "line": 32,
-              "column": 7
-            },
-            {
-              "title": "should handle session creation flow",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "webkit-desktop",
-                  "projectName": "webkit-desktop",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "542ce40c4d5a94d1bfd5-3db54260d0ea29133495",
-              "file": "critical-flows.spec.ts",
-              "line": 42,
-              "column": 7
-            },
-            {
-              "title": "should display homepage and allow navigation",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "mobile-chrome",
-                  "projectName": "mobile-chrome",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "542ce40c4d5a94d1bfd5-5759524d7e40567b010d",
-              "file": "critical-flows.spec.ts",
-              "line": 4,
-              "column": 7
-            },
-            {
-              "title": "should allow user registration flow",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "mobile-chrome",
-                  "projectName": "mobile-chrome",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "542ce40c4d5a94d1bfd5-b549c26e0c9a11f2b697",
-              "file": "critical-flows.spec.ts",
-              "line": 14,
-              "column": 7
-            },
-            {
-              "title": "should allow user login flow",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "mobile-chrome",
-                  "projectName": "mobile-chrome",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "542ce40c4d5a94d1bfd5-9abf4a275e9c376e0569",
-              "file": "critical-flows.spec.ts",
-              "line": 23,
-              "column": 7
-            },
-            {
-              "title": "should display dashboard when logged in",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "mobile-chrome",
-                  "projectName": "mobile-chrome",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "542ce40c4d5a94d1bfd5-2dbb040901f4e7f70dc5",
-              "file": "critical-flows.spec.ts",
-              "line": 32,
-              "column": 7
-            },
-            {
-              "title": "should handle session creation flow",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "mobile-chrome",
-                  "projectName": "mobile-chrome",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "542ce40c4d5a94d1bfd5-666ddf0ef92adf19d081",
-              "file": "critical-flows.spec.ts",
-              "line": 42,
-              "column": 7
-            },
-            {
-              "title": "should display homepage and allow navigation",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "mobile-safari",
-                  "projectName": "mobile-safari",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "542ce40c4d5a94d1bfd5-e464ecd983c0be491862",
-              "file": "critical-flows.spec.ts",
-              "line": 4,
-              "column": 7
-            },
-            {
-              "title": "should allow user registration flow",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "mobile-safari",
-                  "projectName": "mobile-safari",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "542ce40c4d5a94d1bfd5-24fcefaa7b4000dd5a83",
-              "file": "critical-flows.spec.ts",
-              "line": 14,
-              "column": 7
-            },
-            {
-              "title": "should allow user login flow",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "mobile-safari",
-                  "projectName": "mobile-safari",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "542ce40c4d5a94d1bfd5-f099cbd20e3d41e577e1",
-              "file": "critical-flows.spec.ts",
-              "line": 23,
-              "column": 7
-            },
-            {
-              "title": "should display dashboard when logged in",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "mobile-safari",
-                  "projectName": "mobile-safari",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "542ce40c4d5a94d1bfd5-1571fa1c06d44583bdf9",
-              "file": "critical-flows.spec.ts",
-              "line": 32,
-              "column": 7
-            },
-            {
-              "title": "should handle session creation flow",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "mobile-safari",
-                  "projectName": "mobile-safari",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "542ce40c4d5a94d1bfd5-65e166ef9ebea5b95e3c",
-              "file": "critical-flows.spec.ts",
-              "line": 42,
-              "column": 7
-            },
-            {
-              "title": "should display homepage and allow navigation",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "tablet-ipad",
-                  "projectName": "tablet-ipad",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "542ce40c4d5a94d1bfd5-d4b99ff38de3d9aed255",
-              "file": "critical-flows.spec.ts",
-              "line": 4,
-              "column": 7
-            },
-            {
-              "title": "should allow user registration flow",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "tablet-ipad",
-                  "projectName": "tablet-ipad",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "542ce40c4d5a94d1bfd5-de7ab838602e643061e4",
-              "file": "critical-flows.spec.ts",
-              "line": 14,
-              "column": 7
-            },
-            {
-              "title": "should allow user login flow",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "tablet-ipad",
-                  "projectName": "tablet-ipad",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "542ce40c4d5a94d1bfd5-f34629db19f1b169e5e0",
-              "file": "critical-flows.spec.ts",
-              "line": 23,
-              "column": 7
-            },
-            {
-              "title": "should display dashboard when logged in",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "tablet-ipad",
-                  "projectName": "tablet-ipad",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "542ce40c4d5a94d1bfd5-60e3deb5a097cc82e0ff",
-              "file": "critical-flows.spec.ts",
-              "line": 32,
-              "column": 7
-            },
-            {
-              "title": "should handle session creation flow",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "tablet-ipad",
-                  "projectName": "tablet-ipad",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "542ce40c4d5a94d1bfd5-6e8818a4b3d51744e214",
-              "file": "critical-flows.spec.ts",
-              "line": 42,
-              "column": 7
-            },
-            {
-              "title": "should display homepage and allow navigation",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "edge-desktop",
-                  "projectName": "edge-desktop",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "542ce40c4d5a94d1bfd5-c8b5b0a69e72172fa95e",
-              "file": "critical-flows.spec.ts",
-              "line": 4,
-              "column": 7
-            },
-            {
-              "title": "should allow user registration flow",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "edge-desktop",
-                  "projectName": "edge-desktop",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "542ce40c4d5a94d1bfd5-f3335e9ade8ba7a879a8",
-              "file": "critical-flows.spec.ts",
-              "line": 14,
-              "column": 7
-            },
-            {
-              "title": "should allow user login flow",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "edge-desktop",
-                  "projectName": "edge-desktop",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "542ce40c4d5a94d1bfd5-9a3f6e6c6297a0ff07a2",
-              "file": "critical-flows.spec.ts",
-              "line": 23,
-              "column": 7
-            },
-            {
-              "title": "should display dashboard when logged in",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "edge-desktop",
-                  "projectName": "edge-desktop",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "542ce40c4d5a94d1bfd5-120dc264da014c466e4a",
-              "file": "critical-flows.spec.ts",
-              "line": 32,
-              "column": 7
-            },
-            {
-              "title": "should handle session creation flow",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "edge-desktop",
-                  "projectName": "edge-desktop",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "542ce40c4d5a94d1bfd5-46cc92d7d3a5655787c8",
-              "file": "critical-flows.spec.ts",
-              "line": 42,
-              "column": 7
-            }
-          ]
-        },
-        {
-          "title": "Performance and Accessibility",
-          "file": "critical-flows.spec.ts",
-          "line": 50,
-          "column": 6,
-          "specs": [
-            {
-              "title": "should meet basic performance standards",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "chromium-desktop",
-                  "projectName": "chromium-desktop",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "542ce40c4d5a94d1bfd5-cfdd5b6390a6648a15ed",
-              "file": "critical-flows.spec.ts",
-              "line": 51,
-              "column": 7
-            },
-            {
-              "title": "should be responsive on mobile viewport",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "chromium-desktop",
-                  "projectName": "chromium-desktop",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "542ce40c4d5a94d1bfd5-505c93617014d9409379",
-              "file": "critical-flows.spec.ts",
-              "line": 63,
-              "column": 7
-            },
-            {
-              "title": "should meet basic performance standards",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "firefox-desktop",
-                  "projectName": "firefox-desktop",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "542ce40c4d5a94d1bfd5-34d2341e036ca188f744",
-              "file": "critical-flows.spec.ts",
-              "line": 51,
-              "column": 7
-            },
-            {
-              "title": "should be responsive on mobile viewport",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "firefox-desktop",
-                  "projectName": "firefox-desktop",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "542ce40c4d5a94d1bfd5-12b64cede9ca7754a792",
-              "file": "critical-flows.spec.ts",
-              "line": 63,
-              "column": 7
-            },
-            {
-              "title": "should meet basic performance standards",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "webkit-desktop",
-                  "projectName": "webkit-desktop",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "542ce40c4d5a94d1bfd5-3e9bd20a17e00e426388",
-              "file": "critical-flows.spec.ts",
-              "line": 51,
-              "column": 7
-            },
-            {
-              "title": "should be responsive on mobile viewport",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "webkit-desktop",
-                  "projectName": "webkit-desktop",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "542ce40c4d5a94d1bfd5-9807af7ea0f41383f20c",
-              "file": "critical-flows.spec.ts",
-              "line": 63,
-              "column": 7
-            },
-            {
-              "title": "should meet basic performance standards",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "mobile-chrome",
-                  "projectName": "mobile-chrome",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "542ce40c4d5a94d1bfd5-588eef32eab9e3185364",
-              "file": "critical-flows.spec.ts",
-              "line": 51,
-              "column": 7
-            },
-            {
-              "title": "should be responsive on mobile viewport",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "mobile-chrome",
-                  "projectName": "mobile-chrome",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "542ce40c4d5a94d1bfd5-0dd207564403f3f1b9ef",
-              "file": "critical-flows.spec.ts",
-              "line": 63,
-              "column": 7
-            },
-            {
-              "title": "should meet basic performance standards",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "mobile-safari",
-                  "projectName": "mobile-safari",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "542ce40c4d5a94d1bfd5-7cd3845e0e32275c8117",
-              "file": "critical-flows.spec.ts",
-              "line": 51,
-              "column": 7
-            },
-            {
-              "title": "should be responsive on mobile viewport",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "mobile-safari",
-                  "projectName": "mobile-safari",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "542ce40c4d5a94d1bfd5-837d8dcb6e627311d5aa",
-              "file": "critical-flows.spec.ts",
-              "line": 63,
-              "column": 7
-            },
-            {
-              "title": "should meet basic performance standards",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "tablet-ipad",
-                  "projectName": "tablet-ipad",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "542ce40c4d5a94d1bfd5-a5ddc9434b69982f0252",
-              "file": "critical-flows.spec.ts",
-              "line": 51,
-              "column": 7
-            },
-            {
-              "title": "should be responsive on mobile viewport",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "tablet-ipad",
-                  "projectName": "tablet-ipad",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "542ce40c4d5a94d1bfd5-b2e13bce9eabfc41547b",
-              "file": "critical-flows.spec.ts",
-              "line": 63,
-              "column": 7
-            },
-            {
-              "title": "should meet basic performance standards",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "edge-desktop",
-                  "projectName": "edge-desktop",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "542ce40c4d5a94d1bfd5-1b5a26e6540d1d134ba2",
-              "file": "critical-flows.spec.ts",
-              "line": 51,
-              "column": 7
-            },
-            {
-              "title": "should be responsive on mobile viewport",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "edge-desktop",
-                  "projectName": "edge-desktop",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "542ce40c4d5a94d1bfd5-dd426b1a798f38552c92",
-              "file": "critical-flows.spec.ts",
-              "line": 63,
-              "column": 7
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "title": "master-business-flow.spec.ts",
-      "file": "master-business-flow.spec.ts",
-      "column": 0,
-      "line": 0,
-      "specs": [],
-      "suites": [
-        {
-          "title": "Master Business Flow - Full Platform Integration",
-          "file": "master-business-flow.spec.ts",
-          "line": 18,
-          "column": 6,
-          "specs": [
-            {
-              "title": "Complete business lifecycle from discovery to user interaction",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "chromium-desktop",
-                  "projectName": "chromium-desktop",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "2db288afed6853b5be09-8afa57031e8341bf80ae",
-              "file": "master-business-flow.spec.ts",
-              "line": 66,
-              "column": 7
-            },
-            {
-              "title": "Pub owner registration and onboarding flow",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "chromium-desktop",
-                  "projectName": "chromium-desktop",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "2db288afed6853b5be09-ca76696f16476455171b",
-              "file": "master-business-flow.spec.ts",
-              "line": 312,
-              "column": 7
-            },
-            {
-              "title": "Admin dashboard functionality",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "chromium-desktop",
-                  "projectName": "chromium-desktop",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "2db288afed6853b5be09-c34bb29a95490a2345e4",
-              "file": "master-business-flow.spec.ts",
-              "line": 323,
-              "column": 7
-            },
-            {
-              "title": "User app session management",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "chromium-desktop",
-                  "projectName": "chromium-desktop",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "2db288afed6853b5be09-24c286e94d095b91d2f4",
-              "file": "master-business-flow.spec.ts",
-              "line": 334,
-              "column": 7
-            },
-            {
-              "title": "Complete business lifecycle from discovery to user interaction",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "firefox-desktop",
-                  "projectName": "firefox-desktop",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "2db288afed6853b5be09-9228ddb482aa45d0ea16",
-              "file": "master-business-flow.spec.ts",
-              "line": 66,
-              "column": 7
-            },
-            {
-              "title": "Pub owner registration and onboarding flow",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "firefox-desktop",
-                  "projectName": "firefox-desktop",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "2db288afed6853b5be09-7e2d30ad01cb983e6114",
-              "file": "master-business-flow.spec.ts",
-              "line": 312,
-              "column": 7
-            },
-            {
-              "title": "Admin dashboard functionality",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "firefox-desktop",
-                  "projectName": "firefox-desktop",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "2db288afed6853b5be09-ebf102290718dca1a65b",
-              "file": "master-business-flow.spec.ts",
-              "line": 323,
-              "column": 7
-            },
-            {
-              "title": "User app session management",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "firefox-desktop",
-                  "projectName": "firefox-desktop",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "2db288afed6853b5be09-e251a65dd3a6e802d467",
-              "file": "master-business-flow.spec.ts",
-              "line": 334,
-              "column": 7
-            },
-            {
-              "title": "Complete business lifecycle from discovery to user interaction",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "webkit-desktop",
-                  "projectName": "webkit-desktop",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "2db288afed6853b5be09-c3bccd8312a1e6cad750",
-              "file": "master-business-flow.spec.ts",
-              "line": 66,
-              "column": 7
-            },
-            {
-              "title": "Pub owner registration and onboarding flow",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "webkit-desktop",
-                  "projectName": "webkit-desktop",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "2db288afed6853b5be09-8408010cb6618694ca89",
-              "file": "master-business-flow.spec.ts",
-              "line": 312,
-              "column": 7
-            },
-            {
-              "title": "Admin dashboard functionality",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "webkit-desktop",
-                  "projectName": "webkit-desktop",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "2db288afed6853b5be09-4fc3ddab466e2d725a8a",
-              "file": "master-business-flow.spec.ts",
-              "line": 323,
-              "column": 7
-            },
-            {
-              "title": "User app session management",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "webkit-desktop",
-                  "projectName": "webkit-desktop",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "2db288afed6853b5be09-6639261034792b79ead6",
-              "file": "master-business-flow.spec.ts",
-              "line": 334,
-              "column": 7
-            },
-            {
-              "title": "Complete business lifecycle from discovery to user interaction",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "mobile-chrome",
-                  "projectName": "mobile-chrome",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "2db288afed6853b5be09-ae074b7a24c4ad70c16f",
-              "file": "master-business-flow.spec.ts",
-              "line": 66,
-              "column": 7
-            },
-            {
-              "title": "Pub owner registration and onboarding flow",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "mobile-chrome",
-                  "projectName": "mobile-chrome",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "2db288afed6853b5be09-457ff9daca2cda550f02",
-              "file": "master-business-flow.spec.ts",
-              "line": 312,
-              "column": 7
-            },
-            {
-              "title": "Admin dashboard functionality",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "mobile-chrome",
-                  "projectName": "mobile-chrome",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "2db288afed6853b5be09-ef4490e55b1ace02d548",
-              "file": "master-business-flow.spec.ts",
-              "line": 323,
-              "column": 7
-            },
-            {
-              "title": "User app session management",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "mobile-chrome",
-                  "projectName": "mobile-chrome",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "2db288afed6853b5be09-78268705717a789f1ea9",
-              "file": "master-business-flow.spec.ts",
-              "line": 334,
-              "column": 7
-            },
-            {
-              "title": "Complete business lifecycle from discovery to user interaction",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "mobile-safari",
-                  "projectName": "mobile-safari",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "2db288afed6853b5be09-88a6f2fc91ac0c91af8b",
-              "file": "master-business-flow.spec.ts",
-              "line": 66,
-              "column": 7
-            },
-            {
-              "title": "Pub owner registration and onboarding flow",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "mobile-safari",
-                  "projectName": "mobile-safari",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "2db288afed6853b5be09-e986acff636bd497b063",
-              "file": "master-business-flow.spec.ts",
-              "line": 312,
-              "column": 7
-            },
-            {
-              "title": "Admin dashboard functionality",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "mobile-safari",
-                  "projectName": "mobile-safari",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "2db288afed6853b5be09-f2fa648a750ec8dd4fce",
-              "file": "master-business-flow.spec.ts",
-              "line": 323,
-              "column": 7
-            },
-            {
-              "title": "User app session management",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "mobile-safari",
-                  "projectName": "mobile-safari",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "2db288afed6853b5be09-e17ae5a6fa26a24cbe98",
-              "file": "master-business-flow.spec.ts",
-              "line": 334,
-              "column": 7
-            },
-            {
-              "title": "Complete business lifecycle from discovery to user interaction",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "tablet-ipad",
-                  "projectName": "tablet-ipad",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "2db288afed6853b5be09-d49fbc0978915b6a995d",
-              "file": "master-business-flow.spec.ts",
-              "line": 66,
-              "column": 7
-            },
-            {
-              "title": "Pub owner registration and onboarding flow",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "tablet-ipad",
-                  "projectName": "tablet-ipad",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "2db288afed6853b5be09-4826694469fc42e7c710",
-              "file": "master-business-flow.spec.ts",
-              "line": 312,
-              "column": 7
-            },
-            {
-              "title": "Admin dashboard functionality",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "tablet-ipad",
-                  "projectName": "tablet-ipad",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "2db288afed6853b5be09-b929415aa10d0c9df408",
-              "file": "master-business-flow.spec.ts",
-              "line": 323,
-              "column": 7
-            },
-            {
-              "title": "User app session management",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "tablet-ipad",
-                  "projectName": "tablet-ipad",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "2db288afed6853b5be09-00752c2efe80ce1a84bb",
-              "file": "master-business-flow.spec.ts",
-              "line": 334,
-              "column": 7
-            },
-            {
-              "title": "Complete business lifecycle from discovery to user interaction",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "edge-desktop",
-                  "projectName": "edge-desktop",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "2db288afed6853b5be09-9a455b30132306ffa70e",
-              "file": "master-business-flow.spec.ts",
-              "line": 66,
-              "column": 7
-            },
-            {
-              "title": "Pub owner registration and onboarding flow",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "edge-desktop",
-                  "projectName": "edge-desktop",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "2db288afed6853b5be09-a7fde27415d9bdb3d3f8",
-              "file": "master-business-flow.spec.ts",
-              "line": 312,
-              "column": 7
-            },
-            {
-              "title": "Admin dashboard functionality",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "edge-desktop",
-                  "projectName": "edge-desktop",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "2db288afed6853b5be09-252ab80c0ab03d38386c",
-              "file": "master-business-flow.spec.ts",
-              "line": 323,
-              "column": 7
-            },
-            {
-              "title": "User app session management",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "edge-desktop",
-                  "projectName": "edge-desktop",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "2db288afed6853b5be09-d6e213a2b2f1b9e305f6",
-              "file": "master-business-flow.spec.ts",
-              "line": 334,
-              "column": 7
-            }
-          ]
-        },
-        {
-          "title": "Cross-Browser Compatibility",
-          "file": "master-business-flow.spec.ts",
-          "line": 346,
-          "column": 6,
-          "specs": [
-            {
-              "title": "Platform works correctly in chromium",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "chromium-desktop",
-                  "projectName": "chromium-desktop",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "2db288afed6853b5be09-1ea46dd54cf5be826f19",
-              "file": "master-business-flow.spec.ts",
-              "line": 348,
-              "column": 9
-            },
-            {
-              "title": "Platform works correctly in firefox",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "chromium-desktop",
-                  "projectName": "chromium-desktop",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "2db288afed6853b5be09-ae9c5ba368c3abf80685",
-              "file": "master-business-flow.spec.ts",
-              "line": 348,
-              "column": 9
-            },
-            {
-              "title": "Platform works correctly in webkit",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "chromium-desktop",
-                  "projectName": "chromium-desktop",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "2db288afed6853b5be09-91d93683bd222f273e0e",
-              "file": "master-business-flow.spec.ts",
-              "line": 348,
-              "column": 9
-            },
-            {
-              "title": "Platform works correctly in chromium",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "firefox-desktop",
-                  "projectName": "firefox-desktop",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "2db288afed6853b5be09-a401c90bd40efda2854e",
-              "file": "master-business-flow.spec.ts",
-              "line": 348,
-              "column": 9
-            },
-            {
-              "title": "Platform works correctly in firefox",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "firefox-desktop",
-                  "projectName": "firefox-desktop",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "2db288afed6853b5be09-7e438ed3759d7e0dd6dc",
-              "file": "master-business-flow.spec.ts",
-              "line": 348,
-              "column": 9
-            },
-            {
-              "title": "Platform works correctly in webkit",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "firefox-desktop",
-                  "projectName": "firefox-desktop",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "2db288afed6853b5be09-84907ef66b56ce14c8cd",
-              "file": "master-business-flow.spec.ts",
-              "line": 348,
-              "column": 9
-            },
-            {
-              "title": "Platform works correctly in chromium",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "webkit-desktop",
-                  "projectName": "webkit-desktop",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "2db288afed6853b5be09-295f295e31659ed44b8b",
-              "file": "master-business-flow.spec.ts",
-              "line": 348,
-              "column": 9
-            },
-            {
-              "title": "Platform works correctly in firefox",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "webkit-desktop",
-                  "projectName": "webkit-desktop",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "2db288afed6853b5be09-fd3a82a876d733cb1a09",
-              "file": "master-business-flow.spec.ts",
-              "line": 348,
-              "column": 9
-            },
-            {
-              "title": "Platform works correctly in webkit",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "webkit-desktop",
-                  "projectName": "webkit-desktop",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "2db288afed6853b5be09-2d866565882fef46a0c6",
-              "file": "master-business-flow.spec.ts",
-              "line": 348,
-              "column": 9
-            },
-            {
-              "title": "Platform works correctly in chromium",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "mobile-chrome",
-                  "projectName": "mobile-chrome",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "2db288afed6853b5be09-97c8094fc6b0684b75ca",
-              "file": "master-business-flow.spec.ts",
-              "line": 348,
-              "column": 9
-            },
-            {
-              "title": "Platform works correctly in firefox",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "mobile-chrome",
-                  "projectName": "mobile-chrome",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "2db288afed6853b5be09-9ade8ab7c0f3801ce433",
-              "file": "master-business-flow.spec.ts",
-              "line": 348,
-              "column": 9
-            },
-            {
-              "title": "Platform works correctly in webkit",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "mobile-chrome",
-                  "projectName": "mobile-chrome",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "2db288afed6853b5be09-9cbfe1954aba43a91fc0",
-              "file": "master-business-flow.spec.ts",
-              "line": 348,
-              "column": 9
-            },
-            {
-              "title": "Platform works correctly in chromium",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "mobile-safari",
-                  "projectName": "mobile-safari",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "2db288afed6853b5be09-1512a17c9352e44ec8b4",
-              "file": "master-business-flow.spec.ts",
-              "line": 348,
-              "column": 9
-            },
-            {
-              "title": "Platform works correctly in firefox",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "mobile-safari",
-                  "projectName": "mobile-safari",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "2db288afed6853b5be09-1ce57ed0142cdd82f55d",
-              "file": "master-business-flow.spec.ts",
-              "line": 348,
-              "column": 9
-            },
-            {
-              "title": "Platform works correctly in webkit",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "mobile-safari",
-                  "projectName": "mobile-safari",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "2db288afed6853b5be09-ebaf93800726e340941c",
-              "file": "master-business-flow.spec.ts",
-              "line": 348,
-              "column": 9
-            },
-            {
-              "title": "Platform works correctly in chromium",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "tablet-ipad",
-                  "projectName": "tablet-ipad",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "2db288afed6853b5be09-c86e37ef36df0e05ed56",
-              "file": "master-business-flow.spec.ts",
-              "line": 348,
-              "column": 9
-            },
-            {
-              "title": "Platform works correctly in firefox",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "tablet-ipad",
-                  "projectName": "tablet-ipad",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "2db288afed6853b5be09-53c9e3df83710e713a20",
-              "file": "master-business-flow.spec.ts",
-              "line": 348,
-              "column": 9
-            },
-            {
-              "title": "Platform works correctly in webkit",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "tablet-ipad",
-                  "projectName": "tablet-ipad",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "2db288afed6853b5be09-8faa1f6ac4856fd30704",
-              "file": "master-business-flow.spec.ts",
-              "line": 348,
-              "column": 9
-            },
-            {
-              "title": "Platform works correctly in chromium",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "edge-desktop",
-                  "projectName": "edge-desktop",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "2db288afed6853b5be09-028a4da859bd29958085",
-              "file": "master-business-flow.spec.ts",
-              "line": 348,
-              "column": 9
-            },
-            {
-              "title": "Platform works correctly in firefox",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "edge-desktop",
-                  "projectName": "edge-desktop",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "2db288afed6853b5be09-b5fd6182ea387e7a93cf",
-              "file": "master-business-flow.spec.ts",
-              "line": 348,
-              "column": 9
-            },
-            {
-              "title": "Platform works correctly in webkit",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "edge-desktop",
-                  "projectName": "edge-desktop",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "2db288afed6853b5be09-e9d7a1e651362a74968b",
-              "file": "master-business-flow.spec.ts",
-              "line": 348,
-              "column": 9
-            }
-          ]
-        },
-        {
-          "title": "Mobile Responsiveness",
-          "file": "master-business-flow.spec.ts",
-          "line": 368,
-          "column": 6,
-          "specs": [
-            {
-              "title": "Main app adapts to mobile viewports",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "chromium-desktop",
-                  "projectName": "chromium-desktop",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "2db288afed6853b5be09-6718626e199706dc7771",
-              "file": "master-business-flow.spec.ts",
-              "line": 369,
-              "column": 7
-            },
-            {
-              "title": "Partner dashboard is responsive on tablets",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "chromium-desktop",
-                  "projectName": "chromium-desktop",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "2db288afed6853b5be09-fa2de16cb1c9cc172a56",
-              "file": "master-business-flow.spec.ts",
-              "line": 386,
-              "column": 7
-            },
-            {
-              "title": "Main app adapts to mobile viewports",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "firefox-desktop",
-                  "projectName": "firefox-desktop",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "2db288afed6853b5be09-badf3d8e482d66b3cb72",
-              "file": "master-business-flow.spec.ts",
-              "line": 369,
-              "column": 7
-            },
-            {
-              "title": "Partner dashboard is responsive on tablets",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "firefox-desktop",
-                  "projectName": "firefox-desktop",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "2db288afed6853b5be09-a3a34a0d2245fccf5ca4",
-              "file": "master-business-flow.spec.ts",
-              "line": 386,
-              "column": 7
-            },
-            {
-              "title": "Main app adapts to mobile viewports",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "webkit-desktop",
-                  "projectName": "webkit-desktop",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "2db288afed6853b5be09-20df0bcae71e58b4635e",
-              "file": "master-business-flow.spec.ts",
-              "line": 369,
-              "column": 7
-            },
-            {
-              "title": "Partner dashboard is responsive on tablets",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "webkit-desktop",
-                  "projectName": "webkit-desktop",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "2db288afed6853b5be09-acec3213f3f4c8ff3bbf",
-              "file": "master-business-flow.spec.ts",
-              "line": 386,
-              "column": 7
-            },
-            {
-              "title": "Main app adapts to mobile viewports",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "mobile-chrome",
-                  "projectName": "mobile-chrome",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "2db288afed6853b5be09-8aa97bb5b779b4d5ba8d",
-              "file": "master-business-flow.spec.ts",
-              "line": 369,
-              "column": 7
-            },
-            {
-              "title": "Partner dashboard is responsive on tablets",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "mobile-chrome",
-                  "projectName": "mobile-chrome",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "2db288afed6853b5be09-19ea56322ecee8729d6b",
-              "file": "master-business-flow.spec.ts",
-              "line": 386,
-              "column": 7
-            },
-            {
-              "title": "Main app adapts to mobile viewports",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "mobile-safari",
-                  "projectName": "mobile-safari",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "2db288afed6853b5be09-86a15a01f1d59478685f",
-              "file": "master-business-flow.spec.ts",
-              "line": 369,
-              "column": 7
-            },
-            {
-              "title": "Partner dashboard is responsive on tablets",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "mobile-safari",
-                  "projectName": "mobile-safari",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "2db288afed6853b5be09-dc040ac887c9e55f5d85",
-              "file": "master-business-flow.spec.ts",
-              "line": 386,
-              "column": 7
-            },
-            {
-              "title": "Main app adapts to mobile viewports",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "tablet-ipad",
-                  "projectName": "tablet-ipad",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "2db288afed6853b5be09-7076affe1f2e022fa62b",
-              "file": "master-business-flow.spec.ts",
-              "line": 369,
-              "column": 7
-            },
-            {
-              "title": "Partner dashboard is responsive on tablets",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "tablet-ipad",
-                  "projectName": "tablet-ipad",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "2db288afed6853b5be09-cb5a16b0f6a3c94691a9",
-              "file": "master-business-flow.spec.ts",
-              "line": 386,
-              "column": 7
-            },
-            {
-              "title": "Main app adapts to mobile viewports",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "edge-desktop",
-                  "projectName": "edge-desktop",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "2db288afed6853b5be09-ccd2a076e6348103799e",
-              "file": "master-business-flow.spec.ts",
-              "line": 369,
-              "column": 7
-            },
-            {
-              "title": "Partner dashboard is responsive on tablets",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "edge-desktop",
-                  "projectName": "edge-desktop",
-                  "results": [],
-                  "status": "skipped"
-                }
-              ],
-              "id": "2db288afed6853b5be09-d19cfb9dfebd0ac777f1",
-              "file": "master-business-flow.spec.ts",
-              "line": 386,
-              "column": 7
-            }
-          ]
-        }
-      ]
+      "message": "Error: Timed out waiting 120000ms from config.webServer.",
+      "stack": "Error: Timed out waiting 120000ms from config.webServer."
     }
   ],
-  "errors": [],
   "stats": {
-    "startTime": "2025-09-13T16:09:30.792Z",
-    "duration": 139.48000000000002,
+    "startTime": "2025-09-13T21:08:07.887Z",
+    "duration": 120421.53300000001,
     "expected": 0,
-    "skipped": 112,
+    "skipped": 0,
     "unexpected": 0,
     "flaky": 0
   }

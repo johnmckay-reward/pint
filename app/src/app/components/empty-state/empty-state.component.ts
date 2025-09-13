@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { PersonalizationService } from '../../services/personalization.service';
@@ -11,6 +11,8 @@ import { PersonalizationService } from '../../services/personalization.service';
   imports: [CommonModule, IonicModule]
 })
 export class EmptyStateComponent implements OnInit {
+  private personalizationService = inject(PersonalizationService);
+
   @Input() icon: string = 'moon-outline';
   @Input() title?: string;
   @Input() message?: string;
@@ -25,8 +27,6 @@ export class EmptyStateComponent implements OnInit {
   displayTitle: string = '';
   displayMessage: string = '';
   displayActionText: string = '';
-
-  constructor(private personalizationService: PersonalizationService) {}
 
   ngOnInit() {
     if (this.usePersonalization) {

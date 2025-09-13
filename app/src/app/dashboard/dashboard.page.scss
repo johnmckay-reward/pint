@@ -1,20 +1,17 @@
-// Dashboard SCSS - Under 4KB budget with essential styles
+// Dashboard SCSS - Optimized
 ion-toolbar, ion-content { --background: var(--ion-color-tertiary); }
 
-// Greeting section  
 .greeting-section {
   background: linear-gradient(135deg, var(--ion-color-primary), var(--ion-color-primary-shade));
   color: var(--ion-color-primary-contrast); margin: 0; padding: 2rem 1rem 1.5rem; border-radius: 0 0 20px 20px;
   .greeting-content { text-align: center; }
-  .greeting-title { font-size: 1.8rem; font-weight: 700; margin: 0 0 0.5rem 0; opacity: 0; animation: fadeIn 0.8s ease forwards; }
-  .greeting-subtitle { font-size: 1rem; margin: 0; opacity: 0.9; animation: fadeIn 0.8s ease 0.2s forwards; }
+  .greeting-title { font-size: 1.8rem; font-weight: 700; margin: 0 0 0.5rem 0; }
+  .greeting-subtitle { font-size: 1rem; margin: 0; opacity: 0.9; }
 }
 
-// Interactive elements
 .interactive-icon, .header-avatar { transition: transform 0.3s ease; &:hover { transform: scale(1.1); } }
 .header-avatar { width: 32px; height: 32px; border: 2px solid var(--ion-color-primary); }
 
-// Cards
 .initiate-card, .filter-card { margin: 0; border-radius: 12px; transition: all 0.3s ease; &:active { transform: scale(0.98); } }
 .initiate-card {
   --background: var(--ion-color-primary); color: var(--ion-color-primary-contrast); cursor: pointer;
@@ -24,7 +21,6 @@ ion-toolbar, ion-content { --background: var(--ion-color-tertiary); }
   .beer-icon { font-size: 4rem; opacity: 0.2; }
 }
 
-// Lists and sections
 .list-header { margin: 24px 0 8px; .header-content { display: flex; align-items: center; justify-content: space-between; } 
   h2 { margin: 0; font-size: 1.3rem; color: var(--ion-color-secondary); }
   .subtitle { margin: 4px 0 0; font-size: 0.8rem; color: var(--ion-color-medium); }
@@ -46,16 +42,8 @@ ion-item { --background: transparent; --padding-start: 16px; --inner-padding-end
   .time { color: var(--ion-color-medium); }
 }
 
-// Featured sessions
 .featured-session { background: linear-gradient(135deg, rgba(255,193,7,0.1) 0%, rgba(255,193,7,0.05) 100%); border-left: 4px solid var(--ion-color-warning); position: relative; }
 .featured-banner { position: absolute; top: 8px; right: 16px; background: var(--ion-color-warning); color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.75rem; font-weight: 600; display: flex; align-items: center; ion-icon { font-size: 0.875rem; margin-right: 4px; } }
 
-// Utilities
 .private-icon { font-size: 0.875rem; margin-left: 8px; }
 .pub-address { font-size: 0.75rem; color: var(--ion-color-medium); margin-top: 2px; }
-
-// Animation
-@keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
-
-// Dark mode
-body.dark { ion-toolbar, ion-content { --background: #161616; } .initiate-card { --background: var(--ion-color-primary-shade); } .list-header h2, ion-label h3 { color: var(--ion-color-tertiary); } }

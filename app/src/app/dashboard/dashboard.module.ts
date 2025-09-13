@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { DashboardPageRoutingModule } from './dashboard-routing.module';
 import { DashboardPage } from './dashboard.page';
 import { EmptyStateComponent } from '../components/empty-state/empty-state.component';
+import { SkeletonLoaderComponent } from '../components/skeleton-loader/skeleton-loader.component';
 
 @NgModule({
   imports: [
@@ -14,7 +15,8 @@ import { EmptyStateComponent } from '../components/empty-state/empty-state.compo
     FormsModule,
     IonicModule,
     DashboardPageRoutingModule,
-    EmptyStateComponent
+    EmptyStateComponent,
+    SkeletonLoaderComponent
   ],
   declarations: [DashboardPage]
 })
