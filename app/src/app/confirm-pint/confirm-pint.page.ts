@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { NavController, ToastController } from '@ionic/angular';
+import { NavController, ToastController, LoadingController, AlertController } from '@ionic/angular';
+import { ApiService, CreateSessionRequest } from '../services/api.service';
+import { finalize } from 'rxjs/operators';
 
 // Re-using the Pub interface from the previous page
 interface Pub {
@@ -29,7 +31,10 @@ export class ConfirmPintPage implements OnInit {
   constructor(
     private router: Router,
     private navCtrl: NavController,
-    private toastController: ToastController
+    private toastController: ToastController,
+    private apiService: ApiService,
+    private loadingController: LoadingController,
+    private alertController: AlertController
   ) {
     // Retrieve the state passed during navigation
     const navigation = this.router.getCurrentNavigation();
@@ -49,31 +54,51 @@ export class ConfirmPintPage implements OnInit {
 
   /**
    * @description
-   * Simulates sending the pint invitation and navigates the user back to the dashboard.
+   * Creates a pint session via the API and navigates back to the dashboard.
    */
   async sendInvite(): Promise<void> {
     if (!this.selectedPub) return;
 
-    const pintSession = {
-      pub: this.selectedPub,
+    const loading = await this.loadingController.create({
+      message: 'Creating pint session...',
+      spinner: 'crescent'
+    });
+    await loading.present();
+
+    const sessionData: CreateSessionRequest = {
+      pubName: this.selectedPub.name,
       eta: this.eta,
-      timestamp: new Date()
+      location: {
+        lat: this.selectedPub.position.lat,
+        lng: this.selectedPub.position.lng
+      }
     };
 
-    console.log('Sending pint invite:', pintSession);
-    // TODO: Implement actual Firebase/backend logic to create the session and send push notifications.
+    this.apiService.createSession(sessionData)
+      .pipe(
+        finalize(() => loading.dismiss())
+      )
+      .subscribe({
+        next: async (session) => {
+          console.log('Session created successfully:', session);
+          
+          // Show a success toast message
+          const toast = await this.toastController.create({
+            message: `Your pint at ${this.selectedPub!.name} has been started!`,
+            duration: 3000,
+            position: 'top',
+            color: 'success'
+          });
+          toast.present();
 
-    // Show a success toast message
-    const toast = await this.toastController.create({
-      message: `Your pint at ${this.selectedPub.name} has been started!`,
-      duration: 3000,
-      position: 'top',
-      color: 'success'
-    });
-    toast.present();
-
-    // Navigate back to the root dashboard page, clearing the initiation flow from the history.
-    this.navCtrl.navigateRoot('/dashboard');
+          // Navigate back to the dashboard
+          this.navCtrl.navigateRoot('/dashboard');
+        },
+        error: async (err) => {
+          console.error('Failed to create session:', err);
+          await this.presentErrorAlert('Error', 'Failed to create pint session. Please try again.');
+        }
+      });
   }
 
   /**
@@ -82,5 +107,19 @@ export class ConfirmPintPage implements OnInit {
    */
   goBack(): void {
     this.navCtrl.back();
+  }
+
+  /**
+   * @description Presents a generic error alert to the user.
+   * @param header The title of the alert.
+   * @param message The main message of the alert.
+   */
+  private async presentErrorAlert(header: string, message: string): Promise<void> {
+    const alert = await this.alertController.create({
+      header,
+      message,
+      buttons: ['OK'],
+    });
+    await alert.present();
   }
 }

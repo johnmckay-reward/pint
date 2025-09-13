@@ -17,7 +17,8 @@ import { SupportPageModule } from './support/support.module';
 import { InitiatePintPageModule } from './initiate-pint/initiate-pint.module';
 import { ConfirmPintPageModule } from './confirm-pint/confirm-pint.module';
 import { PintDetailsPageModule } from './pint-details/pint-details.module';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptors, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './services/auth.interceptor';
 
 @NgModule({
   declarations: [AppComponent],
@@ -35,7 +36,11 @@ import { provideHttpClient } from '@angular/common/http';
     ConfirmPintPageModule,
     PintDetailsPageModule
   ],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, provideHttpClient()],
+  providers: [
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    provideHttpClient()
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

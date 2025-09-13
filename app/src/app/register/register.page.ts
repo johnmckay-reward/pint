@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertController, LoadingController, NavController } from '@ionic/angular';
-import { ApiService, AuthResponse } from '../services/api.service';
+import { ApiService, AuthResponse, RegisterRequest } from '../services/api.service';
+import { AuthService } from '../services/auth.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { finalize } from 'rxjs';
 
@@ -18,6 +19,7 @@ export class RegisterPage implements OnInit {
   constructor(
     private navCtrl: NavController,
     private apiService: ApiService,
+    private authService: AuthService,
     private formBuilder: FormBuilder,
     private alertController: AlertController,
     private loadingController: LoadingController
@@ -72,7 +74,7 @@ export class RegisterPage implements OnInit {
 
     // For the proof of concept, we send the base64 string directly.
     // The `profileImagePreview` property already holds the base64 data URL.
-    const registrationData = {
+    const registrationData: RegisterRequest = {
       ...this.registerForm.value,
       profilePictureUrl: this.profileImagePreview || '' // Use the preview string or an empty string
     };
@@ -84,7 +86,8 @@ export class RegisterPage implements OnInit {
       .subscribe({
         next: (response: AuthResponse) => {
           console.log('Registration successful', response);
-          // TODO: Save the auth token securely
+          // Set authentication state
+          this.authService.setAuthenticationState(response);
           this.navCtrl.navigateRoot('/dashboard');
         },
         error: (err) => {

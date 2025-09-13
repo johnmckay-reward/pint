@@ -1,17 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController } from '@ionic/angular';
-
-// Interface for a User object for type safety
-interface UserProfile {
-  name: string;
-  tipple: string;
-  avatar: string;
-  stats: {
-    pintsStarted: number;
-    pintsJoined: number;
-    favouritePubs: number;
-  };
-}
+import { NavController, LoadingController, AlertController } from '@ionic/angular';
+import { AuthService } from '../services/auth.service';
+import { ApiService, User } from '../services/api.service';
 
 @Component({
   selector: 'app-profile',
@@ -21,26 +11,50 @@ interface UserProfile {
 })
 export class ProfilePage implements OnInit {
 
-  // Mock user data object. In a real app, this would be fetched from a service.
-  user: UserProfile = {
-    name: 'John Doe',
-    tipple: 'A crisp lager',
-    avatar: 'https://placehold.co/150x150/f4f1de/4a2c2a?text=Me',
-    stats: {
-      pintsStarted: 5,
-      pintsJoined: 12,
-      favouritePubs: 3,
-    },
-  };
+  // User data. Will be loaded from the API.
+  user: User | null = null;
+  isLoading = false;
 
   constructor(
-    private navCtrl: NavController
+    private navCtrl: NavController,
+    private authService: AuthService,
+    private apiService: ApiService,
+    private loadingController: LoadingController,
+    private alertController: AlertController
   ) { }
 
   ngOnInit() {
-    // In a real app, you would fetch the logged-in user's data here.
-    // For example:
-    // this.userService.getCurrentUser().subscribe(profile => this.user = profile);
+    this.loadUserProfile();
+  }
+
+  /**
+   * @description
+   * Loads the current user's profile from the API.
+   */
+  async loadUserProfile(): Promise<void> {
+    this.isLoading = true;
+    
+    try {
+      // First try to get from auth service
+      this.user = this.authService.currentUser;
+      
+      // If we have the user, try to get fresh profile data
+      if (this.user) {
+        try {
+          const freshProfile = await this.apiService.getUserProfile().toPromise();
+          if (freshProfile) {
+            this.user = freshProfile;
+          }
+        } catch (error) {
+          console.warn('Failed to fetch fresh profile data, using cached data');
+        }
+      }
+    } catch (error) {
+      console.error('Failed to load user profile:', error);
+      await this.presentErrorAlert('Error', 'Failed to load profile data.');
+    } finally {
+      this.isLoading = false;
+    }
   }
 
   /**
@@ -75,11 +89,38 @@ export class ProfilePage implements OnInit {
    * @description
    * Logs the user out and returns them to the login screen.
    */
-  logout(): void {
+  async logout(): Promise<void> {
     console.log('Logging out...');
-    // TODO: Add Firebase logout logic here.
+    
+    const loading = await this.loadingController.create({
+      message: 'Signing out...',
+      spinner: 'crescent'
+    });
+    await loading.present();
 
-    // Navigate back to the login page, clearing the history.
-    this.navCtrl.navigateRoot('/login');
+    try {
+      await this.authService.clearAuthenticationState();
+      await loading.dismiss();
+      // Navigate back to the login page, clearing the history.
+      this.navCtrl.navigateRoot('/login');
+    } catch (error) {
+      await loading.dismiss();
+      console.error('Logout failed:', error);
+      await this.presentErrorAlert('Error', 'Failed to log out. Please try again.');
+    }
+  }
+
+  /**
+   * @description Presents a generic error alert to the user.
+   * @param header The title of the alert.
+   * @param message The main message of the alert.
+   */
+  private async presentErrorAlert(header: string, message: string): Promise<void> {
+    const alert = await this.alertController.create({
+      header,
+      message,
+      buttons: ['OK'],
+    });
+    await alert.present();
   }
 }

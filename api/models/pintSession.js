@@ -15,10 +15,10 @@ const PintSession = sequelize.define('PintSession', {
     type: DataTypes.STRING,
     allowNull: false
   },
-  // We use the GEOMETRY type for storing geographic coordinates.
-  // This is powerful for finding sessions "nearby" later on.
+  // For testing with SQLite, we'll use a simple JSON field
+  // In production with PostGIS, this would be GEOMETRY('POINT')
   location: {
-    type: DataTypes.GEOMETRY('POINT'),
+    type: sequelize.getDialect() === 'postgres' ? DataTypes.GEOMETRY('POINT') : DataTypes.JSON,
     allowNull: false
   }
 }, {

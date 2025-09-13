@@ -2,7 +2,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController, AlertController, LoadingController } from '@ionic/angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ApiService, AuthResponse } from '../services/api.service';
+import { ApiService, AuthResponse, LoginRequest } from '../services/api.service';
+import { AuthService } from '../services/auth.service';
 import { finalize } from 'rxjs/operators';
 
 /*
@@ -23,6 +24,7 @@ export class LoginPage implements OnInit {
   constructor(
     private navCtrl: NavController,
     private apiService: ApiService,
+    private authService: AuthService,
     private formBuilder: FormBuilder,
     private alertController: AlertController,
     private loadingController: LoadingController
@@ -55,7 +57,7 @@ export class LoginPage implements OnInit {
     });
     await loading.present();
 
-    this.apiService.login(this.loginForm.value)
+    this.apiService.login(this.loginForm.value as LoginRequest)
       .pipe(
         // Ensure the loading indicator is dismissed on completion
         finalize(() => loading.dismiss())
@@ -63,8 +65,9 @@ export class LoginPage implements OnInit {
       .subscribe({
         next: (response: AuthResponse) => {
           console.log('Login successful', response);
-          // TODO: Save the auth token securely (e.g., using a storage service)
-          // For now, navigate to the main part of the app
+          // Set authentication state
+          this.authService.setAuthenticationState(response);
+          // Navigate to the main part of the app
           this.navCtrl.navigateRoot('/dashboard');
         },
         error: (err) => {

@@ -22,8 +22,9 @@ export interface AuthResponse {
 export interface User {
   id: string;
   displayName: string;
+  email: string;
+  favouriteTipple?: string;
   profilePictureUrl?: string;
-  // Add other fields as needed
 }
 
 export interface PintSession {
@@ -34,6 +35,25 @@ export interface PintSession {
   initiator: User;
   attendees?: User[];
   createdAt: string;
+}
+
+export interface CreateSessionRequest {
+  pubName: string;
+  eta: string;
+  location: { lat: number; lng: number };
+}
+
+export interface LoginRequest {
+  email: string;
+  password: string;
+}
+
+export interface RegisterRequest {
+  email: string;
+  password: string;
+  displayName: string;
+  favouriteTipple?: string;
+  profilePictureUrl?: string;
 }
 
 
@@ -51,8 +71,8 @@ export class ApiService {
    * @param credentials An object with email and password.
    * @returns Observable with the auth token and user data.
    */
-  login(credentials: object): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>(`${this.apiUrl}/auth/login`, credentials).pipe(
+  login(credentials: LoginRequest): Observable<AuthResponse> {
+    return this.http.post<AuthResponse>(`${this.apiUrl}/api/auth/login`, credentials).pipe(
       tap(async (response: AuthResponse) => {
         await Preferences.set({
           key: 'authResponse',
@@ -67,8 +87,8 @@ export class ApiService {
    * @param userData An object with email, password, and displayName.
    * @returns Observable with the auth token and user data.
    */
-  register(userData: object): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>(`${this.apiUrl}/auth/register`, userData).pipe(
+  register(userData: RegisterRequest): Observable<AuthResponse> {
+    return this.http.post<AuthResponse>(`${this.apiUrl}/api/auth/register`, userData).pipe(
       tap(async (response: AuthResponse) => {
         await Preferences.set({
           key: 'authResponse',
@@ -76,6 +96,34 @@ export class ApiService {
         });
       })
     );
+  }
+
+  /**
+   * Gets the current user's profile.
+   * @returns Observable with the user profile data.
+   */
+  getUserProfile(): Observable<User> {
+    return this.http.get<User>(`${this.apiUrl}/api/users/me`);
+  }
+
+  /**
+   * Logs out the current user by removing stored auth data.
+   */
+  async logout(): Promise<void> {
+    await Preferences.remove({ key: 'authResponse' });
+  }
+
+  /**
+   * Gets the stored authentication response.
+   * @returns Promise with the stored auth response or null.
+   */
+  async getStoredAuthResponse(): Promise<AuthResponse | null> {
+    try {
+      const { value } = await Preferences.get({ key: 'authResponse' });
+      return value ? JSON.parse(value) : null;
+    } catch {
+      return null;
+    }
   }
 
   /**
@@ -90,7 +138,15 @@ export class ApiService {
       .set('lng', location.lng.toString())
       .set('radius', radius.toString());
 
-    return this.http.get<PintSession[]>(`${this.apiUrl}/sessions/nearby`, { params });
+    return this.http.get<PintSession[]>(`${this.apiUrl}/api/sessions/nearby`, { params });
+  }
+
+  /**
+   * Fetches all pint sessions.
+   * @returns Observable array of PintSessions.
+   */
+  getAllSessions(): Observable<PintSession[]> {
+    return this.http.get<PintSession[]>(`${this.apiUrl}/api/sessions`);
   }
 
   /**
@@ -99,7 +155,7 @@ export class ApiService {
    * @returns Observable with the PintSession data, including attendees.
    */
   getSessionDetails(sessionId: string): Observable<PintSession> {
-    return this.http.get<PintSession>(`${this.apiUrl}/sessions/${sessionId}`);
+    return this.http.get<PintSession>(`${this.apiUrl}/api/sessions/${sessionId}`);
   }
 
   /**
@@ -107,8 +163,8 @@ export class ApiService {
    * @param sessionData An object with pubName, eta, and location.
    * @returns Observable with the newly created session data.
    */
-  createSession(sessionData: object): Observable<PintSession> {
-    return this.http.post<PintSession>(`${this.apiUrl}/sessions`, sessionData);
+  createSession(sessionData: CreateSessionRequest): Observable<PintSession> {
+    return this.http.post<PintSession>(`${this.apiUrl}/api/sessions`, sessionData);
   }
 
   /**
@@ -118,7 +174,6 @@ export class ApiService {
    * @returns Observable with a success message.
    */
   joinSession(sessionId: string): Observable<{ message: string }> {
-    // The body is empty because the server gets the userId from the auth token
-    return this.http.post<{ message: string }>(`${this.apiUrl}/sessions/${sessionId}/attendees`, {});
+    return this.http.post<{ message: string }>(`${this.apiUrl}/api/sessions/${sessionId}/join`, {});
   }
 }
