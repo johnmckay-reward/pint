@@ -3,7 +3,11 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  sentry: {
+    dsn: '', // Set SENTRY_DSN in production environment
+    enableInDev: false // Set to true to enable Sentry in development
+  }
 };
 
 /*
