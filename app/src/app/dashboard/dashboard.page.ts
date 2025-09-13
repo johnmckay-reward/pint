@@ -104,6 +104,8 @@ export class DashboardPage implements OnInit {
         pubName: 'The Salty Dog',
         eta: '20:00',
         location: { lat: 51.5074, lng: -0.1278 },
+        isPrivate: false,
+        isFeatured: true, // Featured session
         initiator: { 
           id: '1',
           displayName: 'Sarah',
@@ -117,6 +119,8 @@ export class DashboardPage implements OnInit {
         pubName: "Jenny Watts",
         eta: '19:30',
         location: { lat: 51.5074, lng: -0.1278 },
+        isPrivate: false,
+        isFeatured: false, // Regular session
         initiator: { 
           id: '2',
           displayName: 'Mark',
@@ -124,6 +128,21 @@ export class DashboardPage implements OnInit {
           profilePictureUrl: 'https://placehold.co/80x80/4a2c2a/f4f1de?text=M' 
         },
         createdAt: new Date(Date.now() - 12 * 60 * 1000).toISOString() // 12 minutes ago
+      },
+      {
+        id: 'mock3',
+        pubName: 'The Crown & Anchor',
+        eta: '21:15',
+        location: { lat: 51.5074, lng: -0.1278 },
+        isPrivate: false,
+        isFeatured: true, // Another featured session
+        initiator: { 
+          id: '3',
+          displayName: 'Alex',
+          email: 'alex@example.com',
+          profilePictureUrl: 'https://placehold.co/80x80/4a2c2a/f4f1de?text=A' 
+        },
+        createdAt: new Date(Date.now() - 25 * 60 * 1000).toISOString() // 25 minutes ago
       }
     ];
   }

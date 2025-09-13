@@ -6,6 +6,7 @@ const Friendship = require('./friendship');
 const Achievement = require('./achievement');
 const UserAchievement = require('./userAchievement');
 const Pub = require('./pub');
+const PubOwner = require('./pubOwner');
 
 // 1. One-to-Many Relationship: A User can initiate many sessions.
 // This adds an `initiatorId` foreign key to the PintSession model.
@@ -112,6 +113,16 @@ PintSession.belongsTo(Pub, {
   as: 'pub'
 });
 
+// A Pub can have one owner
+Pub.hasOne(PubOwner, {
+  foreignKey: 'pubId',
+  as: 'owner'
+});
+PubOwner.belongsTo(Pub, {
+  foreignKey: 'pubId',
+  as: 'pub'
+});
+
 
 // Export all models and the sequelize connection
 module.exports = {
@@ -122,5 +133,6 @@ module.exports = {
   Friendship,
   Achievement,
   UserAchievement,
-  Pub
+  Pub,
+  PubOwner
 };
