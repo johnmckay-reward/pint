@@ -28,10 +28,13 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  <!-- Loading State -->
-  <div class="loading-container" *ngIf="isLoading">
-    <ion-spinner name="crescent"></ion-spinner>
-    <p>Loading...</p>
+  <!-- Loading State with Skeleton -->
+  <div *ngIf="isLoading" class="ion-padding">
+    <app-skeleton-loader 
+      type="list-item" 
+      [count]="5" 
+      [animated]="true">
+    </app-skeleton-loader>
   </div>
 
   <!-- Friends Tab -->

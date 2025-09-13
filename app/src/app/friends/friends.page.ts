@@ -1,6 +1,8 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { ApiService, User, Friendship, FriendsResponse, FriendRequestsResponse, UserSearchResponse } from '../services/api.service';
 import { ToastController, AlertController, LoadingController } from '@ionic/angular';
+import { HapticService } from '../services/haptic.service';
+import { AccessibilityService } from '../services/accessibility.service';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { Subject, of } from 'rxjs';
 
@@ -15,6 +17,8 @@ export class FriendsPage implements OnInit {
   private toastController = inject(ToastController);
   private alertController = inject(AlertController);
   private loadingController = inject(LoadingController);
+  private hapticService = inject(HapticService);
+  private accessibilityService = inject(AccessibilityService);
 
   
   friends: User[] = [];
@@ -39,6 +43,7 @@ export class FriendsPage implements OnInit {
    */
   async loadData() {
     this.isLoading = true;
+    this.accessibilityService.announceLoading('Loading friends');
     
     try {
       // Load friends
@@ -54,8 +59,12 @@ export class FriendsPage implements OnInit {
         this.receivedRequests = requestsResponse.receivedRequests;
       }
 
+      this.accessibilityService.announceSuccess(
+        `Loaded ${this.friends.length} friends and ${this.receivedRequests.length} requests`
+      );
     } catch (error) {
       console.error('Error loading friends data:', error);
+      this.accessibilityService.announceError('Failed to load friends data');
       this.showToast('Failed to load friends data', 'danger');
     } finally {
       this.isLoading = false;
@@ -115,6 +124,8 @@ export class FriendsPage implements OnInit {
    * Send friend request
    */
   async sendFriendRequest(user: User) {
+    await this.hapticService.impact('light');
+    
     const loading = await this.loadingController.create({
       message: 'Sending friend request...',
       spinner: 'crescent'
@@ -124,6 +135,8 @@ export class FriendsPage implements OnInit {
     try {
       const response = await this.apiService.sendFriendRequest(user.id).toPromise();
       if (response) {
+        await this.hapticService.notification('success');
+        this.accessibilityService.announceSuccess(`Friend request sent to ${user.displayName}`);
         this.showToast(`Friend request sent to ${user.displayName}`, 'success');
         // Remove from search results
         this.searchResults = this.searchResults.filter(u => u.id !== user.id);
@@ -132,6 +145,7 @@ export class FriendsPage implements OnInit {
       }
     } catch (error: any) {
       console.error('Error sending friend request:', error);
+      await this.hapticService.notification('error');
       const message = error.error?.error || 'Failed to send friend request';
       this.showToast(message, 'danger');
     } finally {
@@ -143,6 +157,8 @@ export class FriendsPage implements OnInit {
    * Respond to friend request
    */
   async respondToRequest(request: Friendship, action: 'accept' | 'decline') {
+    await this.hapticService.impact('medium');
+    
     const loading = await this.loadingController.create({
       message: `${action === 'accept' ? 'Accepting' : 'Declining'} request...`,
       spinner: 'crescent'
@@ -152,13 +168,16 @@ export class FriendsPage implements OnInit {
     try {
       const response = await this.apiService.respondToFriendRequest(request.id, action).toPromise();
       if (response) {
+        await this.hapticService.notification(action === 'accept' ? 'success' : 'warning');
         const userName = request.requester?.displayName || 'User';
+        this.accessibilityService.announceSuccess(`Friend request ${action}ed from ${userName}`);
         this.showToast(`Friend request ${action}ed`, 'success');
         // Refresh data
         await this.loadData();
       }
     } catch (error: any) {
       console.error('Error responding to friend request:', error);
+      await this.hapticService.notification('error');
       const message = error.error?.error || 'Failed to respond to request';
       this.showToast(message, 'danger');
     } finally {
