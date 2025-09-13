@@ -44,10 +44,14 @@ const io = new Server(server, {
   }
 });
 
-// Sentry request handler must be the first middleware
-app.use(Sentry.Handlers.requestHandler());
-// Sentry tracing middleware
-app.use(Sentry.Handlers.tracingHandler());
+// Sentry request handler must be the first middleware (only if properly configured)
+if (Sentry.Handlers && typeof Sentry.Handlers.requestHandler === 'function') {
+  app.use(Sentry.Handlers.requestHandler());
+  // Sentry tracing middleware  
+  if (typeof Sentry.Handlers.tracingHandler === 'function') {
+    app.use(Sentry.Handlers.tracingHandler());
+  }
+}
 
 app.use(express.json());
 app.use(cors());
@@ -261,7 +265,9 @@ async function init() {
   });
 
   // Sentry error handler must be before any other error middleware and after all controllers
-  app.use(Sentry.Handlers.errorHandler());
+  if (Sentry.Handlers && typeof Sentry.Handlers.errorHandler === 'function') {
+    app.use(Sentry.Handlers.errorHandler());
+  }
 
   // Global error handler
   app.use((err, req, res, next) => {
