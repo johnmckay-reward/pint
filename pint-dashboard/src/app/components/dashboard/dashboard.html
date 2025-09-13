@@ -1,1 +1,137 @@
-<p>dashboard works!</p>
+<div class="dashboard-container">
+  <!-- Header -->
+  <header class="dashboard-header">
+    <div class="header-content">
+      <h1>Pint Partner Dashboard</h1>
+      <div class="user-info">
+        <span *ngIf="currentUser">{{ currentUser.businessName }}</span>
+        <button class="logout-btn" (click)="logout()">Logout</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Loading state -->
+  <div *ngIf="loading" class="loading">
+    Loading dashboard...
+  </div>
+
+  <!-- Error message -->
+  <div *ngIf="error" class="error-message">
+    {{ error }}
+    <button (click)="error = ''" class="close-error">×</button>
+  </div>
+
+  <!-- No pub claimed yet - onboarding -->
+  <div *ngIf="!loading && currentUser && !currentUser.pubId" class="onboarding">
+    <div class="onboarding-card">
+      <h2>Welcome to Pint Partner Dashboard!</h2>
+      <p>To get started, you need to claim your pub on our platform.</p>
+      
+      <div class="search-section">
+        <h3>Search for your pub:</h3>
+        <div class="search-form">
+          <input 
+            type="text" 
+            [(ngModel)]="searchQuery" 
+            placeholder="Enter pub name or address..."
+            (keyup.enter)="searchPubs()"
+          />
+          <button (click)="searchPubs()" [disabled]="searching || searchQuery.length < 2">
+            {{ searching ? 'Searching...' : 'Search' }}
+          </button>
+        </div>
+
+        <div *ngIf="searchResults.length > 0" class="search-results">
+          <h4>Found pubs:</h4>
+          <div *ngFor="let pub of searchResults" class="pub-result">
+            <div class="pub-info">
+              <h5>{{ pub.name }}</h5>
+              <p>{{ pub.address }}</p>
+            </div>
+            <button 
+              (click)="claimPub(pub.id)" 
+              [disabled]="claiming"
+              class="claim-btn"
+            >
+              {{ claiming ? 'Claiming...' : 'Claim This Pub' }}
+            </button>
+          </div>
+        </div>
+
+        <div *ngIf="searchQuery.length >= 2 && searchResults.length === 0 && !searching" class="no-results">
+          <p>No pubs found matching your search. Please try a different search term.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main dashboard content -->
+  <div *ngIf="!loading && currentUser?.pubId && pub" class="dashboard-content">
+    <!-- Analytics cards -->
+    <div class="analytics-section">
+      <h2>{{ pub.name }} - Analytics Overview</h2>
+      <div class="analytics-cards" *ngIf="analytics">
+        <div class="analytics-card">
+          <h3>{{ analytics.sessionsThisWeek }}</h3>
+          <p>Sessions This Week</p>
+        </div>
+        <div class="analytics-card">
+          <h3>{{ analytics.sessionsThisMonth }}</h3>
+          <p>Sessions This Month</p>
+        </div>
+        <div class="analytics-card">
+          <h3>{{ analytics.attendeesThisMonth }}</h3>
+          <p>Total Attendees This Month</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sessions section -->
+    <div class="sessions-section">
+      <h2>Recent Sessions at Your Pub</h2>
+      <div *ngIf="sessions.length === 0" class="no-sessions">
+        <p>No sessions have been created at your pub yet.</p>
+      </div>
+      <div *ngIf="sessions.length > 0" class="sessions-list">
+        <div *ngFor="let session of sessions" class="session-card">
+          <div class="session-info">
+            <h4>Session by {{ session.initiator.displayName }}</h4>
+            <p>ETA: {{ session.eta }}</p>
+            <p>Attendees: {{ session.attendees.length + 1 }}</p>
+            <p>Created: {{ session.createdAt | date:'short' }}</p>
+            <div class="session-status">
+              <span [class]="session.isFeatured ? 'featured' : 'normal'">
+                {{ session.isFeatured ? '⭐ Featured' : 'Standard' }}
+              </span>
+            </div>
+          </div>
+          <div class="session-actions">
+            <button 
+              *ngIf="!session.isFeatured" 
+              (click)="promoteSession(session.id)"
+              class="promote-btn"
+            >
+              🚀 Promote Session
+            </button>
+            <span *ngIf="session.isFeatured" class="already-promoted">
+              Already Promoted ✓
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pub details section -->
+    <div class="pub-details-section">
+      <h2>Pub Information</h2>
+      <div class="pub-details">
+        <p><strong>Name:</strong> {{ pub.name }}</p>
+        <p><strong>Address:</strong> {{ pub.address || 'Not set' }}</p>
+        <p><strong>Description:</strong> {{ pub.description || 'Not set' }}</p>
+        <p><strong>Phone:</strong> {{ pub.phoneNumber || 'Not set' }}</p>
+        <p><strong>Partnership Tier:</strong> {{ pub.partnershipTier }}</p>
+        <button class="edit-pub-btn">Edit Pub Details</button>
+      </div>
+    </div>
+  </div>
+</div>

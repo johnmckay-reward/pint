@@ -1,6 +1,6 @@
 const express = require('express');
 const { Op } = require('sequelize');
-const { Pub, PintSession, User, PubOwner } = require('../models');
+const { Pub, PintSession, User, PubOwner, sequelize } = require('../models');
 const partnerAuth = require('../middleware/partnerAuth');
 
 const router = express.Router();
@@ -14,11 +14,15 @@ router.get('/pubs/search', partnerAuth, async (req, res) => {
       return res.status(400).json({ error: 'Search query must be at least 2 characters' });
     }
 
+    // Use LIKE for SQLite, ILIKE for PostgreSQL
+    const searchOperator = sequelize.getDialect() === 'postgres' ? Op.iLike : Op.like;
+    const searchTerm = `%${q}%`;
+
     const pubs = await Pub.findAll({
       where: {
         [Op.or]: [
-          { name: { [Op.iLike]: `%${q}%` } },
-          { address: { [Op.iLike]: `%${q}%` } }
+          { name: { [searchOperator]: searchTerm } },
+          { address: { [searchOperator]: searchTerm } }
         ]
       },
       include: {
