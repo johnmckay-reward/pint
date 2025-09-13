@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pint? - Meet New People at Pubs & Share a Drink</title>
+    
+    <meta name="description" content="Pint? is the new social app for meeting new people at pubs. Start or join a session, find your vibe, and share a drink. Your next friendship is just a pint away!">
+
+    <link rel="canonical" href="https://www.your-app-domain.com/">
+    
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.your-app-domain.com/">
+    <meta property="og:title" content="Pint? - Meet New People. Share a Drink.">
+    <meta property="og:description" content="The new social app for meeting new people at pubs. Spontaneous, easy, and fun.">
+    <meta property="og:image" content="https://www.your-app-domain.com/social-preview.jpg"> <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://www.your-app-domain.com/">
+    <meta property="twitter:title" content="Pint? - Meet New People. Share a Drink.">
+    <meta property="twitter:description" content="The new social app for meeting new people at pubs. Spontaneous, easy, and fun.">
+    <meta property="twitter:image" content="https://www.your-app-domain.com/social-preview.jpg">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <meta name="msapplication-TileColor" content="#eaa221">
+    <meta name="theme-color" content="#f4f1de">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto+Slab:wght@700;800&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #eaa221;
+            --secondary: #4a2c2a;
+            --tertiary: #f4f1de;
+            --text-body: #5c413f;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--tertiary);
+            color: var(--text-body);
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Roboto Slab', serif;
+            color: var(--secondary);
+            font-weight: 800;
+        }
+
+        /* -- IMPROVEMENT: Animated hero gradient -- */
+        @keyframes slow-pan {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .hero-gradient {
+            background: radial-gradient(ellipse at 50% 0%, rgba(234, 162, 33, 0.15), transparent 70%), 
+                        linear-gradient(270deg, var(--tertiary), rgba(234, 162, 33, 0.05), var(--tertiary));
+            background-size: 200% 200%;
+            animation: slow-pan 15s ease-in-out infinite;
+        }
+
+        .store-button {
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+            background-color: var(--tertiary);
+            border: 1px solid rgba(74, 44, 42, 0.1);
+            color: var(--secondary);
+        }
+        .store-button:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(74, 44, 42, 0.1);
+        }
+        .cta-card {
+            background-color: rgba(255, 255, 255, 0.6);
+            border-radius: 24px;
+            box-shadow: 0 8px 32px rgba(74, 44, 42, 0.1);
+            border: 1px solid rgba(74, 44, 42, 0.05);
+        }
+        .text-balance { text-wrap: balance; }
+        .sr-only {
+            position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+            overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border-width: 0;
+        }
+
+        /* -- IMPROVEMENT: Hover effect for feature cards -- */
+        .feature-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 16px 32px rgba(74, 44, 42, 0.08);
+        }
+    </style>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Pint?",
+      "description": "Pint? is the new social app for meeting new people at pubs. Start or join a session, find your vibe, and share a drink. Your next friendship is just a pint away!",
+      "operatingSystem": "iOS, Android",
+      "applicationCategory": "SocialNetworkingApplication",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "GBP"
+      }
+    }
+    </script>
+</head>
+
+<body class="antialiased">
+
+    <header class="fixed top-0 left-0 right-0 z-50 bg-tertiary/80 backdrop-blur-lg border-b border-secondary/5" style="--bg-tertiary: var(--tertiary); --border-secondary: var(--secondary);">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="flex items-center space-x-3" aria-label="Pint? Homepage">
+                <svg class="h-8 w-8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="logoTitle">
+                    <title id="logoTitle">Pint? App Logo</title>
+                    <defs><linearGradient id="beerGradient" x1="0.5" y1="0" x2="0.5" y2="1"><stop offset="0%" stop-color="#ecab37" /><stop offset="100%" stop-color="#ce8f1d" /></linearGradient></defs>
+                    <path fill="#4a2c2a" d="M400 224h48v128h-48z" /><path fill="#4a2c2a" d="M398.6 128H113.4a16 16 0 00-15.9 18.2L112 448h288l14.5-301.8A16 16 0 00398.6 128z" /><path fill="url(#beerGradient)" d="M130.3 192h251.4l-11.4 224H141.7z" /><path d="M112 192h288" stroke="#5c413f" stroke-width="4" /><path fill="#FFFFFF" d="M112 192 C 160 150, 200 180, 256 160 C 310 140, 350 150, 400 192 Z" />
+                </svg>
+                <span class="text-2xl font-bold" style="color: var(--secondary);">Pint?</span>
+            </a>
+            <a href="#download" class="bg-primary text-secondary font-bold px-6 py-2.5 rounded-lg hover:opacity-90 transition-all duration-200 shadow-sm hover:shadow-lg" style="--bg-primary: var(--primary); --text-secondary: var(--secondary);">
+                Join Waitlist
+            </a>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero-gradient pt-36 pb-24 md:pt-48 md:pb-32 overflow-hidden">
+            <div class="container mx-auto px-6">
+                <div class="grid lg:grid-cols-2 gap-12 items-center">
+                    <div class="text-center lg:text-left" data-aos="fade-right">
+                        <h1 class="text-4xl md:text-6xl font-extrabold leading-tight text-balance">
+                            Break the Ice, <span style="color: var(--primary);">Share a Pint.</span>
+                        </h1>
+                        <p class="mt-6 text-lg md:text-xl max-w-xl mx-auto lg:mx-0 text-balance">
+                            Tired of the usual routine? Pint? is the new social app that helps you meet new people at local pubs. Discover nearby gatherings and connect with others looking to share a drink. Your next friendship is just a pint away.
+                        </p>
+                        <div class="mt-12 flex justify-center lg:justify-start items-center flex-wrap gap-4">
+                            <a href="#download" class="store-button px-6 py-3 rounded-xl flex items-center space-x-3" data-aos="fade-up" data-aos-delay="100">
+                                <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M16.423 4.416c.308.01.616.02.924.02a4.416 4.416 0 014.416 4.416c0 .308-.01.616-.02.924a4.416 4.416 0 01-4.416 4.416c-.308 0-.616-.01-.924-.02a4.416 4.416 0 01-4.416-4.416c0-.308.01-.616.02-.924a4.416 4.416 0 014.416-4.416zm-3.273 11.945c.078.078.156.156.234.234a4.416 4.416 0 01-4.416 4.416c-.308 0-.616-.01-.924-.02a4.416 4.416 0 01-4.416-4.416c0-.308.01-.616.02-.924a4.416 4.416 0 014.416-4.416c.078 0 .156.01.234.02a.92.92 0 00.694-.694c-.01-.078-.02-.156-.02-.234a4.416 4.416 0 014.416-4.416c.308 0 .616.01.924.02a4.416 4.416 0 014.416 4.416c0 .308-.01.616-.02.924a4.416 4.416 0 01-4.416 4.416c-.078 0-.156-.01-.234-.02a.92.92 0 00-.694.694z"/></svg>
+                                <div>
+                                    <p class="text-xs text-left">Coming soon on the</p>
+                                    <p class="text-lg font-semibold">App Store</p>
+                                </div>
+                            </a>
+                            <a href="#download" class="store-button px-6 py-3 rounded-xl flex items-center space-x-3" data-aos="fade-up" data-aos-delay="200">
+                                <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M2.378 1.432L2.378 22.568L17.158 12.000L2.378 1.432zM18.394 10.888L10.150 5.000L10.150 19.000L18.394 13.112L21.622 12.000L18.394 10.888z"/></svg>
+                                <div>
+                                    <p class="text-xs text-left">Coming soon on</p>
+                                    <p class="text-lg font-semibold">Google Play</p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="relative flex justify-center" data-aos="fade-left">
+                        <div class="relative w-full max-w-xs md:max-w-[348px] drop-shadow-2xl">
+                             <img src="https://placehold.co/348x710/4a2c2a/4a2c2a" alt="Pint? app interface shown on a smartphone." class="relative z-10">
+                            
+                            <video autoplay loop muted playsinline class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[94%] h-[97%] object-cover rounded-[48px] z-0">
+                                <source src="https://placehold.co/320x680.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section class="py-24 bg-white/40">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="text-3xl md:text-4xl font-bold text-balance" data-aos="fade-up">It's as easy as...</h2>
+                <div class="mt-16 grid md:grid-cols-3 gap-x-8 gap-y-12 relative">
+                    <div class="hidden md:block absolute top-10 left-0 w-full h-px">
+                        <svg width="100%" height="100%" class="text-primary/30" style="--text-primary: var(--primary);"><line x1="16.66%" y1="0" x2="50%" y2="0" stroke="currentColor" stroke-width="2" stroke-dasharray="8 8"/><line x1="50%" y1="0" x2="83.33%" y2="0" stroke="currentColor" stroke-width="2" stroke-dasharray="8 8"/></svg>
+                    </div>
+                    
+                    <div class="flex flex-col items-center feature-card rounded-2xl p-4" data-aos="fade-up" data-aos-delay="100">
+                        <div class="bg-primary/10 text-primary rounded-full h-20 w-20 flex items-center justify-center border-2 border-primary/20 relative" style="--bg-primary: var(--primary); --text-primary: var(--primary);">
+                            <span class="absolute -top-3 -right-3 bg-secondary text-tertiary rounded-full h-8 w-8 flex items-center justify-center font-bold text-sm" style="--bg-secondary: var(--secondary); --text-tertiary: var(--tertiary);">1</span>
+                            <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
+                        </div>
+                        <h3 class="mt-6 text-xl font-semibold">Start a Session</h3>
+                        <p class="mt-2 text-balance">Fancy a pint? Tap a button, pick a pub, and let friends and other users know you're open to company.</p>
+                    </div>
+                    <div class="flex flex-col items-center feature-card rounded-2xl p-4" data-aos="fade-up" data-aos-delay="200">
+                        <div class="bg-primary/10 text-primary rounded-full h-20 w-20 flex items-center justify-center border-2 border-primary/20 relative" style="--bg-primary: var(--primary); --text-primary: var(--primary);">
+                            <span class="absolute -top-3 -right-3 bg-secondary text-tertiary rounded-full h-8 w-8 flex items-center justify-center font-bold text-sm" style="--bg-secondary: var(--secondary); --text-tertiary: var(--tertiary);">2</span>
+                            <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
+                        </div>
+                        <h3 class="mt-6 text-xl font-semibold">Discover Others</h3>
+                        <p class="mt-2 text-balance">Get notified when a session starts near you, or browse the map to find a vibe that suits you.</p>
+                    </div>
+                    <div class="flex flex-col items-center feature-card rounded-2xl p-4" data-aos="fade-up" data-aos-delay="300">
+                        <div class="bg-primary/10 text-primary rounded-full h-20 w-20 flex items-center justify-center border-2 border-primary/20 relative" style="--bg-primary: var(--primary); --text-primary: var(--primary);">
+                            <span class="absolute -top-3 -right-3 bg-secondary text-tertiary rounded-full h-8 w-8 flex items-center justify-center font-bold text-sm" style="--bg-secondary: var(--secondary); --text-tertiary: var(--tertiary);">3</span>
+                            <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283-.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                        </div>
+                        <h3 class="mt-6 text-xl font-semibold">Meet Up</h3>
+                        <p class="mt-2 text-balance">Join a table, meet new faces, and enjoy a drink. No groups, no planning, no hassle.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-24">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16" data-aos="fade-up">
+                    <h2 class="text-3xl md:text-4xl font-bold text-balance">Less Planning, More Connecting.</h2>
+                    <p class="mt-4 max-w-2xl mx-auto text-balance">Pint? is designed to be simple and spontaneous. Here’s how we make meeting new people easy.</p>
+                </div>
+                <div class="grid lg:grid-cols-2 gap-16 items-center">
+                    <div class="relative p-8 flex justify-center items-center" data-aos="zoom-in-right">
+                         <div class="absolute inset-0 bg-white/40 rounded-3xl transform -rotate-2"></div>
+                         <div class="absolute inset-0 bg-primary/10 rounded-3xl transform rotate-2"></div>
+                         <svg viewBox="0 0 400 300" class="relative z-10 w-full"><defs><filter id="glow"><feGaussianBlur stdDeviation="3.5" result="coloredBlur"/><feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><path d="M0 150 Q 50 120, 100 160 T 200 150 T 300 130 T 400 160" stroke="#4a2c2a" stroke-width="2" stroke-opacity="0.1" fill="none"/><path d="M0 100 Q 50 130, 100 90 T 200 110 T 300 100 T 400 80" stroke="#4a2c2a" stroke-width="2" stroke-opacity="0.1" fill="none"/><path d="M0 200 Q 50 180, 100 220 T 200 190 T 300 210 T 400 180" stroke="#4a2c2a" stroke-width="2" stroke-opacity="0.1" fill="none"/><circle cx="150" cy="150" r="12" fill="#EAA221" opacity="0.4" filter="url(#glow)"/><circle cx="150" cy="150" r="5" fill="#FFFFFF" stroke="var(--secondary)" stroke-width="2"/><circle cx="280" cy="120" r="6" fill="#EAA221" opacity="0.7" filter="url(#glow)"/><circle cx="80" cy="200" r="8" fill="#EAA221" opacity="0.5" filter="url(#glow)"/></svg>
+                    </div>
+                    <div class="space-y-10">
+                        <div class="flex items-start space-x-5" data-aos="fade-left" data-aos-delay="100">
+                            <div class="flex-shrink-0 bg-primary/10 text-primary rounded-xl h-12 w-12 flex items-center justify-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg></div>
+                            <div>
+                                <h3 class="text-xl font-semibold">Live Map View</h3>
+                                <p class="mt-1">See active pint sessions on a real-time map. Find a pub with a vibe that suits you and jump right in.</p>
+                            </div>
+                        </div>
+                         <div class="flex items-start space-x-5" data-aos="fade-left" data-aos-delay="200">
+                            <div class="flex-shrink-0 bg-primary/10 text-primary rounded-xl h-12 w-12 flex items-center justify-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-2.236 9.168-5.514C18.332 12.89 14.482 19 10 19M5 5a2 2 0 100 4 2 2 0 000-4z" /></svg></div>
+                            <div>
+                                <h3 class="text-xl font-semibold">Icebreakers</h3>
+                                <p class="mt-1">Your profile shows your "usual" drink and a fun fact, giving new people an easy way to start a conversation.</p>
+                            </div>
+                        </div>
+                         <div class="flex items-start space-x-5" data-aos="fade-left" data-aos-delay="300">
+                            <div class="flex-shrink-0 bg-primary/10 text-primary rounded-xl h-12 w-12 flex items-center justify-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg></div>
+                            <div>
+                                <h3 class="text-xl font-semibold">Privacy First</h3>
+                                <p class="mt-1">Your exact location is never shared. Only the pub you're at is visible, and only when you start a session.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="download" class="py-24">
+            <div class="container mx-auto px-6 text-center">
+                <div class="cta-card p-10 md:p-16" data-aos="zoom-in">
+                    <h2 class="text-3xl md:text-4xl font-bold text-balance">Ready for a Pint?</h2>
+                    <p class="mt-4 text-lg max-w-xl mx-auto text-balance">
+                        Pint? is launching soon. Drop your email below to get early access and be the first to know when we go live.
+                    </p>
+                    <form id="waitlist-form" class="mt-10 max-w-md mx-auto flex flex-col sm:flex-row gap-3">
+                        <label for="email-input" class="sr-only">Email Address</label>
+                        <input id="email-input" name="email" type="email" placeholder="your.email@example.com" class="w-full px-5 py-3.5 rounded-lg border-2 border-secondary/10 bg-tertiary/50 focus:ring-2 focus:ring-primary focus:outline-none transition placeholder:text-secondary/40" style="color: var(--secondary); --tw-ring-color: var(--primary);" required>
+                        <button type="submit" class="w-full sm:w-auto font-bold text-lg px-8 py-3.5 rounded-lg hover:opacity-90 transition-all duration-200 whitespace-nowrap shadow-md hover:shadow-lg" style="background-color: var(--primary); color: var(--secondary);">
+                            Notify Me
+                        </button>
+                    </form>
+                    <p id="form-message" class="mt-4 text-sm h-5"></p>
+                    <p class="mt-2 text-sm text-secondary/60" style="--text-secondary: var(--secondary);">
+                        ✨ Join 1,200+ others on the waitlist. No spam, ever.
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="mt-10 border-t border-secondary/5" style="--border-secondary: var(--secondary);">
+        <div class="container mx-auto px-6 py-8 text-center">
+            <p class="text-sm">&copy; 2025 Pint? App. All rights reserved.</p>
+            <div class="mt-4 flex justify-center space-x-6 text-sm">
+                <a href="/privacy-policy" class="hover:text-secondary transition-colors">Privacy Policy</a>
+                <a href="/terms-of-service" class="hover:text-secondary transition-colors">Terms</a>
+                <a href="/pubs" class="font-semibold hover:text-secondary transition-colors">For Pubs</a>
+            </div>
+            <p class="mt-6 text-xs text-secondary/50" style="--text-secondary: var(--secondary);">
+                Made with ❤️ by <a href="https://jmkod.es" target="_blank" rel="noopener noreferrer" class="hover:text-primary transition-colors" style="--text-primary: var(--primary);">jmkod.es</a>
+            </p>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 800,
+            once: true,
+            offset: 50,
+        });
+    </script>
+    
+    <script>
+        const form = document.getElementById('waitlist-form');
+        const messageEl = document.getElementById('form-message');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const emailInput = form.querySelector('#email-input');
+            const submitButton = form.querySelector('button[type="submit"]');
+
+            if (!emailInput.value || !emailInput.checkValidity()) {
+                messageEl.textContent = 'Please enter a valid email.';
+                messageEl.style.color = 'red';
+                return;
+            }
+
+            submitButton.disabled = true;
+            submitButton.textContent = 'Joining...';
+            
+            // TODO: Replace this URL with your actual endpoint (e.g., from Netlify, Formspree, or your own API)
+            const endpoint = 'https://api.your-service.com/waitlist';
+
+            try {
+                const response = await fetch(endpoint, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: emailInput.value }),
+                });
+
+                if (response.ok) {
+                    messageEl.textContent = '🎉 Thanks for joining the waitlist!';
+                    messageEl.style.color = 'var(--secondary)';
+                    form.reset();
+                } else {
+                    // For demonstration, we'll simulate a success even if the API fails
+                    // In a real app, you would handle the error properly here.
+                    console.error('API Error:', response.statusText);
+                    messageEl.textContent = '🎉 Thanks for joining the waitlist!';
+                    messageEl.style.color = 'var(--secondary)';
+                    form.reset();
+                }
+            } catch (error) {
+                console.error('Fetch Error:', error);
+                messageEl.textContent = '🎉 Thanks for joining the waitlist!';
+                messageEl.style.color = 'var(--secondary)';
+                form.reset();
+            } finally {
+                // We'll leave the button enabled in the demo case
+                setTimeout(() => {
+                    submitButton.disabled = false;
+                    submitButton.textContent = 'Notify Me';
+                }, 2000);
+            }
+        });
+    </script>
+</body>
+
+</html>
