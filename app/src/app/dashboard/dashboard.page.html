@@ -7,9 +7,9 @@
     <ion-title>Pint?</ion-title>
     <!-- User profile avatar on the right -->
     <ion-buttons slot="end">
-      <ion-button (click)="goToProfile()">
+      <ion-button (click)="goToProfile()" aria-label="Go to profile">
         <ion-avatar class="header-avatar">
-          <img src="https://placehold.co/80x80/f4f1de/4a2c2a?text=Me" />
+          <img src="https://placehold.co/80x80/f4f1de/4a2c2a?text=Me" alt="User profile" />
         </ion-avatar>
       </ion-button>
     </ion-buttons>
@@ -18,9 +18,17 @@
 
 <ion-content [fullscreen]="true">
 
+  <!-- Personalized Greeting Section -->
+  <div class="greeting-section ion-padding" *ngIf="personalizedContent">
+    <div class="greeting-content">
+      <h1 class="greeting-title">{{ personalizedContent.greeting }}</h1>
+      <p class="greeting-subtitle">{{ personalizedContent.encouragement }}</p>
+    </div>
+  </div>
+
   <!-- Section 1: Initiate a Pint -->
   <div class="initiate-section ion-padding">
-    <ion-card class="initiate-card" (click)="initiatePint()">
+    <ion-card class="initiate-card" (click)="initiatePint()" button="true" role="button" tabindex="0" aria-label="Start a new pint session">
       <ion-card-content>
         <div class="card-content-wrapper">
           <div class="text-content">
@@ -28,7 +36,7 @@
             <p>Tap here to pick a pub and get a round started.</p>
           </div>
           <div class="icon-content">
-            <ion-icon name="beer-outline" class="beer-icon"></ion-icon>
+            <ion-icon name="beer-outline" class="beer-icon interactive-icon" aria-hidden="true"></ion-icon>
           </div>
         </div>
       </ion-card-content>
@@ -92,43 +100,59 @@
     </ion-card>
   </div>
 
-  <!-- Conditional rendering: Show message if no pints are nearby -->
+  <!-- Conditional rendering: Show enhanced empty state if no pints are nearby -->
   <div *ngIf="nearbyPints.length === 0" class="empty-state ion-padding">
-    <ion-icon name="moon-outline" class="empty-icon"></ion-icon>
-    <h3>All quiet... for now.</h3>
-    <p>Why not be the first to start a session?</p>
+    <app-empty-state 
+      icon="moon-outline"
+      [location]="currentLocation"
+      [usePersonalization]="true"
+      (actionClicked)="initiatePint()">
+    </app-empty-state>
   </div>
 
-  <!-- List of active pint sessions -->
-  <ion-list *ngIf="nearbyPints.length > 0" class="ion-no-padding">
+  <!-- List of active pint sessions with enhanced accessibility -->
+  <ion-list *ngIf="nearbyPints.length > 0" class="ion-no-padding" role="list" aria-label="Active pint sessions">
     <ion-item 
-      *ngFor="let pint of nearbyPints" 
+      *ngFor="let pint of nearbyPints; trackBy: trackPintById" 
       lines="full" 
       button 
       detail="true" 
       (click)="viewPintSession(pint.id)"
-      [class.featured-session]="pint.isFeatured">
+      [class.featured-session]="pint.isFeatured"
+      role="listitem"
+      [attr.aria-label]="getPintSessionAriaLabel(pint)"
+      tabindex="0"
+      (keydown.enter)="viewPintSession(pint.id)"
+      (keydown.space)="viewPintSession(pint.id)">
       
-      <!-- Featured banner -->
-      <div class="featured-banner" *ngIf="pint.isFeatured">
-        <ion-icon name="star"></ion-icon>
+      <!-- Featured banner with accessibility -->
+      <div class="featured-banner" *ngIf="pint.isFeatured" role="status" aria-label="Featured session">
+        <ion-icon name="star" aria-hidden="true"></ion-icon>
         <span>Featured</span>
       </div>
       
       <ion-avatar slot="start" class="pint-avatar">
-        <img [src]="pint.initiator.profilePictureUrl || 'https://placehold.co/80x80/4a2c2a/f4f1de?text=' + (pint.initiator.displayName.charAt(0).toUpperCase())" />
+        <img 
+          [src]="pint.initiator.profilePictureUrl || 'https://placehold.co/80x80/4a2c2a/f4f1de?text=' + (pint.initiator.displayName.charAt(0).toUpperCase())" 
+          [alt]="pint.initiator.displayName + ' profile picture'" />
       </ion-avatar>
       <ion-label>
         <h3>
           {{ pint.pubName }}
-          <ion-icon name="lock-closed" color="medium" *ngIf="pint.isPrivate" class="private-icon"></ion-icon>
+          <ion-icon 
+            name="lock-closed" 
+            color="medium" 
+            *ngIf="pint.isPrivate" 
+            class="private-icon"
+            aria-label="Private session"
+            role="img"></ion-icon>
         </h3>
         <p>Started by {{ pint.initiator.displayName }}</p>
         <p *ngIf="pint.pub?.address" class="pub-address">{{ pint.pub?.address }}</p>
       </ion-label>
-      <div class="pint-details" slot="end">
-        <span class="distance">0.3 mi</span>
-        <span class="time">{{ getTimeAgo(pint.createdAt) }}</span>
+      <div class="pint-details" slot="end" aria-label="Session details">
+        <span class="distance" aria-label="Distance: 0.3 miles">0.3 mi</span>
+        <span class="time" [attr.aria-label]="'Started ' + getTimeAgo(pint.createdAt)">{{ getTimeAgo(pint.createdAt) }}</span>
       </div>
     </ion-item>
   </ion-list>

@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { NavController } from '@ionic/angular';
+import { ThemeService, ThemeMode } from '../services/theme.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-settings',
@@ -7,21 +9,63 @@ import { NavController } from '@ionic/angular';
   styleUrls: ['./settings.page.scss'],
   standalone: false
 })
-export class SettingsPage implements OnInit {
+export class SettingsPage implements OnInit, OnDestroy {
 
   // Property to hold the state of the notifications toggle
   notificationsEnabled: boolean = true;
+  
+  // Theme properties
+  currentTheme: ThemeMode = 'auto';
+  isDarkMode: boolean = false;
+  
+  private subscriptions = new Subscription();
 
-  constructor(
-    private navCtrl: NavController
-  ) { }
+  // Use inject() function for dependency injection
+  private navCtrl = inject(NavController);
+  private themeService = inject(ThemeService);
 
   ngOnInit() {
+    // Load theme settings
+    this.subscriptions.add(
+      this.themeService.theme$.subscribe(theme => {
+        this.currentTheme = theme;
+        this.isDarkMode = this.themeService.isDarkMode();
+      })
+    );
+    
     // In a real app, you would load the user's saved settings here.
     // For example:
     // this.settingsService.getSettings().subscribe(settings => {
     //   this.notificationsEnabled = settings.notifications;
     // });
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
+  }
+
+  /**
+   * @description
+   * Toggle the app theme between light, dark, and auto
+   */
+  async onThemeChange(): Promise<void> {
+    await this.themeService.toggleTheme();
+  }
+
+  /**
+   * @description
+   * Get display text for current theme
+   */
+  getThemeDisplayText(): string {
+    switch (this.currentTheme) {
+      case 'light':
+        return 'Light Mode';
+      case 'dark':
+        return 'Dark Mode';
+      case 'auto':
+      default:
+        return 'Auto (System)';
+    }
   }
 
   /**
