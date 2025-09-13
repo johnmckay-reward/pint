@@ -21,6 +21,9 @@ A social drinking application that connects people through pub meetups. Create a
    
    # Partner Dashboard
    cd ../pint-dashboard && npm install
+   
+   # Admin Dashboard
+   cd ../admin-dashboard && npm install
    ```
 
 2. **Database setup:**
@@ -37,13 +40,18 @@ A social drinking application that connects people through pub meetups. Create a
    
    # Start partner dashboard (terminal 3)
    cd pint-dashboard && npm start
+   
+   # Start admin dashboard (terminal 4)
+   cd admin-dashboard && npm start
    ```
 
 ## Project Structure
 
 - `app/` - Angular/Ionic frontend application (main user app)
 - `api/` - Node.js/Express backend API
-- `pint-dashboard/` - Angular partner dashboard
+- `pint-dashboard/` - Angular partner dashboard for pub owners
+- `admin-dashboard/` - Angular admin dashboard for platform management
+- `website/` - Marketing website and pub partner onboarding
 
 ## Tech Stack
 
@@ -62,6 +70,7 @@ A social drinking application that connects people through pub meetups. Create a
 # Build applications
 cd app && npm run build
 cd ../pint-dashboard && npm run build
+cd ../admin-dashboard && npm run build
 
 # Run tests
 cd app && npm test
@@ -119,6 +128,8 @@ cd app && npm run lint
 3. **Deploy Frontend:**
    - Serve built files via CDN or web server
    - Configure proper routing for SPA
+   - Deploy partner dashboard at partner subdomain
+   - Deploy admin dashboard (internal access only)
 
 ### Monitoring
 
@@ -134,9 +145,11 @@ cd app && npm run lint
 - Real-time session management
 - Mobile-responsive design
 - Partner dashboard for pub owners
+- Admin dashboard for platform management
 - Subscription management
 - Achievement system
 - Real-time chat functionality
+- Pub partner onboarding and approval system
 
 ## Development Guidelines
 

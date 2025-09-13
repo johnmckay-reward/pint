@@ -1,0 +1,74 @@
+<div class="min-h-screen bg-gray-50">
+  <!-- Navigation -->
+  <nav class="bg-white shadow">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between h-16">
+        <div class="flex items-center">
+          <svg class="h-8 w-8 mr-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+            <defs><linearGradient id="beerGradient" x1="0.5" y1="0" x2="0.5" y2="1"><stop offset="0%" stop-color="#ecab37" /><stop offset="100%" stop-color="#ce8f1d" /></linearGradient></defs>
+            <path fill="#4a2c2a" d="M400 224h48v128h-48z" /><path fill="#4a2c2a" d="M398.6 128H113.4a16 16 0 00-15.9 18.2L112 448h288l14.5-301.8A16 16 0 00398.6 128z" /><path fill="url(#beerGradient)" d="M130.3 192h251.4l-11.4 224H141.7z" /><path d="M112 192h288" stroke="#5c413f" stroke-width="4" /><path fill="#FFFFFF" d="M112 192 C 160 150, 200 180, 256 160 C 310 140, 350 150, 400 192 Z" />
+          </svg>
+          <span class="text-xl font-bold text-gray-800">Pint? Admin</span>
+        </div>
+        
+        <div class="flex items-center space-x-4">
+          <span class="text-gray-700">Welcome, {{ currentUser?.displayName || 'Admin' }}</span>
+          <button 
+            (click)="logout()"
+            class="bg-gray-600 text-white px-4 py-2 rounded-md text-sm hover:bg-gray-700"
+          >
+            Logout
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Sidebar and main content -->
+  <div class="flex">
+    <!-- Sidebar -->
+    <div class="w-64 bg-white shadow-sm min-h-screen">
+      <nav class="mt-8">
+        <div class="px-4">
+          <ul class="space-y-2">
+            <li>
+              <a routerLink="/dashboard/analytics" 
+                 routerLinkActive="bg-amber-100 text-amber-700"
+                 class="flex items-center px-4 py-2 text-gray-700 rounded-md hover:bg-gray-100">
+                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                </svg>
+                Analytics
+              </a>
+            </li>
+            <li>
+              <a routerLink="/dashboard/users" 
+                 routerLinkActive="bg-amber-100 text-amber-700"
+                 class="flex items-center px-4 py-2 text-gray-700 rounded-md hover:bg-gray-100">
+                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"/>
+                </svg>
+                Users
+              </a>
+            </li>
+            <li>
+              <a routerLink="/dashboard/pub-claims" 
+                 routerLinkActive="bg-amber-100 text-amber-700"
+                 class="flex items-center px-4 py-2 text-gray-700 rounded-md hover:bg-gray-100">
+                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                </svg>
+                Pub Claims
+              </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+
+    <!-- Main content -->
+    <div class="flex-1 p-8">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
