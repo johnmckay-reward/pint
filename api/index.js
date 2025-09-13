@@ -5,7 +5,8 @@ const { Server } = require('socket.io');
 const jwt = require('jsonwebtoken');
 
 // Import everything from the models/index.js file
-const { sequelize, User, PintSession, ChatMessage, Friendship } = require('./models');
+const { sequelize, User, PintSession, ChatMessage, Friendship, Achievement, UserAchievement } = require('./models');
+const AchievementsService = require('./services/achievementsService');
 const userRoutes = require('./routes/users');
 const pintSessionRoutes = require('./routes/pintSessions');
 const authRoutes = require('./routes/auth');
@@ -189,6 +190,10 @@ async function init() {
   // Useful in development, but use with caution.
   await sequelize.sync({ force: true });
   console.log('All models were synchronized successfully. 🔄');
+
+  // Initialize achievements in the database
+  await AchievementsService.initializeAchievements();
+  console.log('Achievements initialized successfully. 🏆');
 
   app.use('/api/auth', authRoutes);
   app.use('/api/users', userRoutes);

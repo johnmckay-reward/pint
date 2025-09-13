@@ -2,6 +2,7 @@ const express = require('express');
 const { PintSession, User, ChatMessage, sequelize } = require('../models');
 const authMiddleware = require('../middleware/auth');
 const { Op } = require('sequelize');
+const AchievementsService = require('../services/achievementsService');
 
 const router = express.Router();
 
@@ -36,6 +37,9 @@ router.post('/', authMiddleware, async (req, res) => {
         attributes: ['id', 'displayName', 'profilePictureUrl']
       }
     });
+
+    // Check for achievements after creating session
+    await AchievementsService.checkSessionCreateAchievements(initiatorId);
 
     res.status(201).json(sessionWithInitiator);
   } catch (error) {
@@ -198,6 +202,10 @@ router.post('/:id/join', authMiddleware, async (req, res) => {
 
     // Add user as attendee
     await session.addAttendee(userId);
+    
+    // Check for achievements after joining session
+    await AchievementsService.checkSessionJoinAchievements(userId);
+    
     res.status(200).json({ message: 'Successfully joined session!' });
   } catch (error) {
     res.status(500).json({ error: 'Failed to join session', details: error.message });
@@ -219,6 +227,10 @@ router.post('/:id/attendees', authMiddleware, async (req, res) => {
 
     // `addAttendee` is a special method Sequelize creates for us
     await session.addAttendee(attendeeId);
+    
+    // Check for achievements after joining session
+    await AchievementsService.checkSessionJoinAchievements(attendeeId);
+    
     res.status(200).json({ message: 'Successfully joined session!' });
   } catch (error) {
     res.status(500).json({ error: 'Failed to join session', details: error.message });

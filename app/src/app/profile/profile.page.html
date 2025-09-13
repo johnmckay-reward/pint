@@ -45,6 +45,9 @@
     </div>
   </div>
 
+  <!-- Achievements Section -->
+  <app-achievements [userId]="user.id" *ngIf="user"></app-achievements>
+
   <!-- Action List Section -->
   <ion-list class="action-list" lines="full">
     <ion-list-header>

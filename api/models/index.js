@@ -3,6 +3,8 @@ const User = require('./user');
 const PintSession = require('./pintSession');
 const ChatMessage = require('./chatMessage');
 const Friendship = require('./friendship');
+const Achievement = require('./achievement');
+const UserAchievement = require('./userAchievement');
 
 // 1. One-to-Many Relationship: A User can initiate many sessions.
 // This adds an `initiatorId` foreign key to the PintSession model.
@@ -66,11 +68,45 @@ Friendship.belongsTo(User, {
 });
 
 
+// 5. Achievement Relationships
+// User can have many achievements through UserAchievement
+User.belongsToMany(Achievement, {
+  through: UserAchievement,
+  foreignKey: 'userId',
+  otherKey: 'achievementId',
+  as: 'achievements'
+});
+Achievement.belongsToMany(User, {
+  through: UserAchievement,
+  foreignKey: 'achievementId',
+  otherKey: 'userId',
+  as: 'users'
+});
+
+// Direct relationships for easier querying
+User.hasMany(UserAchievement, {
+  foreignKey: 'userId',
+  as: 'userAchievements'
+});
+UserAchievement.belongsTo(User, {
+  foreignKey: 'userId'
+});
+
+Achievement.hasMany(UserAchievement, {
+  foreignKey: 'achievementId'
+});
+UserAchievement.belongsTo(Achievement, {
+  foreignKey: 'achievementId'
+});
+
+
 // Export all models and the sequelize connection
 module.exports = {
   sequelize,
   User,
   PintSession,
   ChatMessage,
-  Friendship
+  Friendship,
+  Achievement,
+  UserAchievement
 };

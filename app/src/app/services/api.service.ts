@@ -77,6 +77,20 @@ export interface FriendRequestsResponse {
   };
 }
 
+export interface Achievement {
+  id: string;
+  name: string;
+  description: string;
+  iconUrl: string;
+  key: string;
+  dateEarned: string;
+}
+
+export interface UserAchievementsResponse {
+  achievements: Achievement[];
+  count: number;
+}
+
 export interface UserSearchResponse {
   users: User[];
   count: number;
@@ -314,5 +328,14 @@ export class ApiService {
    */
   getFriendRequests(): Observable<FriendRequestsResponse> {
     return this.http.get<FriendRequestsResponse>(`${this.apiUrl}/api/friends/requests`);
+  }
+
+  /**
+   * Get achievements for a specific user.
+   * @param userId The ID of the user to get achievements for.
+   * @returns Observable with the user's achievements.
+   */
+  getUserAchievements(userId: string): Observable<UserAchievementsResponse> {
+    return this.http.get<UserAchievementsResponse>(`${this.apiUrl}/api/users/${userId}/achievements`);
   }
 }
