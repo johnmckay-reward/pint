@@ -1,3 +1,23 @@
 {
-  "typescript.preferences.autoImportFileExcludePatterns": ["@ionic/angular/common", "@ionic/angular/standalone"]
+  "typescript.preferences.autoImportFileExcludePatterns": ["@ionic/angular/common", "@ionic/angular/standalone"],
+  "github.copilot.enable": {
+    "*": true,
+    "yaml": false,
+    "plaintext": false
+  },
+  "github.copilot.chat.localeOverride": "en",
+  "github.copilot.editor.enableAutoCompletions": true,
+  "files.associations": {
+    "*.ts": "typescript",
+    "*.js": "javascript",
+    "*.scss": "scss"
+  },
+  "typescript.suggest.autoImports": true,
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": "explicit"
+  },
+  "angular.experimental-ivy": true,
+  "ionic.defaultProject": "app"
 }

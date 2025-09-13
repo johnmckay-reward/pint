@@ -1,5 +1,12 @@
 {
     "recommendations": [
-       "Webnative.webnative"
+       "github.copilot",
+       "github.copilot-chat",
+       "angular.ng-template",
+       "ms-vscode.vscode-typescript-next",
+       "ionic.ionic",
+       "dbaeumer.vscode-eslint",
+       "bradlc.vscode-tailwindcss",
+       "esbenp.prettier-vscode"
     ]
 }
