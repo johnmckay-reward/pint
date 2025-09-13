@@ -77,4 +77,29 @@ export class SettingsPage implements OnInit {
     console.log('Opening terms of service...');
     // TODO: Open a web browser with the terms of service URL.
   }
+
+  /**
+   * @description
+   * Opens email client to contact support.
+   */
+  contactSupport(): void {
+    console.log('Opening support email...');
+    const supportEmail = 'support@pint-app.com';
+    const subject = 'Pint? App Support Request';
+    const body = 'Hi there,\n\nI need help with:\n\n[Please describe your issue here]\n\nThanks!';
+    
+    const mailtoUrl = `mailto:${supportEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    window.open(mailtoUrl, '_system');
+  }
+
+  /**
+   * @description
+   * Opens FAQ/Help page.
+   */
+  viewFAQ(): void {
+    console.log('Opening FAQ...');
+    // In a real app, you could navigate to an in-app FAQ page or open a web URL
+    const faqUrl = 'https://pint-app.com/faq';
+    window.open(faqUrl, '_blank');
+  }
 }

@@ -1,0 +1,18 @@
+User-agent: *
+Allow: /
+
+# Allow all pages to be crawled
+Allow: /index.html
+Allow: /pubs.html
+Allow: /privacy-policy.html
+Allow: /terms-of-service.html
+
+# Disallow any admin or API directories if they exist
+Disallow: /admin/
+Disallow: /api/
+
+# Sitemap location
+Sitemap: https://www.your-app-domain.com/sitemap.xml
+
+# Crawl delay (optional - adjust as needed)
+Crawl-delay: 1
