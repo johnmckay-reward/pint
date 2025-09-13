@@ -1,6 +1,7 @@
 const express = require('express');
 const { PintSession, User, ChatMessage, sequelize } = require('../models');
 const authMiddleware = require('../middleware/auth');
+const { Op } = require('sequelize');
 
 const router = express.Router();
 
@@ -92,10 +93,43 @@ router.get('/nearby', async (req, res) => {
   }
 });
 
-// GET /sessions - Get a list of all sessions
+// GET /sessions - Get a list of all sessions with optional filtering
 router.get('/', async (req, res) => {
   try {
+    const { pubName, date } = req.query;
+    
+    // Build where clause based on filters
+    const whereClause = {};
+    
+    // Filter by pub name (case-insensitive partial match)
+    if (pubName && pubName.trim()) {
+      whereClause.pubName = {
+        [Op.iLike]: `%${pubName.trim()}%`
+      };
+    }
+    
+    // Filter by date (sessions created on a specific date)
+    if (date) {
+      try {
+        const filterDate = new Date(date);
+        // Set to start of day (00:00:00)
+        const startOfDay = new Date(filterDate);
+        startOfDay.setHours(0, 0, 0, 0);
+        
+        // Set to end of day (23:59:59)
+        const endOfDay = new Date(filterDate);
+        endOfDay.setHours(23, 59, 59, 999);
+        
+        whereClause.createdAt = {
+          [Op.between]: [startOfDay, endOfDay]
+        };
+      } catch (dateError) {
+        return res.status(400).json({ error: 'Invalid date format. Use YYYY-MM-DD format.' });
+      }
+    }
+
     const sessions = await PintSession.findAll({
+      where: whereClause,
       // "Eager load" the initiator's data along with each session
       include: {
         model: User,
@@ -104,7 +138,15 @@ router.get('/', async (req, res) => {
       },
       order: [['createdAt', 'DESC']] // Show newest first
     });
-    res.json(sessions);
+    
+    res.json({
+      sessions,
+      count: sessions.length,
+      filters: {
+        pubName: pubName || null,
+        date: date || null
+      }
+    });
   } catch (error) {
     res.status(500).json({ error: 'Failed to retrieve sessions', details: error.message });
   }

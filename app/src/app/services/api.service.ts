@@ -83,6 +83,15 @@ export interface UserSearchResponse {
   query: string;
 }
 
+export interface FilteredSessionsResponse {
+  sessions: PintSession[];
+  count: number;
+  filters: {
+    pubName: string | null;
+    date: string | null;
+  };
+}
+
 export interface CreateSessionRequest {
   pubName: string;
   eta: string;
@@ -193,6 +202,26 @@ export class ApiService {
    */
   getAllSessions(): Observable<PintSession[]> {
     return this.http.get<PintSession[]>(`${this.apiUrl}/api/sessions`);
+  }
+
+  /**
+   * Fetches all pint sessions with optional filtering.
+   * @param pubName Optional pub name filter.
+   * @param date Optional date filter in YYYY-MM-DD format.
+   * @returns Observable with filtered sessions.
+   */
+  getFilteredSessions(pubName?: string, date?: string): Observable<FilteredSessionsResponse> {
+    let params = new HttpParams();
+    
+    if (pubName && pubName.trim()) {
+      params = params.set('pubName', pubName.trim());
+    }
+    
+    if (date && date.trim()) {
+      params = params.set('date', date.trim());
+    }
+    
+    return this.http.get<FilteredSessionsResponse>(`${this.apiUrl}/api/sessions`, { params });
   }
 
   /**
