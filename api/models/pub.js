@@ -20,6 +20,26 @@ const Pub = sequelize.define('Pub', {
     type: DataTypes.ENUM('none', 'basic', 'premium'),
     allowNull: false,
     defaultValue: 'none'
+  },
+  description: {
+    type: DataTypes.TEXT,
+    allowNull: true
+  },
+  phoneNumber: {
+    type: DataTypes.STRING,
+    allowNull: true
+  },
+  openingHours: {
+    type: DataTypes.JSON,
+    allowNull: true
+  },
+  photoUrls: {
+    type: DataTypes.JSON,
+    allowNull: true
+  },
+  location: {
+    type: sequelize.getDialect() === 'postgres' ? DataTypes.GEOMETRY('POINT') : DataTypes.JSON,
+    allowNull: true
   }
 }, {
   tableName: 'pubs'
