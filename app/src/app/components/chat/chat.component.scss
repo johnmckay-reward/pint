@@ -1,3 +1,5 @@
+// Optimized Chat Component SCSS - Reduced size and complexity
+
 .chat-container {
   display: flex;
   flex-direction: column;
@@ -14,28 +16,23 @@
   color: white;
   border-radius: 8px 8px 0 0;
 
-  h3 {
-    margin: 0;
-    font-size: 1.1rem;
-    font-weight: 600;
-  }
-
-  ion-badge {
-    font-size: 0.75rem;
-  }
+  h3 { margin: 0; font-size: 1.1rem; font-weight: 600; }
+  ion-badge { font-size: 0.75rem; }
 }
 
-.loading-state {
+// States
+.loading-state, .empty-state {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: 40px 20px;
-  
-  p {
-    margin-top: 16px;
-    color: var(--ion-color-medium);
-  }
+  text-align: center;
+  color: var(--ion-color-medium);
+
+  p { margin-top: 16px; }
+  .empty-icon { font-size: 4rem; opacity: 0.8; }
+  h3 { margin-top: 16px; font-weight: 500; color: var(--ion-color-secondary); }
 }
 
 .messages-container {
@@ -46,55 +43,43 @@
   max-height: 400px;
 }
 
+// Message layout
 .message-wrapper {
   margin-bottom: 16px;
 
-  &.own-message {
-    display: flex;
-    justify-content: flex-end;
-  }
-
-  &.other-message {
-    display: flex;
-    justify-content: flex-start;
-  }
+  &.own-message { display: flex; justify-content: flex-end; }
+  &.other-message { display: flex; justify-content: flex-start; }
 }
 
 .message {
   display: flex;
   align-items: flex-start;
   max-width: 80%;
-  
-  &.own {
-    flex-direction: row-reverse;
-  }
+
+  &.own { flex-direction: row-reverse; }
 }
 
 .message-avatar {
-  width: 32px;
+  width: 32px; 
   height: 32px;
   margin: 0 8px;
 }
 
+// Message content styling
 .message-content {
   flex: 1;
   background: white;
   border-radius: 16px;
   padding: 8px 12px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
   position: relative;
 
   .own-message & {
     background: var(--ion-color-primary);
     color: white;
-    
-    .message-time {
-      color: rgba(255, 255, 255, 0.8);
-    }
-    
-    .sender-name {
-      color: rgba(255, 255, 255, 0.9);
-    }
+
+    .message-time { color: rgba(255,255,255,0.8); }
+    .sender-name { color: rgba(255,255,255,0.9); }
   }
 }
 
@@ -105,57 +90,19 @@
   margin-bottom: 4px;
   font-size: 0.75rem;
 
-  .own-message & {
-    flex-direction: row-reverse;
-  }
+  .own-message & { flex-direction: row-reverse; }
 }
 
-.sender-name {
-  font-weight: 600;
-  color: var(--ion-color-primary);
+.sender-name { font-weight: 600; color: var(--ion-color-primary); }
+.message-time { color: var(--ion-color-medium); font-size: 0.7rem; }
+.message-text { 
+  font-size: 0.9rem; 
+  color: var(--ion-color-medium); 
+  line-height: 1.4; 
+  word-wrap: break-word; 
 }
 
-.message-time {
-  color: var(--ion-color-medium);
-  font-size: 0.7rem;
-}
-
-.message-text {
-  font-size: 0.9rem;
-  color: var(--ion-color-medium);
-  line-height: 1.4;
-  word-wrap: break-word;
-}
-
-.empty-state {
-  text-align: center;
-  margin-top: 10vh;
-  color: var(--ion-color-medium);
-  padding: 40px 20px;
-
-  .empty-icon {
-    font-size: 4rem;
-    opacity: 0.8;
-  }
-
-  h3 {
-    margin-top: 16px;
-    font-weight: 500;
-    color: var(--ion-color-secondary);
-  }
-
-  ion-icon {
-    margin-bottom: 16px;
-    opacity: 0.6;
-  }
-
-  p {
-    margin: 0;
-    font-size: 0.9rem;
-    color: var(--ion-color-medium);
-  }
-}
-
+// Input area
 .message-input-container {
   border-top: 1px solid var(--ion-color-light);
   background: white;
@@ -164,18 +111,13 @@
 
 .message-input-item {
   --background: transparent;
-  --padding-start: 16px;
-  --padding-end: 8px;
-  --padding-top: 12px;
-  --padding-bottom: 12px;
+  --padding-start: 16px; --padding-end: 8px;
+  --padding-top: 12px; --padding-bottom: 12px;
 
   ion-textarea {
     --background: var(--ion-color-light);
-    --color: var(--ion-color-dark);
-    --padding-start: 12px;
-    --padding-end: 12px;
-    --padding-top: 8px;
-    --padding-bottom: 8px;
+    --padding-start: 12px; --padding-end: 12px;
+    --padding-top: 8px; --padding-bottom: 8px;
     border-radius: 20px;
     font-size: 0.9rem;
   }
@@ -183,20 +125,13 @@
   ion-button {
     --color: var(--ion-color-primary);
     margin-left: 8px;
-    
-    &[disabled] {
-      --color: var(--ion-color-medium);
-    }
+
+    &[disabled] { --color: var(--ion-color-medium); }
   }
 }
 
+// Mobile optimization
 @media (max-width: 768px) {
-  .message {
-    max-width: 90%;
-  }
-  
-  .message-avatar {
-    width: 28px;
-    height: 28px;
-  }
+  .message { max-width: 90%; }
+  .message-avatar { width: 28px; height: 28px; }
 }
