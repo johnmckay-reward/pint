@@ -1,13 +1,4 @@
-/*
- * Pint? App: Dashboard Page Styles
- * Description: Styles for the main dashboard screen.
- */
-
-ion-toolbar {
-  --background: var(--ion-color-tertiary);
-}
-
-ion-content {
+ion-toolbar, ion-content {
   --background: var(--ion-color-tertiary);
 }
 
@@ -16,8 +7,6 @@ ion-content {
   height: 32px;
   border: 2px solid var(--ion-color-primary);
 }
-
-// -------- Initiate Card --------
 
 .initiate-section {
   padding-bottom: 0;
@@ -28,7 +17,7 @@ ion-content {
   color: var(--ion-color-primary-contrast);
   cursor: pointer;
   transition: transform 0.2s ease-in-out;
-  margin: 0; // Remove default card margins
+  margin: 0;
 
   &:active {
     transform: scale(0.99);
@@ -57,11 +46,8 @@ ion-content {
   }
 }
 
-// -------- List Header --------
-
 .list-header {
-  margin-top: 24px;
-  margin-bottom: 8px;
+  margin: 24px 0 8px;
 
   .header-content {
     display: flex;
@@ -90,8 +76,6 @@ ion-content {
     margin: 0;
   }
 }
-
-// -------- Filter Section --------
 
 .filter-section {
   padding: 0 16px 16px;
@@ -152,8 +136,6 @@ ion-content {
   }
 }
 
-// -------- Pint List --------
-
 ion-list {
   background: transparent;
 }
@@ -162,8 +144,7 @@ ion-item {
   --background: transparent;
   --padding-start: 16px;
   --inner-padding-end: 16px;
-  padding-top: 8px;
-  padding-bottom: 8px;
+  padding: 8px 0;
 
   .pint-avatar {
     width: 48px;
@@ -176,8 +157,8 @@ ion-item {
   }
 
   ion-label p {
-    color: var(--ion-color-medium);
     font-size: 0.9rem;
+    color: var(--ion-color-medium);
   }
 }
 
@@ -197,8 +178,6 @@ ion-item {
   }
 }
 
-// -------- Empty State --------
-
 .empty-state {
   text-align: center;
   margin-top: 10vh;
@@ -211,17 +190,15 @@ ion-item {
 
   h3 {
     margin-top: 16px;
-    font-family: 'Poppins', sans-serif; // Use body font for a softer feel
     font-weight: 500;
     color: var(--ion-color-secondary);
   }
 
   p {
     font-size: 0.9rem;
+    color: var(--ion-color-medium);
   }
 }
-
-// -------- Featured Sessions --------
 
 .featured-session {
   position: relative;
@@ -271,9 +248,7 @@ ion-item {
   margin-top: 2px;
 }
 
-
-// -------- Dark Mode Adjustments --------
-
+// Dark Mode
 body.dark {
   ion-toolbar, ion-content {
     --background: #161616;

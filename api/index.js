@@ -4,6 +4,23 @@ const http = require('http');
 const { Server } = require('socket.io');
 const jwt = require('jsonwebtoken');
 
+// Initialize Sentry for error tracking
+const Sentry = require('@sentry/node');
+
+// Initialize Sentry ASAP
+Sentry.init({
+  dsn: process.env.SENTRY_DSN || '', // Set SENTRY_DSN environment variable in production
+  environment: process.env.NODE_ENV || 'development',
+  tracesSampleRate: 0.1, // Capture 10% of transactions for performance monitoring
+  beforeSend(event, hint) {
+    // Don't send events in development unless explicitly enabled
+    if (process.env.NODE_ENV === 'development' && !process.env.SENTRY_ENABLE_DEV) {
+      return null;
+    }
+    return event;
+  }
+});
+
 // Import everything from the models/index.js file
 const { sequelize, User, PintSession, ChatMessage, Friendship, Achievement, UserAchievement, Pub, PubOwner } = require('./models');
 const AchievementsService = require('./services/achievementsService');
@@ -24,6 +41,11 @@ const io = new Server(server, {
     methods: ["GET", "POST"]
   }
 });
+
+// Sentry request handler must be the first middleware
+app.use(Sentry.Handlers.requestHandler());
+// Sentry tracing middleware
+app.use(Sentry.Handlers.tracingHandler());
 
 app.use(express.json());
 app.use(cors());
@@ -210,10 +232,26 @@ async function init() {
     res.json({ message: 'Welcome to the Pint? API! 🍻' });
   });
 
+  // Sentry error handler must be before any other error middleware and after all controllers
+  app.use(Sentry.Handlers.errorHandler());
+
+  // Global error handler
+  app.use((err, req, res, next) => {
+    console.error('Unhandled error:', err);
+    res.status(500).json({ 
+      error: 'Internal server error',
+      message: process.env.NODE_ENV === 'development' ? err.message : 'Something went wrong'
+    });
+  });
+
   server.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
     console.log('Socket.IO server is ready for connections 🔌');
   });
 }
 
-init();
+init().catch(err => {
+  console.error('Failed to initialize server:', err);
+  Sentry.captureException(err);
+  process.exit(1);
+});

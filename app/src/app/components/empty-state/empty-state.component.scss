@@ -1,0 +1,42 @@
+.empty-state {
+  text-align: center;
+  padding: 3rem 1.5rem;
+  color: var(--ion-color-medium);
+
+  .empty-icon {
+    margin-bottom: 1.5rem;
+    
+    ion-icon {
+      font-size: 4rem;
+      opacity: 0.6;
+      color: var(--ion-color-medium);
+    }
+  }
+
+  h3 {
+    margin: 0 0 1rem 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--ion-color-secondary);
+  }
+
+  p {
+    margin: 0 0 2rem 0;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    max-width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  ion-button {
+    margin-top: 1rem;
+  }
+}
+
+// Dark mode adjustments
+body.dark .empty-state {
+  h3 {
+    color: var(--ion-color-tertiary);
+  }
+}

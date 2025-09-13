@@ -1,8 +1,9 @@
-import { NgModule } from '@angular/core';
+import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
+import * as Sentry from '@sentry/angular';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -20,6 +21,7 @@ import { PintDetailsPageModule } from './pint-details/pint-details.module';
 import { FriendsPageModule } from './friends/friends.module';
 import { provideHttpClient, withInterceptors, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './services/auth.interceptor';
+import { ErrorInterceptor } from './services/error.interceptor';
 
 @NgModule({
   declarations: [AppComponent],
@@ -41,6 +43,13 @@ import { AuthInterceptor } from './services/auth.interceptor';
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    { 
+      provide: ErrorHandler,
+      useValue: Sentry.createErrorHandler({
+        showDialog: false, // Don't show Sentry dialog in production
+      }),
+    },
     provideHttpClient()
   ],
   bootstrap: [AppComponent],
