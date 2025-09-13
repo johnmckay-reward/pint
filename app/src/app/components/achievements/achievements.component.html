@@ -1,0 +1,32 @@
+<!-- Achievements Section -->
+<div class="achievements-section" *ngIf="!isLoading && achievements.length > 0">
+  <ion-list class="achievements-list" lines="none">
+    <ion-list-header>
+      <h3>Achievements</h3>
+    </ion-list-header>
+    
+    <div class="achievements-grid">
+      <div class="achievement-badge" *ngFor="let achievement of achievements">
+        <div class="badge-icon">{{ achievement.iconUrl }}</div>
+        <div class="badge-info">
+          <h4>{{ achievement.name }}</h4>
+          <p>{{ achievement.description }}</p>
+          <small>Earned {{ formatDate(achievement.dateEarned) }}</small>
+        </div>
+      </div>
+    </div>
+  </ion-list>
+</div>
+
+<!-- No Achievements State -->
+<div class="no-achievements" *ngIf="!isLoading && achievements.length === 0">
+  <ion-icon name="trophy-outline" color="medium"></ion-icon>
+  <p>No achievements yet</p>
+  <small>Join sessions and explore to unlock achievements!</small>
+</div>
+
+<!-- Loading State -->
+<div class="loading-achievements" *ngIf="isLoading">
+  <ion-spinner></ion-spinner>
+  <p>Loading achievements...</p>
+</div>

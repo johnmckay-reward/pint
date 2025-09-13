@@ -2,6 +2,7 @@ const express = require('express');
 const { User } = require('../models');
 const authMiddleware = require('../middleware/auth');
 const { Op } = require('sequelize');
+const AchievementsService = require('../services/achievementsService');
 
 const router = express.Router();
 
@@ -84,6 +85,22 @@ router.get('/search', authMiddleware, async (req, res) => {
   } catch (error) {
     console.error('Error searching users:', error);
     res.status(500).json({ error: 'Failed to search users', details: error.message });
+  }
+});
+
+// GET /users/:id/achievements - Get achievements for a specific user
+router.get('/:id/achievements', async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const achievements = await AchievementsService.getUserAchievements(userId);
+
+    res.json({
+      achievements,
+      count: achievements.length
+    });
+  } catch (error) {
+    console.error('Error getting user achievements:', error);
+    res.status(500).json({ error: 'Failed to retrieve user achievements', details: error.message });
   }
 });
 

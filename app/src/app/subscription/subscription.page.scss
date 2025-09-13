@@ -1,0 +1,152 @@
+.loading-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 64px 16px;
+  text-align: center;
+}
+
+.loading-section ion-spinner {
+  margin-bottom: 16px;
+}
+
+.loading-section p {
+  color: var(--ion-color-medium);
+}
+
+.premium-status {
+  padding: 16px;
+}
+
+.premium-badge {
+  background: linear-gradient(135deg, var(--ion-color-warning) 0%, var(--ion-color-warning-shade) 100%);
+  border-radius: 16px;
+  padding: 32px 24px;
+  text-align: center;
+  color: white;
+  margin-bottom: 24px;
+}
+
+.premium-badge ion-icon {
+  font-size: 3rem;
+  margin-bottom: 16px;
+}
+
+.premium-badge h2 {
+  margin: 0 0 8px 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.premium-badge p {
+  margin: 0;
+  opacity: 0.9;
+}
+
+.subscription-offer {
+  padding: 16px;
+}
+
+.hero-section {
+  text-align: center;
+  padding: 32px 0;
+}
+
+.hero-icon {
+  font-size: 4rem;
+  margin-bottom: 16px;
+}
+
+.hero-section h1 {
+  margin: 0 0 8px 0;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--ion-color-primary);
+}
+
+.hero-subtitle {
+  margin: 0;
+  font-size: 1.125rem;
+  color: var(--ion-color-medium);
+  line-height: 1.4;
+}
+
+.pricing-card {
+  background: var(--ion-color-light);
+  border-radius: 16px;
+  padding: 24px;
+  text-align: center;
+  margin: 24px 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.price {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  margin-bottom: 8px;
+}
+
+.currency {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--ion-color-primary);
+}
+
+.amount {
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--ion-color-primary);
+  margin: 0 4px;
+}
+
+.period {
+  font-size: 1.125rem;
+  color: var(--ion-color-medium);
+}
+
+.price-description {
+  margin: 0;
+  color: var(--ion-color-medium);
+  font-size: 0.875rem;
+}
+
+.features-list {
+  margin: 24px 0;
+}
+
+.features-list ion-item {
+  --padding-start: 0;
+  --inner-padding-end: 0;
+}
+
+.features-list ion-label h3 {
+  margin: 0 0 4px 0;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.features-list ion-label p {
+  margin: 0;
+  color: var(--ion-color-medium);
+  font-size: 0.875rem;
+}
+
+.action-section {
+  padding: 24px 0;
+}
+
+.action-section ion-button {
+  margin-bottom: 16px;
+  --border-radius: 12px;
+  height: 56px;
+  font-weight: 600;
+}
+
+.terms-text {
+  font-size: 0.75rem;
+  color: var(--ion-color-medium);
+  text-align: center;
+  line-height: 1.4;
+  margin: 0;
+}

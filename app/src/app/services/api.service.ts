@@ -25,6 +25,7 @@ export interface User {
   email: string;
   favouriteTipple?: string;
   profilePictureUrl?: string;
+  subscriptionTier?: 'free' | 'plus';
 }
 
 export interface PintSession {
@@ -35,6 +36,16 @@ export interface PintSession {
   initiator: User;
   attendees?: User[];
   createdAt: string;
+  isPrivate?: boolean;
+  isFeatured?: boolean;
+  pub?: Pub;
+}
+
+export interface Pub {
+  id: string;
+  name: string;
+  address?: string;
+  partnershipTier: 'none' | 'basic' | 'premium';
 }
 
 export interface ChatMessage {
@@ -77,6 +88,30 @@ export interface FriendRequestsResponse {
   };
 }
 
+export interface Achievement {
+  id: string;
+  name: string;
+  description: string;
+  iconUrl: string;
+  key: string;
+  dateEarned: string;
+}
+
+export interface UserAchievementsResponse {
+  achievements: Achievement[];
+  count: number;
+}
+
+export interface SubscriptionStatus {
+  subscriptionTier: 'free' | 'plus';
+  isPremium: boolean;
+}
+
+export interface CheckoutSessionResponse {
+  sessionId: string;
+  url: string;
+}
+
 export interface UserSearchResponse {
   users: User[];
   count: number;
@@ -96,6 +131,7 @@ export interface CreateSessionRequest {
   pubName: string;
   eta: string;
   location: { lat: number; lng: number };
+  isPrivate?: boolean;
 }
 
 export interface LoginRequest {
@@ -314,5 +350,30 @@ export class ApiService {
    */
   getFriendRequests(): Observable<FriendRequestsResponse> {
     return this.http.get<FriendRequestsResponse>(`${this.apiUrl}/api/friends/requests`);
+  }
+
+  /**
+   * Get achievements for a specific user.
+   * @param userId The ID of the user to get achievements for.
+   * @returns Observable with the user's achievements.
+   */
+  getUserAchievements(userId: string): Observable<UserAchievementsResponse> {
+    return this.http.get<UserAchievementsResponse>(`${this.apiUrl}/api/users/${userId}/achievements`);
+  }
+
+  /**
+   * Get the current user's subscription status.
+   * @returns Observable with subscription status.
+   */
+  getSubscriptionStatus(): Observable<SubscriptionStatus> {
+    return this.http.get<SubscriptionStatus>(`${this.apiUrl}/api/subscriptions/status`);
+  }
+
+  /**
+   * Create a Stripe checkout session for premium subscription.
+   * @returns Observable with checkout session details.
+   */
+  createCheckoutSession(): Observable<CheckoutSessionResponse> {
+    return this.http.post<CheckoutSessionResponse>(`${this.apiUrl}/api/subscriptions/create-checkout-session`, {});
   }
 }

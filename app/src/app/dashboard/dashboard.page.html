@@ -75,6 +75,14 @@
         </ion-item>
 
         <div class="filter-actions">
+          <ion-item lines="none" class="filter-toggle">
+            <ion-checkbox 
+              [(ngModel)]="showFeaturedOnly" 
+              (ionChange)="applyFilters()">
+            </ion-checkbox>
+            <ion-label class="ion-margin-start">Show only featured sessions</ion-label>
+          </ion-item>
+          
           <ion-button fill="clear" color="medium" (click)="clearFilters()">
             <ion-icon name="close" slot="start"></ion-icon>
             Clear Filters
@@ -93,13 +101,30 @@
 
   <!-- List of active pint sessions -->
   <ion-list *ngIf="nearbyPints.length > 0" class="ion-no-padding">
-    <ion-item *ngFor="let pint of nearbyPints" lines="full" button detail="true" (click)="viewPintSession(pint.id)">
+    <ion-item 
+      *ngFor="let pint of nearbyPints" 
+      lines="full" 
+      button 
+      detail="true" 
+      (click)="viewPintSession(pint.id)"
+      [class.featured-session]="pint.isFeatured">
+      
+      <!-- Featured banner -->
+      <div class="featured-banner" *ngIf="pint.isFeatured">
+        <ion-icon name="star"></ion-icon>
+        <span>Featured</span>
+      </div>
+      
       <ion-avatar slot="start" class="pint-avatar">
         <img [src]="pint.initiator.profilePictureUrl || 'https://placehold.co/80x80/4a2c2a/f4f1de?text=' + (pint.initiator.displayName.charAt(0).toUpperCase())" />
       </ion-avatar>
       <ion-label>
-        <h3>{{ pint.pubName }}</h3>
+        <h3>
+          {{ pint.pubName }}
+          <ion-icon name="lock-closed" color="medium" *ngIf="pint.isPrivate" class="private-icon"></ion-icon>
+        </h3>
         <p>Started by {{ pint.initiator.displayName }}</p>
+        <p *ngIf="pint.pub?.address" class="pub-address">{{ pint.pub?.address }}</p>
       </ion-label>
       <div class="pint-details" slot="end">
         <span class="distance">0.3 mi</span>

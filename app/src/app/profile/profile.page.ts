@@ -78,6 +78,15 @@ export class ProfilePage implements OnInit {
 
   /**
    * @description
+   * Navigates to the subscription page.
+   */
+  goToSubscription(): void {
+    console.log('Navigating to subscription...');
+    this.navCtrl.navigateForward('/subscription');
+  }
+
+  /**
+   * @description
    * Navigates to a help page (to be created).
    */
   goToHelp(): void {

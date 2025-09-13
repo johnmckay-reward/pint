@@ -1,0 +1,115 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/profile"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Pint Plus</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  
+  <!-- Loading State -->
+  <div class="loading-section" *ngIf="isLoading">
+    <ion-spinner></ion-spinner>
+    <p>Loading subscription status...</p>
+  </div>
+
+  <!-- Already Premium -->
+  <div class="premium-status" *ngIf="!isLoading && subscriptionStatus?.isPremium">
+    <div class="premium-badge">
+      <ion-icon name="diamond" color="warning"></ion-icon>
+      <h2>You're a Pint Plus Member!</h2>
+      <p>Thanks for supporting Pint! You have access to all premium features.</p>
+    </div>
+
+    <ion-list class="features-list" lines="none">
+      <ion-list-header>
+        <h3>Your Premium Features</h3>
+      </ion-list-header>
+      
+      <ion-item>
+        <ion-icon name="lock-closed" slot="start" color="primary"></ion-icon>
+        <ion-label>
+          <h3>Private Sessions</h3>
+          <p>Create invite-only pint sessions</p>
+        </ion-label>
+        <ion-icon name="checkmark-circle" slot="end" color="success"></ion-icon>
+      </ion-item>
+      
+      <ion-item>
+        <ion-icon name="star" slot="start" color="primary"></ion-icon>
+        <ion-label>
+          <h3>Premium Profile Badge</h3>
+          <p>Special flair on your profile</p>
+        </ion-label>
+        <ion-icon name="checkmark-circle" slot="end" color="success"></ion-icon>
+      </ion-item>
+    </ion-list>
+  </div>
+
+  <!-- Subscription Offer -->
+  <div class="subscription-offer" *ngIf="!isLoading && !subscriptionStatus?.isPremium">
+    <div class="hero-section">
+      <ion-icon name="diamond" color="warning" class="hero-icon"></ion-icon>
+      <h1>Upgrade to Pint Plus</h1>
+      <p class="hero-subtitle">Unlock premium features for the ultimate pub experience</p>
+    </div>
+
+    <div class="pricing-card">
+      <div class="price">
+        <span class="currency">$</span>
+        <span class="amount">9.99</span>
+        <span class="period">/month</span>
+      </div>
+      <p class="price-description">Cancel anytime</p>
+    </div>
+
+    <ion-list class="features-list" lines="none">
+      <ion-list-header>
+        <h3>What's Included</h3>
+      </ion-list-header>
+      
+      <ion-item>
+        <ion-icon name="lock-closed" slot="start" color="primary"></ion-icon>
+        <ion-label>
+          <h3>Private Sessions</h3>
+          <p>Create invite-only pint sessions for your close friends</p>
+        </ion-label>
+      </ion-item>
+      
+      <ion-item>
+        <ion-icon name="star" slot="start" color="primary"></ion-icon>
+        <ion-label>
+          <h3>Premium Profile Badge</h3>
+          <p>Stand out with special flair on your profile</p>
+        </ion-label>
+      </ion-item>
+      
+      <ion-item>
+        <ion-icon name="trending-up" slot="start" color="primary"></ion-icon>
+        <ion-label>
+          <h3>Priority Support</h3>
+          <p>Get faster help when you need it</p>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+
+    <div class="action-section">
+      <ion-button 
+        expand="block" 
+        size="large" 
+        color="primary"
+        (click)="subscribeToPintPlus()">
+        <ion-icon name="card" slot="start"></ion-icon>
+        Subscribe to Pint Plus
+      </ion-button>
+      
+      <p class="terms-text">
+        By subscribing, you agree to our terms and conditions. 
+        Cancel anytime through your account settings.
+      </p>
+    </div>
+  </div>
+
+</ion-content>
