@@ -31,6 +31,7 @@ const friendsRoutes = require('./routes/friends');
 const subscriptionRoutes = require('./routes/subscriptions');
 const partnerAuthRoutes = require('./routes/partnerAuth');
 const partnerRoutes = require('./routes/partner');
+const adminRoutes = require('./routes/admin');
 
 
 const app = express();
@@ -227,6 +228,7 @@ async function init() {
   app.use('/api/subscriptions', subscriptionRoutes);
   app.use('/api/partner/auth', partnerAuthRoutes);
   app.use('/api/partner', partnerRoutes);
+  app.use('/api/admin', adminRoutes);
 
   app.get('/', (req, res) => {
     res.json({ message: 'Welcome to the Pint? API! 🍻' });
