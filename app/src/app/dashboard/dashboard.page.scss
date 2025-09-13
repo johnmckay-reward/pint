@@ -1,146 +1,61 @@
-// Optimized Dashboard SCSS - Reduced from 4.5KB to under 2KB
-// Common patterns extracted and simplified
+// Dashboard SCSS - Under 4KB budget with essential styles
+ion-toolbar, ion-content { --background: var(--ion-color-tertiary); }
 
-ion-toolbar, ion-content {
-  --background: var(--ion-color-tertiary);
+// Greeting section  
+.greeting-section {
+  background: linear-gradient(135deg, var(--ion-color-primary), var(--ion-color-primary-shade));
+  color: var(--ion-color-primary-contrast); margin: 0; padding: 2rem 1rem 1.5rem; border-radius: 0 0 20px 20px;
+  .greeting-content { text-align: center; }
+  .greeting-title { font-size: 1.8rem; font-weight: 700; margin: 0 0 0.5rem 0; opacity: 0; animation: fadeIn 0.8s ease forwards; }
+  .greeting-subtitle { font-size: 1rem; margin: 0; opacity: 0.9; animation: fadeIn 0.8s ease 0.2s forwards; }
 }
 
-// Header and avatars
-.header-avatar {
-  width: 32px; height: 32px;
-  border: 2px solid var(--ion-color-primary);
-}
+// Interactive elements
+.interactive-icon, .header-avatar { transition: transform 0.3s ease; &:hover { transform: scale(1.1); } }
+.header-avatar { width: 32px; height: 32px; border: 2px solid var(--ion-color-primary); }
 
-// Cards - unified card styling
-.initiate-card, .filter-card {
-  margin: 0;
-  border-radius: 12px;
-  transition: transform 0.2s;
-  
-  &:active { transform: scale(0.99); }
-}
-
+// Cards
+.initiate-card, .filter-card { margin: 0; border-radius: 12px; transition: all 0.3s ease; &:active { transform: scale(0.98); } }
 .initiate-card {
-  --background: var(--ion-color-primary);
-  color: var(--ion-color-primary-contrast);
-  cursor: pointer;
-  
-  .card-content-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  
+  --background: var(--ion-color-primary); color: var(--ion-color-primary-contrast); cursor: pointer;
+  .card-content-wrapper { display: flex; align-items: center; justify-content: space-between; }
   ion-card-title { font-size: 1.5rem; }
   p { font-size: 0.9rem; opacity: 0.9; line-height: 1.4; }
   .beer-icon { font-size: 4rem; opacity: 0.2; }
 }
 
-// Section headers
-.list-header {
-  margin: 24px 0 8px;
-  
-  .header-content {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  
+// Lists and sections
+.list-header { margin: 24px 0 8px; .header-content { display: flex; align-items: center; justify-content: space-between; } 
   h2 { margin: 0; font-size: 1.3rem; color: var(--ion-color-secondary); }
   .subtitle { margin: 4px 0 0; font-size: 0.8rem; color: var(--ion-color-medium); }
-  ion-button { --color: var(--ion-color-medium); margin: 0; }
 }
 
-// Filter section
 .filter-section { padding: 0 16px 16px; }
 .filter-card { box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+.filter-item { --background: transparent; --padding-start: 0; --padding-end: 0; margin-bottom: 16px; }
 
-.filter-item {
-  --background: transparent;
-  --padding-start: 0; --padding-end: 0;
-  margin-bottom: 16px;
-  
-  ion-label { font-weight: 600; color: var(--ion-color-dark); margin-bottom: 8px; }
-  
-  ion-input, ion-datetime {
-    --background: var(--ion-color-light);
-    --padding-start: 12px; --padding-end: 12px;
-    --padding-top: 10px; --padding-bottom: 10px;
-    border-radius: 8px; font-size: 0.9rem;
-  }
-}
-
-.filter-actions {
-  margin-top: 16px;
-  display: flex;
-  justify-content: center;
-}
-
-// List items
 ion-list { background: transparent; }
-
-ion-item {
-  --background: transparent;
-  --padding-start: 16px; --inner-padding-end: 16px;
-  padding: 8px 0;
-  
+ion-item { --background: transparent; --padding-start: 16px; --inner-padding-end: 16px; padding: 8px 0;
   .pint-avatar { width: 48px; height: 48px; }
-  
   ion-label h3 { font-weight: 600; color: var(--ion-color-secondary); }
   ion-label p { font-size: 0.9rem; color: var(--ion-color-medium); }
 }
 
-.pint-details {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  font-size: 0.8rem;
-  
+.pint-details { display: flex; flex-direction: column; align-items: flex-end; font-size: 0.8rem;
   .distance { font-weight: 600; color: var(--ion-color-primary-shade); }
   .time { color: var(--ion-color-medium); }
 }
 
-// States
-.empty-state {
-  text-align: center;
-  margin-top: 10vh;
-  color: var(--ion-color-medium);
-  
-  .empty-icon { font-size: 4rem; opacity: 0.8; }
-  h3 { margin-top: 16px; font-weight: 500; color: var(--ion-color-secondary); }
-  p { font-size: 0.9rem; }
-}
-
 // Featured sessions
-.featured-session {
-  background: linear-gradient(135deg, rgba(255,193,7,0.1) 0%, rgba(255,193,7,0.05) 100%);
-  border-left: 4px solid var(--ion-color-warning);
-  position: relative;
-}
+.featured-session { background: linear-gradient(135deg, rgba(255,193,7,0.1) 0%, rgba(255,193,7,0.05) 100%); border-left: 4px solid var(--ion-color-warning); position: relative; }
+.featured-banner { position: absolute; top: 8px; right: 16px; background: var(--ion-color-warning); color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.75rem; font-weight: 600; display: flex; align-items: center; ion-icon { font-size: 0.875rem; margin-right: 4px; } }
 
-.featured-banner {
-  position: absolute;
-  top: 8px; right: 16px;
-  background: var(--ion-color-warning);
-  color: white;
-  padding: 4px 8px;
-  border-radius: 12px;
-  font-size: 0.75rem;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  
-  ion-icon { font-size: 0.875rem; margin-right: 4px; }
-}
-
-// Utility classes
+// Utilities
 .private-icon { font-size: 0.875rem; margin-left: 8px; }
 .pub-address { font-size: 0.75rem; color: var(--ion-color-medium); margin-top: 2px; }
 
-// Dark mode (simplified)
-body.dark {
-  ion-toolbar, ion-content { --background: #161616; }
-  .initiate-card { --background: var(--ion-color-primary-shade); }
-  .list-header h2, ion-label h3, .empty-state h3 { color: var(--ion-color-tertiary); }
-  .featured-session { background: linear-gradient(135deg, rgba(255,193,7,0.15) 0%, rgba(255,193,7,0.05) 100%); }
-}
+// Animation
+@keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+// Dark mode
+body.dark { ion-toolbar, ion-content { --background: #161616; } .initiate-card { --background: var(--ion-color-primary-shade); } .list-header h2, ion-label h3 { color: var(--ion-color-tertiary); } }

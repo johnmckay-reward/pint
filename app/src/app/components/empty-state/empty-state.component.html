@@ -1,17 +1,17 @@
 <div class="empty-state">
   <div class="empty-icon">
-    <ion-icon [name]="icon"></ion-icon>
+    <ion-icon [name]="icon" [class.animated-icon]="usePersonalization"></ion-icon>
   </div>
   
-  <h3>{{ title }}</h3>
-  <p>{{ message }}</p>
+  <h3>{{ displayTitle }}</h3>
+  <p>{{ displayMessage }}</p>
   
   <ion-button 
-    *ngIf="showAction && actionText" 
+    *ngIf="showAction && displayActionText" 
     fill="outline" 
     color="primary"
     (click)="onActionClick()">
     <ion-icon *ngIf="actionIcon" [name]="actionIcon" slot="start"></ion-icon>
-    {{ actionText }}
+    {{ displayActionText }}
   </ion-button>
 </div>

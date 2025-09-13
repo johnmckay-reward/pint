@@ -1,0 +1,51 @@
+<div class="skeleton-container">
+  <div 
+    *ngFor="let item of skeletonItems; trackBy: trackByIndex" 
+    [class]="getSkeletonClass()"
+    [ngStyle]="getSkeletonStyle()">
+    
+    <!-- Text skeleton -->
+    <div *ngIf="type === 'text'" class="skeleton-text">
+      <div class="skeleton-line"></div>
+    </div>
+    
+    <!-- Avatar skeleton -->
+    <div *ngIf="type === 'avatar'" class="skeleton-avatar">
+      <div class="skeleton-circle"></div>
+    </div>
+    
+    <!-- Card skeleton -->
+    <div *ngIf="type === 'card'" class="skeleton-card">
+      <div class="skeleton-card-header">
+        <div class="skeleton-circle"></div>
+        <div class="skeleton-card-text">
+          <div class="skeleton-line skeleton-title"></div>
+          <div class="skeleton-line skeleton-subtitle"></div>
+        </div>
+      </div>
+      <div class="skeleton-card-content">
+        <div class="skeleton-line"></div>
+        <div class="skeleton-line"></div>
+        <div class="skeleton-line skeleton-short"></div>
+      </div>
+    </div>
+    
+    <!-- List item skeleton -->
+    <div *ngIf="type === 'list-item'" class="skeleton-list-item">
+      <div class="skeleton-circle"></div>
+      <div class="skeleton-list-content">
+        <div class="skeleton-line skeleton-title"></div>
+        <div class="skeleton-line skeleton-subtitle"></div>
+      </div>
+      <div class="skeleton-list-end">
+        <div class="skeleton-line skeleton-short"></div>
+      </div>
+    </div>
+    
+    <!-- Button skeleton -->
+    <div *ngIf="type === 'button'" class="skeleton-button">
+      <div class="skeleton-button-content"></div>
+    </div>
+    
+  </div>
+</div>

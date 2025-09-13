@@ -1,7 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { NavController, AlertController, LoadingController } from '@ionic/angular';
 import { ApiService, PintSession, FilteredSessionsResponse } from '../services/api.service';
 import { AuthService } from '../services/auth.service';
+import { PersonalizationService, PersonalizedContent } from '../services/personalization.service';
+import { HapticService } from '../services/haptic.service';
+import { ThemeService } from '../services/theme.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard',
@@ -9,7 +13,7 @@ import { AuthService } from '../services/auth.service';
   styleUrls: ['./dashboard.page.scss'],
   standalone: false // This is not a standalone component, so we set this to false.
 })
-export class DashboardPage implements OnInit {
+export class DashboardPage implements OnInit, OnDestroy {
 
   // Array to hold nearby pint sessions. Initially empty.
   nearbyPints: PintSession[] = [];
@@ -21,16 +25,49 @@ export class DashboardPage implements OnInit {
   showFilters = false;
   showFeaturedOnly = false;
 
-  constructor(
-    private navCtrl: NavController,
-    private apiService: ApiService,
-    private authService: AuthService,
-    private alertController: AlertController,
-    private loadingController: LoadingController
-  ) { }
+  // Personalization properties
+  personalizedContent: PersonalizedContent | null = null;
+  userName: string = '';
+  currentLocation: string = '';
+
+  private subscriptions = new Subscription();
+
+  // Use inject() function for dependency injection
+  private navCtrl = inject(NavController);
+  private apiService = inject(ApiService);
+  private authService = inject(AuthService);
+  private alertController = inject(AlertController);
+  private loadingController = inject(LoadingController);
+  private personalizationService = inject(PersonalizationService);
+  private hapticService = inject(HapticService);
+  private themeService = inject(ThemeService);
 
   ngOnInit() {
+    this.loadPersonalizedContent();
+    this.loadUserInfo();
     this.loadSessions();
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
+  }
+
+  private loadPersonalizedContent(): void {
+    // Subscribe to personalization content updates
+    this.subscriptions.add(
+      this.personalizationService.content$.subscribe(content => {
+        this.personalizedContent = content;
+      })
+    );
+  }
+
+  private loadUserInfo(): void {
+    // Load user information for personalization
+    // This would typically come from the auth service or user profile
+    this.userName = 'there'; // Default fallback
+    this.currentLocation = 'your area'; // Default fallback
+    
+    // TODO: Get actual user name and location from user profile/API
   }
 
   /**
@@ -151,8 +188,9 @@ export class DashboardPage implements OnInit {
    * @description
    * Navigates to the screen for initiating a new pint session.
    */
-  initiatePint(): void {
+  async initiatePint(): Promise<void> {
     console.log('Navigating to initiate pint flow...');
+    await this.hapticService.buttonPress();
     // We'll navigate to a page that we can create later.
     this.navCtrl.navigateForward('/initiate-pint');
   }
@@ -162,8 +200,9 @@ export class DashboardPage implements OnInit {
    * Navigates to the details of a specific pint session.
    * @param pintId The ID of the pint session to view.
    */
-  viewPintSession(pintId: string): void {
+  async viewPintSession(pintId: string): Promise<void> {
     console.log('Viewing pint session:', pintId);
+    await this.hapticService.selection();
     // Navigate to a details page, passing the ID as a parameter.
     this.navCtrl.navigateForward(`/pint-details/${pintId}`);
   }
@@ -172,8 +211,9 @@ export class DashboardPage implements OnInit {
    * @description
    * Navigates to the user's own profile page.
    */
-  goToProfile(): void {
+  async goToProfile(): Promise<void> {
     console.log('Navigating to profile page...');
+    await this.hapticService.buttonPress();
     this.navCtrl.navigateForward('/profile');
   }
 
@@ -215,6 +255,26 @@ export class DashboardPage implements OnInit {
     
     const diffDays = Math.floor(diffHours / 24);
     return `${diffDays}d ago`;
+  }
+
+  /**
+   * @description
+   * TrackBy function for *ngFor optimization
+   */
+  trackPintById(index: number, pint: PintSession): string {
+    return pint.id;
+  }
+
+  /**
+   * @description
+   * Generate accessible aria-label for pint sessions
+   */
+  getPintSessionAriaLabel(pint: PintSession): string {
+    const privacy = pint.isPrivate ? 'Private' : 'Public';
+    const featured = pint.isFeatured ? 'Featured' : '';
+    const timeAgo = this.getTimeAgo(pint.createdAt);
+    
+    return `${featured} ${privacy} session at ${pint.pubName}, started by ${pint.initiator.displayName}, ${timeAgo}. Distance 0.3 miles.`.trim();
   }
 
   /**
