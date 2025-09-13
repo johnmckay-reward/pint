@@ -17,6 +17,7 @@ import { SupportPageModule } from './support/support.module';
 import { InitiatePintPageModule } from './initiate-pint/initiate-pint.module';
 import { ConfirmPintPageModule } from './confirm-pint/confirm-pint.module';
 import { PintDetailsPageModule } from './pint-details/pint-details.module';
+import { FriendsPageModule } from './friends/friends.module';
 import { provideHttpClient, withInterceptors, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './services/auth.interceptor';
 
@@ -34,7 +35,8 @@ import { AuthInterceptor } from './services/auth.interceptor';
     SupportPageModule,
     InitiatePintPageModule,
     ConfirmPintPageModule,
-    PintDetailsPageModule
+    PintDetailsPageModule,
+    FriendsPageModule
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },

@@ -53,6 +53,36 @@ export interface ChatMessagesResponse {
   };
 }
 
+export interface Friendship {
+  id: string;
+  requesterId: string;
+  addresseeId: string;
+  status: 'pending' | 'accepted' | 'declined';
+  createdAt: string;
+  requester?: User;
+  addressee?: User;
+}
+
+export interface FriendsResponse {
+  friends: User[];
+  count: number;
+}
+
+export interface FriendRequestsResponse {
+  sentRequests: Friendship[];
+  receivedRequests: Friendship[];
+  counts: {
+    sent: number;
+    received: number;
+  };
+}
+
+export interface UserSearchResponse {
+  users: User[];
+  count: number;
+  query: string;
+}
+
 export interface CreateSessionRequest {
   pubName: string;
   eta: string;
@@ -206,5 +236,54 @@ export class ApiService {
       .set('limit', limit.toString());
 
     return this.http.get<ChatMessagesResponse>(`${this.apiUrl}/api/sessions/${sessionId}/messages`, { params });
+  }
+
+  /**
+   * Search for users by display name.
+   * @param query The search query string.
+   * @returns Observable with search results.
+   */
+  searchUsers(query: string): Observable<UserSearchResponse> {
+    const params = new HttpParams().set('query', query);
+    return this.http.get<UserSearchResponse>(`${this.apiUrl}/api/users/search`, { params });
+  }
+
+  /**
+   * Send a friend request to another user.
+   * @param addresseeId The ID of the user to send the request to.
+   * @returns Observable with the created friendship.
+   */
+  sendFriendRequest(addresseeId: string): Observable<{ message: string; friendship: Friendship }> {
+    return this.http.post<{ message: string; friendship: Friendship }>(`${this.apiUrl}/api/friends/requests`, {
+      addresseeId
+    });
+  }
+
+  /**
+   * Respond to a friend request (accept or decline).
+   * @param requestId The ID of the friend request.
+   * @param action Either 'accept' or 'decline'.
+   * @returns Observable with the updated friendship.
+   */
+  respondToFriendRequest(requestId: string, action: 'accept' | 'decline'): Observable<{ message: string; friendship: Friendship }> {
+    return this.http.put<{ message: string; friendship: Friendship }>(`${this.apiUrl}/api/friends/requests/${requestId}`, {
+      action
+    });
+  }
+
+  /**
+   * Get the current user's friends list.
+   * @returns Observable with the friends list.
+   */
+  getFriends(): Observable<FriendsResponse> {
+    return this.http.get<FriendsResponse>(`${this.apiUrl}/api/friends`);
+  }
+
+  /**
+   * Get pending friend requests (both sent and received).
+   * @returns Observable with friend requests.
+   */
+  getFriendRequests(): Observable<FriendRequestsResponse> {
+    return this.http.get<FriendRequestsResponse>(`${this.apiUrl}/api/friends/requests`);
   }
 }

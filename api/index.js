@@ -5,10 +5,11 @@ const { Server } = require('socket.io');
 const jwt = require('jsonwebtoken');
 
 // Import everything from the models/index.js file
-const { sequelize, User, PintSession, ChatMessage } = require('./models');
+const { sequelize, User, PintSession, ChatMessage, Friendship } = require('./models');
 const userRoutes = require('./routes/users');
 const pintSessionRoutes = require('./routes/pintSessions');
 const authRoutes = require('./routes/auth');
+const friendsRoutes = require('./routes/friends');
 
 
 const app = express();
@@ -192,6 +193,7 @@ async function init() {
   app.use('/api/auth', authRoutes);
   app.use('/api/users', userRoutes);
   app.use('/api/sessions', pintSessionRoutes);
+  app.use('/api/friends', friendsRoutes);
 
   app.get('/', (req, res) => {
     res.json({ message: 'Welcome to the Pint? API! 🍻' });

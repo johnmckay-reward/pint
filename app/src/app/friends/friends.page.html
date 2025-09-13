@@ -1,0 +1,170 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/dashboard"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Friends</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <!-- Segment for tabs -->
+  <ion-segment value="{{activeTab}}" (ionChange)="onTabChange($event)">
+    <ion-segment-button value="friends">
+      <ion-label>Friends</ion-label>
+      <ion-badge *ngIf="friends.length > 0">{{friends.length}}</ion-badge>
+    </ion-segment-button>
+    <ion-segment-button value="requests">
+      <ion-label>Requests</ion-label>
+      <ion-badge *ngIf="receivedRequests.length > 0" color="primary">{{receivedRequests.length}}</ion-badge>
+    </ion-segment-button>
+    <ion-segment-button value="search">
+      <ion-label>Search</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <!-- Refresher -->
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <!-- Loading State -->
+  <div class="loading-container" *ngIf="isLoading">
+    <ion-spinner name="crescent"></ion-spinner>
+    <p>Loading...</p>
+  </div>
+
+  <!-- Friends Tab -->
+  <div *ngIf="activeTab === 'friends' && !isLoading">
+    <div class="tab-content">
+      <div class="section-header">
+        <h2>Your Friends</h2>
+        <p *ngIf="friends.length === 0">No friends yet. Search for people to connect with!</p>
+      </div>
+
+      <ion-list *ngIf="friends.length > 0">
+        <ion-item *ngFor="let friend of friends" button>
+          <ion-avatar slot="start">
+            <img [src]="friend.profilePictureUrl || 'https://placehold.co/80x80/4a2c2a/f4f1de?text=' + (friend.displayName.charAt(0).toUpperCase())" />
+          </ion-avatar>
+          <ion-label>
+            <h2>{{friend.displayName}}</h2>
+            <p *ngIf="friend.favouriteTipple">{{friend.favouriteTipple}}</p>
+          </ion-label>
+          <ion-badge slot="end" color="success">Friend</ion-badge>
+        </ion-item>
+      </ion-list>
+    </div>
+  </div>
+
+  <!-- Requests Tab -->
+  <div *ngIf="activeTab === 'requests' && !isLoading">
+    <div class="tab-content">
+      <!-- Received Requests -->
+      <div class="section-header">
+        <h2>Received Requests</h2>
+        <p *ngIf="receivedRequests.length === 0">No pending friend requests.</p>
+      </div>
+
+      <ion-list *ngIf="receivedRequests.length > 0">
+        <ion-item *ngFor="let request of receivedRequests">
+          <ion-avatar slot="start">
+            <img [src]="request.requester?.profilePictureUrl || 'https://placehold.co/80x80/4a2c2a/f4f1de?text=' + (request.requester?.displayName?.charAt(0)?.toUpperCase() || '?')" />
+          </ion-avatar>
+          <ion-label>
+            <h2>{{request.requester?.displayName}}</h2>
+            <p>Wants to be your friend</p>
+          </ion-label>
+          <div slot="end" class="request-buttons">
+            <ion-button fill="clear" color="success" (click)="confirmResponse(request, 'accept')">
+              <ion-icon name="checkmark" slot="icon-only"></ion-icon>
+            </ion-button>
+            <ion-button fill="clear" color="danger" (click)="confirmResponse(request, 'decline')">
+              <ion-icon name="close" slot="icon-only"></ion-icon>
+            </ion-button>
+          </div>
+        </ion-item>
+      </ion-list>
+
+      <!-- Sent Requests -->
+      <div class="section-header" style="margin-top: 32px;">
+        <h2>Sent Requests</h2>
+        <p *ngIf="sentRequests.length === 0">No outgoing friend requests.</p>
+      </div>
+
+      <ion-list *ngIf="sentRequests.length > 0">
+        <ion-item *ngFor="let request of sentRequests">
+          <ion-avatar slot="start">
+            <img [src]="request.addressee?.profilePictureUrl || 'https://placehold.co/80x80/4a2c2a/f4f1de?text=' + (request.addressee?.displayName?.charAt(0)?.toUpperCase() || '?')" />
+          </ion-avatar>
+          <ion-label>
+            <h2>{{request.addressee?.displayName}}</h2>
+            <p>Request sent</p>
+          </ion-label>
+          <ion-badge slot="end" color="medium">Pending</ion-badge>
+        </ion-item>
+      </ion-list>
+    </div>
+  </div>
+
+  <!-- Search Tab -->
+  <div *ngIf="activeTab === 'search' && !isLoading">
+    <div class="tab-content">
+      <div class="section-header">
+        <h2>Find Friends</h2>
+        <p>Search for people by their display name.</p>
+      </div>
+
+      <!-- Search Input -->
+      <ion-searchbar 
+        [(ngModel)]="searchQuery"
+        (ionInput)="onSearchInput($event)"
+        placeholder="Search by name..."
+        debounce="300"
+        showClearButton="focus">
+      </ion-searchbar>
+
+      <!-- Search Loading -->
+      <div class="search-loading" *ngIf="isSearching">
+        <ion-spinner name="dots"></ion-spinner>
+        <p>Searching...</p>
+      </div>
+
+      <!-- Search Results -->
+      <ion-list *ngIf="searchResults.length > 0 && !isSearching">
+        <ion-item *ngFor="let user of searchResults">
+          <ion-avatar slot="start">
+            <img [src]="user.profilePictureUrl || 'https://placehold.co/80x80/4a2c2a/f4f1de?text=' + (user.displayName.charAt(0).toUpperCase())" />
+          </ion-avatar>
+          <ion-label>
+            <h2>{{user.displayName}}</h2>
+            <p *ngIf="user.favouriteTipple">{{user.favouriteTipple}}</p>
+          </ion-label>
+          <div slot="end">
+            <ion-button 
+              *ngIf="!isAlreadyFriend(user.id) && !isRequestSent(user.id)"
+              fill="clear" 
+              (click)="sendFriendRequest(user)">
+              <ion-icon name="person-add" slot="start"></ion-icon>
+              Add Friend
+            </ion-button>
+            <ion-badge *ngIf="isAlreadyFriend(user.id)" color="success">Friend</ion-badge>
+            <ion-badge *ngIf="isRequestSent(user.id)" color="medium">Request Sent</ion-badge>
+          </div>
+        </ion-item>
+      </ion-list>
+
+      <!-- No Results -->
+      <div class="no-results" *ngIf="searchQuery.length >= 2 && searchResults.length === 0 && !isSearching">
+        <ion-icon name="person-outline" size="large"></ion-icon>
+        <p>No users found for "{{searchQuery}}"</p>
+      </div>
+
+      <!-- Search Instructions -->
+      <div class="search-instructions" *ngIf="searchQuery.length < 2 && !isSearching">
+        <ion-icon name="search-outline" size="large"></ion-icon>
+        <p>Enter at least 2 characters to search for users</p>
+      </div>
+    </div>
+  </div>
+</ion-content>
