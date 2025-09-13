@@ -12,12 +12,15 @@ router.post('/', authMiddleware, async (req, res) => {
     // Get the user ID from the JWT token instead of request body
     const initiatorId = req.user.id;
 
-    // Create the session
+    // Create the session with appropriate location format
+    const locationData = sequelize.getDialect() === 'postgres'
+      ? { type: 'Point', coordinates: [location.lng, location.lat] } // PostGIS format
+      : { lat: location.lat, lng: location.lng }; // Simple JSON for SQLite
+
     const newSession = await PintSession.create({
       pubName,
       eta,
-      // Location data should be a GeoJSON Point
-      location: { type: 'Point', coordinates: [location.lng, location.lat] },
+      location: locationData,
       initiatorId
     });
 
@@ -50,27 +53,38 @@ router.get('/nearby', async (req, res) => {
       return res.status(400).json({ error: 'Latitude, longitude, and radius are required.' });
     }
 
-    // The user's location, created as a geographic point
-    const userLocation = sequelize.fn('ST_MakePoint', lng, lat);
+    let sessions;
     
-    const sessions = await PintSession.findAll({
-      where: sequelize.where(
-        // ST_DWithin is a PostGIS function that checks if a session's location
-        // is within a certain distance (in meters) of the user's location.
-        sequelize.fn('ST_DWithin',
-          sequelize.col('location'), // The 'location' column of the PintSession table
-          userLocation,
-          radius,
-          true // use spheroid, for more accurate distance calc
+    if (sequelize.getDialect() === 'postgres') {
+      // Use PostGIS for PostgreSQL
+      const userLocation = sequelize.fn('ST_MakePoint', lng, lat);
+      
+      sessions = await PintSession.findAll({
+        where: sequelize.where(
+          sequelize.fn('ST_DWithin',
+            sequelize.col('location'),
+            userLocation,
+            radius,
+            true
+          ),
+          true
         ),
-        true
-      ),
-      include: {
-        model: User,
-        as: 'initiator',
-        attributes: ['id', 'displayName', 'profilePictureUrl']
-      }
-    });
+        include: {
+          model: User,
+          as: 'initiator',
+          attributes: ['id', 'displayName', 'profilePictureUrl']
+        }
+      });
+    } else {
+      // For SQLite, return all sessions (simple fallback)
+      sessions = await PintSession.findAll({
+        include: {
+          model: User,
+          as: 'initiator',
+          attributes: ['id', 'displayName', 'profilePictureUrl']
+        }
+      });
+    }
 
     res.json(sessions);
   } catch (error) {
