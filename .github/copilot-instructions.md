@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-Pint is a social drinking application that connects people through pub meetups. Users can create and join location-based drinking sessions at pubs, find nearby events, and connect with fellow pub-goers.
+Pint is a comprehensive social drinking platform that connects people through pub meetups. The platform consists of five integrated applications serving different user types: pub-goers, pub owners, and platform administrators.
 
 ## Architecture
 
@@ -11,21 +11,75 @@ Pint is a social drinking application that connects people through pub meetups. 
 - **Backend**: Node.js + Express (JavaScript)
 - **Database**: PostgreSQL with Sequelize ORM
 - **Mobile**: Capacitor for iOS/Android deployment
+- **Admin**: Angular 20 (TypeScript)
+- **Website**: Static HTML/CSS/JavaScript
 
 ### Project Structure
 ```
 /
-├── app/           # Angular/Ionic frontend application
+├── app/                # Angular/Ionic user-facing application
 │   ├── src/
 │   │   ├── app/
 │   │   │   ├── services/    # API services and business logic
 │   │   │   └── [pages]/     # Ionic page components
 │   │   └── theme/           # Global styles and theming
-├── api/           # Node.js/Express backend
-│   ├── models/    # Sequelize database models
-│   ├── routes/    # Express route handlers
-│   └── middleware/ # Authentication and other middleware
+├── api/                # Node.js/Express backend
+│   ├── models/         # Sequelize database models
+│   ├── routes/         # Express route handlers
+│   │   ├── auth.js     # User authentication
+│   │   ├── users.js    # User management
+│   │   ├── partner.js  # Partner-specific routes
+│   │   └── admin.js    # Admin-only routes
+│   ├── middleware/     # Authentication and authorization
+│   └── services/       # Business logic services
+├── pint-dashboard/     # Angular partner dashboard for pub owners
+│   ├── src/
+│   │   ├── app/
+│   │   │   ├── services/    # Partner API services
+│   │   │   └── [pages]/     # Dashboard pages
+│   │   └── assets/          # Partner-specific assets
+├── admin-dashboard/    # Angular admin dashboard for platform management
+│   ├── src/
+│   │   ├── app/
+│   │   │   ├── services/    # Admin API services
+│   │   │   └── pages/       # Admin dashboard pages
+│   │   └── assets/          # Admin-specific assets
+└── website/            # Marketing website and pub onboarding
+    ├── index.html      # Main landing page
+    └── pubs.html       # Pub partner onboarding page
 ```
+
+## Application Purposes
+
+### User App (`/app`)
+- Primary mobile/web application for pub-goers
+- Features: Create/join pint sessions, find pubs, chat, achievements
+- Target users: General public looking to socialize at pubs
+- Technology: Angular + Ionic for mobile-first experience
+
+### Partner Dashboard (`/pint-dashboard`)
+- Business dashboard for pub owners and managers
+- Features: Claim pub ownership, view analytics, manage pub profile
+- Target users: Pub owners, bar managers, hospitality businesses
+- Technology: Angular web application
+
+### Admin Dashboard (`/admin-dashboard`)
+- Internal platform management interface
+- Features: User management, pub approval, analytics, content moderation
+- Target users: Platform administrators and support staff
+- Technology: Angular web application with role-based access
+
+### Marketing Website (`/website`)
+- Public-facing marketing and onboarding site
+- Features: Product information, waitlist signup, partner onboarding
+- Target users: Potential customers and business partners
+- Technology: Static HTML/CSS/JavaScript
+
+### API (`/api`)
+- Centralized backend serving all applications
+- Features: Authentication, data management, business logic
+- Serves: All frontend applications with role-based endpoints
+- Technology: Node.js + Express + PostgreSQL
 
 ## Core Domain Models
 
@@ -36,6 +90,8 @@ Pint is a social drinking application that connects people through pub meetups. 
 - Display name
 - Favorite tipple (drink preference)
 - Profile picture URL
+- Role (user, pub_owner, admin)
+- Subscription tier (free, plus)
 
 ### PintSession Model
 - UUID primary key
@@ -43,6 +99,42 @@ Pint is a social drinking application that connects people through pub meetups. 
 - ETA (estimated time of arrival)
 - Location (PostGIS GEOMETRY point)
 - Relationships: User (initiator), Users (attendees)
+
+### Friendship Model
+- UUID primary key
+- Requester and requested user IDs
+- Status (pending, accepted, declined)
+- Created and updated timestamps
+
+### Achievement Model
+- UUID primary key
+- Name, description, icon
+- Point value
+- Achievement criteria
+
+### UserAchievement Model
+- Junction table for users and achievements
+- Earned timestamp
+
+### ChatMessage Model
+- UUID primary key
+- Content, sender ID, session ID
+- Created timestamp
+- Relationships: User (sender), PintSession
+
+### PubOwner Model
+- UUID primary key
+- User ID (who owns/manages the pub)
+- Pub name and address
+- Status (pending, approved, rejected)
+- Business verification details
+- Approval/rejection metadata
+
+### Pub Model
+- UUID primary key
+- Name, address, location coordinates
+- Operating hours, contact details
+- Associated PubOwner
 
 ## Development Conventions
 
@@ -73,7 +165,14 @@ Pint is a social drinking application that connects people through pub meetups. 
 
 **API Structure:**
 - RESTful endpoints under `/api` prefix
-- Group routes by domain: `/auth`, `/users`, `/sessions`
+- Group routes by domain and user type:
+  - `/api/auth` - Authentication endpoints
+  - `/api/users` - User management
+  - `/api/sessions` - Pint session management
+  - `/api/friends` - Friend system
+  - `/api/subscriptions` - Subscription management
+  - `/api/partner/*` - Partner-specific endpoints (pub owners)
+  - `/api/admin/*` - Admin-only endpoints (platform management)
 - Use Express Router for modular route organization
 
 **Database:**
@@ -85,7 +184,14 @@ Pint is a social drinking application that connects people through pub meetups. 
 
 **Authentication:**
 - JWT-based authentication
-- Middleware for protected routes
+- Role-based authorization with three user types:
+  - `user` - Regular app users
+  - `pub_owner` - Pub owners with partner dashboard access
+  - `admin` - Platform administrators with full access
+- Middleware for protected routes:
+  - `authenticateToken` - Validates JWT for any authenticated user
+  - `isAdmin` - Restricts access to admin-only routes
+  - Partner routes use standard authentication + role checking
 - Store hashed passwords using bcrypt
 
 **Location Features:**
@@ -126,7 +232,7 @@ const Model = sequelize.define('ModelName', {
 
 ## Build and Development
 
-### Frontend Commands
+### Frontend Commands (User App)
 ```bash
 cd app/
 npm install
@@ -134,6 +240,22 @@ npm run start    # Development server
 npm run build    # Production build
 npm run lint     # ESLint checking
 npm run test     # Karma/Jasmine tests
+```
+
+### Partner Dashboard Commands
+```bash
+cd pint-dashboard/
+npm install
+npm run start    # Development server (typically port 4200)
+npm run build    # Production build
+```
+
+### Admin Dashboard Commands
+```bash
+cd admin-dashboard/
+npm install
+npm run start    # Development server (typically port 4201)
+npm run build    # Production build
 ```
 
 ### Backend Commands
