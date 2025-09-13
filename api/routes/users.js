@@ -10,7 +10,7 @@ const router = express.Router();
 router.get('/me', authMiddleware, async (req, res) => {
   try {
     const user = await User.findByPk(req.user.id, {
-      attributes: ['id', 'displayName', 'email', 'favouriteTipple', 'profilePictureUrl']
+      attributes: ['id', 'displayName', 'email', 'favouriteTipple', 'profilePictureUrl', 'referralCode', 'subscriptionTier']
     });
 
     if (!user) {
@@ -116,6 +116,32 @@ router.get('/:id', async (req, res) => {
     res.json(user);
   } catch (error) {
     res.status(500).json({ error: 'Failed to retrieve user', details: error.message });
+  }
+});
+
+// GET /users/me/referral - Get current user's referral information
+router.get('/me/referral', authMiddleware, async (req, res) => {
+  try {
+    const user = await User.findByPk(req.user.id, {
+      attributes: ['id', 'referralCode']
+    });
+
+    if (!user) {
+      return res.status(404).json({ error: 'User not found.' });
+    }
+
+    // Count how many people this user has referred
+    const referralCount = await User.count({
+      where: { referredById: user.id }
+    });
+
+    res.json({
+      referralCode: user.referralCode,
+      referralCount: referralCount,
+      referralUrl: `https://your-app-domain.com/register?referral=${user.referralCode}`
+    });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to retrieve referral information', details: error.message });
   }
 });
 

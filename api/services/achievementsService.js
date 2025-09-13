@@ -37,6 +37,12 @@ class AchievementsService {
         name: 'Pint Pioneer',
         description: 'One of the first 100 users to join Pint',
         iconUrl: '🚀'
+      },
+      {
+        key: 'pint_ambassador',
+        name: 'Pint Ambassador',
+        description: 'Referred a friend who successfully joined Pint',
+        iconUrl: '🎖️'
       }
     ];
 
@@ -202,6 +208,18 @@ class AchievementsService {
       }
     }
     return null;
+  }
+
+  /**
+   * Award the Pint Ambassador achievement for successful referrals
+   */
+  static async awardPintAmbassadorAchievement(referrerId) {
+    try {
+      return await this.awardAchievement(referrerId, 'pint_ambassador');
+    } catch (error) {
+      console.error('Error awarding Pint Ambassador achievement:', error);
+      return null;
+    }
   }
 }
 

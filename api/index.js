@@ -32,6 +32,7 @@ const subscriptionRoutes = require('./routes/subscriptions');
 const partnerAuthRoutes = require('./routes/partnerAuth');
 const partnerRoutes = require('./routes/partner');
 const adminRoutes = require('./routes/admin');
+const socialRoutes = require('./routes/social');
 
 
 const app = express();
@@ -229,9 +230,34 @@ async function init() {
   app.use('/api/partner/auth', partnerAuthRoutes);
   app.use('/api/partner', partnerRoutes);
   app.use('/api/admin', adminRoutes);
+  app.use('/api/social', socialRoutes);
 
   app.get('/', (req, res) => {
     res.json({ message: 'Welcome to the Pint? API! 🍻' });
+  });
+
+  // Health check endpoint for uptime monitoring
+  app.get('/api/health', async (req, res) => {
+    try {
+      // Test database connection
+      await sequelize.authenticate();
+      
+      res.status(200).json({
+        status: 'healthy',
+        timestamp: new Date().toISOString(),
+        database: 'connected',
+        uptime: process.uptime(),
+        version: process.env.npm_package_version || '1.0.0'
+      });
+    } catch (error) {
+      console.error('Health check failed:', error);
+      res.status(503).json({
+        status: 'unhealthy',
+        timestamp: new Date().toISOString(),
+        database: 'disconnected',
+        error: process.env.NODE_ENV === 'development' ? error.message : 'Database connection failed'
+      });
+    }
   });
 
   // Sentry error handler must be before any other error middleware and after all controllers

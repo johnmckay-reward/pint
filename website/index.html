@@ -33,6 +33,20 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto+Slab:wght@700;800&display=swap" rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        
+        // Replace GA_MEASUREMENT_ID with your actual Google Analytics 4 Measurement ID
+        gtag('config', 'GA_MEASUREMENT_ID', {
+            page_title: document.title,
+            page_location: window.location.href
+        });
+    </script>
+
     <style>
         :root {
             --primary: #eaa221;
@@ -328,6 +342,13 @@
                     messageEl.textContent = '🎉 Thanks for joining the waitlist!';
                     messageEl.style.color = 'var(--secondary)';
                     form.reset();
+                    
+                    // Track successful waitlist signup
+                    gtag('event', 'sign_up', {
+                        method: 'waitlist',
+                        event_category: 'engagement',
+                        event_label: 'waitlist_signup'
+                    });
                 } else {
                     // For demonstration, we'll simulate a success even if the API fails
                     // In a real app, you would handle the error properly here.
@@ -335,12 +356,26 @@
                     messageEl.textContent = '🎉 Thanks for joining the waitlist!';
                     messageEl.style.color = 'var(--secondary)';
                     form.reset();
+                    
+                    // Track waitlist signup even if API fails (demo mode)
+                    gtag('event', 'sign_up', {
+                        method: 'waitlist',
+                        event_category: 'engagement',
+                        event_label: 'waitlist_signup_demo'
+                    });
                 }
             } catch (error) {
                 console.error('Fetch Error:', error);
                 messageEl.textContent = '🎉 Thanks for joining the waitlist!';
                 messageEl.style.color = 'var(--secondary)';
                 form.reset();
+                
+                // Track waitlist signup in demo mode
+                gtag('event', 'sign_up', {
+                    method: 'waitlist',
+                    event_category: 'engagement',
+                    event_label: 'waitlist_signup_demo'
+                });
             } finally {
                 // We'll leave the button enabled in the demo case
                 setTimeout(() => {

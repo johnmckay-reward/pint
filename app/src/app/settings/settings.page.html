@@ -60,6 +60,23 @@
     </ion-item>
   </ion-list>
 
+  <!-- Support -->
+  <ion-list class="settings-list" lines="full">
+    <ion-list-header>
+      <h3>Support</h3>
+    </ion-list-header>
+
+    <ion-item button detail="true" (click)="contactSupport()">
+      <ion-icon name="mail-outline" slot="start"></ion-icon>
+      <ion-label>Contact Support</ion-label>
+    </ion-item>
+
+    <ion-item button detail="true" (click)="viewFAQ()">
+      <ion-icon name="help-circle-outline" slot="start"></ion-icon>
+      <ion-label>FAQ & Help</ion-label>
+    </ion-item>
+  </ion-list>
+
   <!-- App Version Info -->
   <div class="app-version ion-padding-horizontal">
     <p>Version 1.0.0 (Build 1)</p>
