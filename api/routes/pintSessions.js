@@ -1,5 +1,5 @@
 const express = require('express');
-const { PintSession, User, sequelize } = require('../models');
+const { PintSession, User, ChatMessage, sequelize } = require('../models');
 const authMiddleware = require('../middleware/auth');
 
 const router = express.Router();
@@ -180,6 +180,65 @@ router.post('/:id/attendees', authMiddleware, async (req, res) => {
     res.status(200).json({ message: 'Successfully joined session!' });
   } catch (error) {
     res.status(500).json({ error: 'Failed to join session', details: error.message });
+  }
+});
+
+// GET /sessions/:id/messages - Get chat messages for a session
+router.get('/:id/messages', authMiddleware, async (req, res) => {
+  try {
+    const sessionId = req.params.id;
+    const userId = req.user.id;
+
+    // Verify the session exists
+    const session = await PintSession.findByPk(sessionId, {
+      include: {
+        model: User,
+        as: 'attendees',
+        where: { id: userId },
+        required: false
+      }
+    });
+
+    if (!session) {
+      return res.status(404).json({ error: 'Session not found' });
+    }
+
+    // Check if user is an attendee or the initiator
+    const isAttendee = session.attendees?.some(attendee => attendee.id === userId);
+    const isInitiator = session.initiatorId === userId;
+    
+    if (!isAttendee && !isInitiator) {
+      return res.status(403).json({ error: 'You are not a member of this session' });
+    }
+
+    // Get messages with pagination (optional)
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 50;
+    const offset = (page - 1) * limit;
+
+    const messages = await ChatMessage.findAll({
+      where: { sessionId },
+      include: {
+        model: User,
+        as: 'sender',
+        attributes: ['id', 'displayName', 'profilePictureUrl']
+      },
+      order: [['createdAt', 'ASC']], // Oldest first for chat display
+      limit,
+      offset
+    });
+
+    res.json({
+      messages,
+      pagination: {
+        page,
+        limit,
+        hasMore: messages.length === limit
+      }
+    });
+
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to retrieve messages', details: error.message });
   }
 });
 

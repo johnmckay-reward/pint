@@ -57,6 +57,11 @@
         </div>
       </ion-card-content>
     </ion-card>
+
+    <!-- Chat Section - Only visible to attendees -->
+    <ion-card class="chat-card" *ngIf="isUserAttending()">
+      <app-chat [sessionId]="pintSession.id"></app-chat>
+    </ion-card>
   </div>
 
 </ion-content>

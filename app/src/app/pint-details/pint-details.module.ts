@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { PintDetailsPageRoutingModule } from './pint-details-routing.module';
 
 import { PintDetailsPage } from './pint-details.page';
+import { ChatComponent } from '../components/chat/chat.component';
 import { GoogleMapsModule } from '@angular/google-maps';
 
 @NgModule({
@@ -17,6 +18,6 @@ import { GoogleMapsModule } from '@angular/google-maps';
     GoogleMapsModule,
     PintDetailsPageRoutingModule
   ],
-  declarations: [PintDetailsPage]
+  declarations: [PintDetailsPage, ChatComponent]
 })
 export class PintDetailsPageModule {}

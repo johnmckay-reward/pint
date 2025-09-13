@@ -37,6 +37,22 @@ export interface PintSession {
   createdAt: string;
 }
 
+export interface ChatMessage {
+  id: string;
+  content: string;
+  createdAt: string;
+  sender: User;
+}
+
+export interface ChatMessagesResponse {
+  messages: ChatMessage[];
+  pagination: {
+    page: number;
+    limit: number;
+    hasMore: boolean;
+  };
+}
+
 export interface CreateSessionRequest {
   pubName: string;
   eta: string;
@@ -175,5 +191,20 @@ export class ApiService {
    */
   joinSession(sessionId: string): Observable<{ message: string }> {
     return this.http.post<{ message: string }>(`${this.apiUrl}/api/sessions/${sessionId}/join`, {});
+  }
+
+  /**
+   * Gets chat messages for a specific session.
+   * @param sessionId The ID of the session.
+   * @param page The page number for pagination (optional).
+   * @param limit The number of messages per page (optional).
+   * @returns Observable with chat messages and pagination info.
+   */
+  getSessionMessages(sessionId: string, page: number = 1, limit: number = 50): Observable<ChatMessagesResponse> {
+    const params = new HttpParams()
+      .set('page', page.toString())
+      .set('limit', limit.toString());
+
+    return this.http.get<ChatMessagesResponse>(`${this.apiUrl}/api/sessions/${sessionId}/messages`, { params });
   }
 }

@@ -97,6 +97,13 @@ ion-content {
 
 // -------- Footer Button --------
 
+.chat-card {
+  margin-top: 16px;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
 ion-footer {
   ion-toolbar {
     --padding-start: 16px;

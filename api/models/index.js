@@ -1,6 +1,7 @@
 const sequelize = require('../db');
 const User = require('./user');
 const PintSession = require('./pintSession');
+const ChatMessage = require('./chatMessage');
 
 // 1. One-to-Many Relationship: A User can initiate many sessions.
 // This adds an `initiatorId` foreign key to the PintSession model.
@@ -20,9 +21,32 @@ User.belongsToMany(PintSession, { as: 'attendedSessions', through: 'SessionAtten
 PintSession.belongsToMany(User, { as: 'attendees', through: 'SessionAttendees' });
 
 
+// 3. Chat Message Relationships
+// A User can send many ChatMessages
+User.hasMany(ChatMessage, {
+  foreignKey: 'senderId',
+  as: 'sentMessages'
+});
+ChatMessage.belongsTo(User, {
+  foreignKey: 'senderId',
+  as: 'sender'
+});
+
+// A PintSession can have many ChatMessages
+PintSession.hasMany(ChatMessage, {
+  foreignKey: 'sessionId',
+  as: 'messages'
+});
+ChatMessage.belongsTo(PintSession, {
+  foreignKey: 'sessionId',
+  as: 'session'
+});
+
+
 // Export all models and the sequelize connection
 module.exports = {
   sequelize,
   User,
-  PintSession
+  PintSession,
+  ChatMessage
 };
