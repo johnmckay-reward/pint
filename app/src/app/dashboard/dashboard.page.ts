@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { NavController, AlertController, LoadingController } from '@ionic/angular';
-import { ApiService, PintSession, FilteredSessionsResponse } from '../services/api.service';
-import { AuthService } from '../services/auth.service';
+import { FirestoreService, PintSession } from '../services/firestore.service';
+import { FirebaseAuthService, PintUser } from '../services/firebase-auth.service';
 import { PersonalizationService, PersonalizedContent } from '../services/personalization.service';
 import { HapticService } from '../services/haptic.service';
 import { ThemeService } from '../services/theme.service';
@@ -34,8 +34,8 @@ export class DashboardPage implements OnInit, OnDestroy {
 
   // Use inject() function for dependency injection
   private navCtrl = inject(NavController);
-  private apiService = inject(ApiService);
-  private authService = inject(AuthService);
+  private firestoreService = inject(FirestoreService);
+  private authService = inject(FirebaseAuthService);
   private alertController = inject(AlertController);
   private loadingController = inject(LoadingController);
   private personalizationService = inject(PersonalizationService);
@@ -62,46 +62,63 @@ export class DashboardPage implements OnInit, OnDestroy {
   }
 
   private loadUserInfo(): void {
-    // Load user information for personalization
-    // This would typically come from the auth service or user profile
-    this.userName = 'there'; // Default fallback
-    this.currentLocation = 'your area'; // Default fallback
-    
-    // TODO: Get actual user name and location from user profile/API
+    // Load user information from Firebase Auth
+    this.authService.currentUser$.subscribe(user => {
+      if (user) {
+        this.userName = user.displayName || 'there';
+        // TODO: Get location from user profile or geolocation
+        this.currentLocation = 'your area';
+      }
+    });
   }
 
   /**
    * @description
-   * Loads session data from the API with optional filtering.
+   * Loads session data from Firestore with optional filtering.
    */
   async loadSessions(): Promise<void> {
     this.isLoading = true;
 
     try {
-      // Use filtered sessions method
-      const response = await this.apiService.getFilteredSessions(
-        this.pubNameFilter || undefined,
-        this.dateFilter || undefined
-      ).toPromise();
-      
-      if (response) {
-        let sessions = response.sessions;
-        
-        // Apply client-side featured filter if enabled
-        if (this.showFeaturedOnly) {
-          sessions = sessions.filter(session => session.isFeatured);
-        }
-        
-        this.nearbyPints = sessions;
-      } else {
-        this.nearbyPints = [];
-      }
+      // Subscribe to real-time sessions from Firestore
+      this.subscriptions.add(
+        this.firestoreService.getAllSessions().subscribe({
+          next: (sessions) => {
+            let filteredSessions = sessions;
+            
+            // Apply client-side filters
+            if (this.pubNameFilter) {
+              filteredSessions = filteredSessions.filter(session => 
+                session.pubName.toLowerCase().includes(this.pubNameFilter.toLowerCase())
+              );
+            }
+            
+            if (this.dateFilter) {
+              const filterDate = new Date(this.dateFilter).toDateString();
+              filteredSessions = filteredSessions.filter(session => 
+                new Date(session.createdAt).toDateString() === filterDate
+              );
+            }
+            
+            if (this.showFeaturedOnly) {
+              filteredSessions = filteredSessions.filter(session => session.isFeatured);
+            }
+            
+            this.nearbyPints = filteredSessions;
+            this.isLoading = false;
+          },
+          error: (error) => {
+            console.error('Failed to load sessions:', error);
+            this.loadMockData();
+            this.presentErrorAlert('Error', 'Failed to load sessions. Showing sample data.');
+            this.isLoading = false;
+          }
+        })
+      );
     } catch (error) {
       console.error('Failed to load sessions:', error);
-      // Fall back to mock data if API fails
       this.loadMockData();
       await this.presentErrorAlert('Error', 'Failed to load sessions. Showing sample data.');
-    } finally {
       this.isLoading = false;
     }
   }
@@ -141,14 +158,18 @@ export class DashboardPage implements OnInit, OnDestroy {
         pubName: 'The Salty Dog',
         eta: '20:00',
         location: { lat: 51.5074, lng: -0.1278 },
+        geohash: 'gcpvn',
         isPrivate: false,
         isFeatured: true, // Featured session
         initiator: { 
           id: '1',
           displayName: 'Sarah',
           email: 'sarah@example.com',
-          profilePictureUrl: 'https://placehold.co/80x80/4a2c2a/f4f1de?text=S' 
+          profilePictureUrl: 'https://placehold.co/80x80/4a2c2a/f4f1de?text=S',
+          subscriptionTier: 'free',
+          role: 'user'
         },
+        attendees: [],
         createdAt: new Date(Date.now() - 5 * 60 * 1000).toISOString() // 5 minutes ago
       },
       {
@@ -156,14 +177,18 @@ export class DashboardPage implements OnInit, OnDestroy {
         pubName: "Jenny Watts",
         eta: '19:30',
         location: { lat: 51.5074, lng: -0.1278 },
+        geohash: 'gcpvn',
         isPrivate: false,
         isFeatured: false, // Regular session
         initiator: { 
           id: '2',
           displayName: 'Mark',
           email: 'mark@example.com',
-          profilePictureUrl: 'https://placehold.co/80x80/4a2c2a/f4f1de?text=M' 
+          profilePictureUrl: 'https://placehold.co/80x80/4a2c2a/f4f1de?text=M',
+          subscriptionTier: 'free',
+          role: 'user'
         },
+        attendees: [],
         createdAt: new Date(Date.now() - 12 * 60 * 1000).toISOString() // 12 minutes ago
       },
       {
@@ -171,14 +196,18 @@ export class DashboardPage implements OnInit, OnDestroy {
         pubName: 'The Crown & Anchor',
         eta: '21:15',
         location: { lat: 51.5074, lng: -0.1278 },
+        geohash: 'gcpvn',
         isPrivate: false,
         isFeatured: true, // Another featured session
         initiator: { 
           id: '3',
           displayName: 'Alex',
           email: 'alex@example.com',
-          profilePictureUrl: 'https://placehold.co/80x80/4a2c2a/f4f1de?text=A' 
+          profilePictureUrl: 'https://placehold.co/80x80/4a2c2a/f4f1de?text=A',
+          subscriptionTier: 'free',
+          role: 'user'
         },
+        attendees: [],
         createdAt: new Date(Date.now() - 25 * 60 * 1000).toISOString() // 25 minutes ago
       }
     ];
@@ -233,7 +262,7 @@ export class DashboardPage implements OnInit, OnDestroy {
    * Logs out the current user.
    */
   async logout(): Promise<void> {
-    await this.authService.clearAuthenticationState();
+    await this.authService.signOut();
     this.navCtrl.navigateRoot('/login');
   }
 
@@ -262,7 +291,7 @@ export class DashboardPage implements OnInit, OnDestroy {
    * TrackBy function for *ngFor optimization
    */
   trackPintById(index: number, pint: PintSession): string {
-    return pint.id;
+    return pint.id || `index-${index}`;
   }
 
   /**

@@ -1,9 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { AlertController, LoadingController, NavController } from '@ionic/angular';
-import { ApiService, AuthResponse, RegisterRequest } from '../services/api.service';
-import { AuthService } from '../services/auth.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { finalize } from 'rxjs';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-register',
@@ -13,110 +9,24 @@ import { finalize } from 'rxjs';
 })
 export class RegisterPage implements OnInit {
   private navCtrl = inject(NavController);
-  private apiService = inject(ApiService);
-  private authService = inject(AuthService);
-  private formBuilder = inject(FormBuilder);
-  private alertController = inject(AlertController);
-  private loadingController = inject(LoadingController);
 
-  registerForm: FormGroup;
-  profileImagePreview: string | null = null;
-  private selectedFile: File | null = null;
-
-  constructor() {
-    // Initialize the form group in the constructor
-    this.registerForm = this.formBuilder.group({
-      displayName: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
-      favouriteTipple: [''], // Optional field
-    });
-  }
+  constructor() {}
 
   ngOnInit() {
-    // Initialize any additional setup here if needed
-    console.log('RegisterPage initialized');
+    console.log('RegisterPage initialized - redirecting to social sign-in');
   }
 
   /**
-   * @description Handles the selection of a profile picture file.
-   * @param event The file input change event.
+   * @description Navigate to the login page for social sign-in
    */
-  onFileSelected(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    if (input.files && input.files[0]) {
-      this.selectedFile = input.files[0];
-
-      // Generate a preview
-      const reader = new FileReader();
-      reader.onload = () => {
-        // Ensure the result is a string before assigning
-        this.profileImagePreview = reader.result as string;
-      };
-      reader.readAsDataURL(this.selectedFile);
-    }
+  goToLogin(): void {
+    this.navCtrl.navigateRoot('/login');
   }
 
   /**
-   * @description Handles the form submission for user registration.
-   * It validates the form, calls the API service, and handles success or error responses.
+   * @description Go back to the previous page
    */
-  async register(): Promise<void> {
-    if (this.registerForm.invalid) {
-      this.registerForm.markAllAsTouched();
-      return;
-    }
-
-    const loading = await this.loadingController.create({
-      message: 'Creating account...',
-      spinner: 'crescent'
-    });
-    await loading.present();
-
-    // For the proof of concept, we send the base64 string directly.
-    // The `profileImagePreview` property already holds the base64 data URL.
-    const registrationData: RegisterRequest = {
-      ...this.registerForm.value,
-      profilePictureUrl: this.profileImagePreview || '' // Use the preview string or an empty string
-    };
-
-    this.apiService.register(registrationData)
-      .pipe(
-        finalize(() => loading.dismiss())
-      )
-      .subscribe({
-        next: (response: AuthResponse) => {
-          console.log('Registration successful', response);
-          // Set authentication state
-          this.authService.setAuthenticationState(response);
-          this.navCtrl.navigateRoot('/dashboard');
-        },
-        error: (err) => {
-          console.error('Registration failed', err);
-          const message = err.error?.message || 'An unknown error occurred. Please try again.';
-          this.presentErrorAlert('Registration Failed', message);
-        }
-      });
-  }
-
-  /**
-   * @description Navigates the user back to the login page.
-   */
-  navigateToLogin(): void {
-    this.navCtrl.navigateBack('/login');
-  }
-
-  /**
-   * @description Presents a generic error alert to the user.
-   * @param header The title of the alert.
-   * @param message The main message of the alert.
-   */
-  private async presentErrorAlert(header: string, message: string): Promise<void> {
-    const alert = await this.alertController.create({
-      header,
-      message,
-      buttons: ['OK'],
-    });
-    await alert.present();
+  goBack(): void {
+    this.navCtrl.back();
   }
 }

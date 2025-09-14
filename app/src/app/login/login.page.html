@@ -1,6 +1,6 @@
 <!--
   Pint? App: Login Page
-  Description: A screen for users to sign in using their email and password.
+  Description: A screen for users to sign in using Firebase Authentication with social providers.
 -->
 <ion-content [fullscreen]="true" class="ion-padding">
   <div class="login-container">
@@ -20,61 +20,53 @@
         <path d="M112 192h288" stroke="var(--ion-color-primary-tint)" stroke-width="4" />
         <path fill="var(--ion-color-light)" d="M112 192 C 160 150, 200 180, 256 160 C 310 140, 350 150, 400 192 Z"/>
       </svg>
-      <h1 class="app-title">Welcome Back</h1>
-      <p class="tagline">Sign in to find a pint.</p>
+      <h1 class="app-title">Welcome to Pint</h1>
+      <p class="tagline">Sign in to find your next pint.</p>
     </div>
 
-    <!-- Login Form Section -->
-    <div class="form-section">
-      <form [formGroup]="loginForm" (ngSubmit)="login()">
-        <ion-list>
-          <!-- Email Input -->
-          <ion-item class="input-item" lines="none">
-            <ion-icon name="mail-outline" slot="start" color="medium"></ion-icon>
-            <ion-input
-              label="Email"
-              labelPlacement="floating"
-              type="email"
-              formControlName="email"
-              required
-              autocomplete="email"
-              inputmode="email">
-            </ion-input>
-          </ion-item>
-          <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched" class="error-message">
-            Please enter a valid email.
-          </div>
+    <!-- Social Sign-In Section -->
+    <div class="signin-section">
+      
+      <!-- Google Sign In Button -->
+      <ion-button
+        class="social-button google-button"
+        expand="block"
+        fill="outline"
+        (click)="signInWithGoogle()"
+        [disabled]="isLoading">
+        <ion-icon name="logo-google" slot="start"></ion-icon>
+        Continue with Google
+      </ion-button>
 
-          <!-- Password Input -->
-          <ion-item class="input-item" lines="none">
-            <ion-icon name="lock-closed-outline" slot="start" color="medium"></ion-icon>
-            <ion-input
-              label="Password"
-              labelPlacement="floating"
-              type="password"
-              formControlName="password"
-              required>
-            </ion-input>
-          </ion-item>
-          <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" class="error-message">
-            Password is required.
-          </div>
-        </ion-list>
+      <!-- Apple Sign In Button -->
+      <ion-button
+        class="social-button apple-button"
+        expand="block"
+        fill="outline"
+        (click)="signInWithApple()"
+        [disabled]="isLoading">
+        <ion-icon name="logo-apple" slot="start"></ion-icon>
+        Continue with Apple
+      </ion-button>
 
-        <!-- Login Button -->
-        <ion-button
-          class="login-button"
-          expand="block"
-          type="submit"
-          [disabled]="loginForm.invalid">
-          Sign In
-        </ion-button>
-      </form>
-
-      <!-- Registration Link -->
-      <div class="signup-prompt">
-        Don't have an account? <a (click)="navigateToRegister()">Sign Up</a>
+      <!-- Loading Indicator -->
+      <div *ngIf="isLoading" class="loading-section">
+        <ion-spinner name="crescent" color="primary"></ion-spinner>
+        <p>Signing you in...</p>
       </div>
+
+      <!-- Error Message -->
+      <ion-text color="danger" *ngIf="errorMessage" class="error-text">
+        <p>{{ errorMessage }}</p>
+      </ion-text>
+
+    </div>
+
+    <!-- Terms and Privacy -->
+    <div class="terms-section">
+      <p class="terms-text">
+        By continuing, you agree to our Terms of Service and Privacy Policy.
+      </p>
     </div>
 
   </div>

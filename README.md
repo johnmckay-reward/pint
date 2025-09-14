@@ -6,7 +6,7 @@ A social drinking application that connects people through pub meetups. Create a
 
 ### Prerequisites
 - Node.js 18+
-- PostgreSQL with PostGIS extension
+- Firebase project with Authentication and Firestore enabled
 - Angular CLI
 
 ### Setup
@@ -16,51 +16,86 @@ A social drinking application that connects people through pub meetups. Create a
    # Frontend
    cd app && npm install
    
-   # Backend
-   cd ../api && npm install
-   
    # Partner Dashboard
    cd ../pint-dashboard && npm install
    
    # Admin Dashboard
    cd ../admin-dashboard && npm install
+   
+   # Firebase Functions (for payments and admin operations)
+   cd ../functions && npm install
    ```
 
-2. **Database setup:**
-   - Create PostgreSQL database with PostGIS extension
-   - Configure environment variables for database connection
+2. **Firebase Configuration:**
+   - Create a Firebase project at https://console.firebase.google.com
+   - Enable Authentication with Google and Apple providers
+   - Enable Cloud Firestore
+   - Copy your Firebase config and update:
+     - `app/src/environments/firebase.config.ts`
+     - `pint-dashboard/src/environments/firebase.config.ts`
+     - `admin-dashboard/src/environments/firebase.config.ts`
 
-3. **Run the application:**
+3. **Deploy Firestore Security Rules:**
    ```bash
-   # Start backend (terminal 1)
-   cd api && node index.js
+   # Install Firebase CLI
+   npm install -g firebase-tools
    
-   # Start frontend (terminal 2)
+   # Login and deploy rules
+   firebase login
+   firebase deploy --only firestore:rules
+   ```
+
+4. **Run the application:**
+   ```bash
+   # Start frontend (terminal 1)
    cd app && npm start
    
-   # Start partner dashboard (terminal 3)
+   # Start partner dashboard (terminal 2)
    cd pint-dashboard && npm start
    
-   # Start admin dashboard (terminal 4)
+   # Start admin dashboard (terminal 3)
    cd admin-dashboard && npm start
+   
+   # Start Firebase Functions locally (terminal 4) - for payments/admin
+   cd functions && npm run serve
    ```
+
+## Firebase Functions Deployment
+
+For production deployment of server-side functionality:
+
+```bash
+# Build and deploy Firebase Functions
+cd functions
+npm run build
+firebase deploy --only functions
+```
+
+See [FIREBASE_DEPLOYMENT.md](./FIREBASE_DEPLOYMENT.md) for detailed deployment instructions.
 
 ## Project Structure
 
 - `app/` - Angular/Ionic frontend application (main user app)
-- `api/` - Node.js/Express backend API
+- `functions/` - Firebase Functions for server-side operations (payments, admin)
+- `api/` - Legacy Node.js/Express API (being phased out)
 - `pint-dashboard/` - Angular partner dashboard for pub owners
 - `admin-dashboard/` - Angular admin dashboard for platform management
 - `website/` - Marketing website and pub partner onboarding
+- `firestore.rules` - Firestore security rules
+- `firebase.json` - Firebase project configuration
 
 ## Tech Stack
 
 - **Frontend**: Angular 20, Ionic 8, TypeScript
-- **Backend**: Node.js, Express, JavaScript
-- **Database**: PostgreSQL with Sequelize ORM
+- **Backend**: Firebase Functions (Node.js/TypeScript)
+- **Authentication**: Firebase Authentication (Google & Apple sign-in)
+- **Database**: Cloud Firestore with real-time capabilities
+- **Payments**: Stripe integration via Firebase Functions
+- **Geospatial**: Geohashing with geofire-common for location queries
 - **Mobile**: Capacitor for native app deployment
 - **Testing**: Playwright (E2E), Karma/Jasmine (Unit)
-- **Monitoring**: Sentry for error tracking
+- **Monitoring**: Firebase Console, Sentry for error tracking
+- **Payments**: Stripe integration via minimal Express API
 
 ## Development
 
@@ -78,6 +113,9 @@ cd ../app && npm run e2e  # E2E tests with Playwright
 
 # Linting
 cd app && npm run lint
+
+# Deploy Firestore rules
+firebase deploy --only firestore:rules
 ```
 
 ### Performance Monitoring
@@ -90,17 +128,21 @@ cd app && npm run lint
 
 ### Environment Configuration
 
-1. **API Configuration** (copy `api/.env.example` to `api/.env`):
-   - Database credentials
-   - JWT secrets
-   - Sentry DSN for error tracking
-   - CORS settings
-   - Admin user credentials for database seeding
+1. **Firebase Configuration**:
+   - Firebase project ID and API keys
+   - Authentication providers (Google, Apple)
+   - Firestore database region
+   - Security rules deployment
 
-2. **Frontend Configuration** (set build-time environment variables):
+2. **API Configuration** (optional - for payments/admin functions):
+   - Stripe API keys
+   - Admin authentication secrets
+   - Sentry DSN for error tracking
+
+3. **Frontend Configuration**:
+   - Firebase configuration objects
    - Sentry DSN
-   - API base URL
-   - Google Maps API key
+   - Google Maps API key (for location features)
    - Stripe publishable key
 
 ### Deployment Architecture
@@ -112,45 +154,55 @@ The Pint platform consists of 5 applications that should be deployed as follows:
 https://app.pint.com          → Main User App (Angular/Ionic)
 https://partners.pint.com     → Partner Dashboard (Angular)
 https://admin.pint.com        → Admin Dashboard (Angular - Internal Access Only)
-https://api.pint.com          → Backend API (Node.js/Express)
+https://api.pint.com          → Minimal API (Payments/Admin Functions)
 https://www.pint.com          → Marketing Website (Static HTML)
 ```
 
-#### Database Initialization
+#### Firebase Setup
 
-Before first deployment, initialize the database with required data:
+Before deployment, configure your Firebase project:
 
 ```bash
-# Set environment variables for admin user
-export ADMIN_EMAIL=admin@yourcompany.com
-export ADMIN_PASSWORD=YourSecureAdminPassword123!
-export ADMIN_DISPLAY_NAME="Platform Administrator"
+# Install Firebase CLI
+npm install -g firebase-tools
 
-# Run database seeding script
-cd api && npm run seed:prod
+# Initialize Firebase project
+firebase login
+firebase init firestore
+
+# Deploy security rules
+firebase deploy --only firestore:rules
+
+# Set up Authentication providers
+# - Enable Google sign-in in Firebase Console
+# - Enable Apple sign-in in Firebase Console
+# - Configure OAuth redirect URIs for production domains
 ```
-
-This creates:
-- Database schema (tables and relationships)
-- Default admin user with provided credentials
-- Achievement definitions for the platform
-- Proper indexes for optimal performance
 
 ### Security Checklist
 
-- [x] All environment variables configured (no hardcoded secrets)
-- [x] CORS restricted to production domains
+- [x] Firebase project configured with proper security rules
+- [x] Authentication restricted to approved providers (Google, Apple)
+- [x] Firestore security rules implement role-based access control
 - [x] HTTPS enabled for all endpoints
-- [x] Database connection secured
-- [x] JWT secrets are cryptographically secure
-- [x] Rate limiting enabled
-- [x] Input validation on all endpoints
-- [x] Role-based access control implemented
-- [x] Admin credentials secured via environment variables
+- [x] API endpoints secured for payments and admin functions
+- [x] Environment variables configured (no hardcoded secrets)
+- [x] Input validation via Firestore security rules
+- [x] Real-time data access properly secured
 
 ### Deployment Steps
 
-1. **Build Production Assets:**
+1. **Configure Firebase Project:**
+   ```bash
+   # Deploy Firestore security rules
+   firebase deploy --only firestore:rules
+   
+   # Configure Authentication providers in Firebase Console
+   # - Add production domains to authorized domains
+   # - Set up OAuth redirect URIs
+   ```
+
+2. **Build Production Assets:**
    ```bash
    # Main User App
    cd app && ng build --configuration=production
@@ -162,17 +214,14 @@ This creates:
    cd ../admin-dashboard && ng build --configuration=production
    ```
 
-2. **Deploy Backend:**
+3. **Deploy API (Optional - for payments/admin):**
    ```bash
    # Configure environment variables in production
-   # Run database seeding (first time only)
-   cd api && npm run seed:prod
-   
    # Start Node.js server with PM2 or similar process manager
    pm2 start index.js --name "pint-api"
    ```
 
-3. **Deploy Frontend Applications:**
+4. **Deploy Frontend Applications:**
    ```bash
    # Upload built files to CDN or web servers
    # Configure proper routing for SPAs:
@@ -195,89 +244,95 @@ This creates:
    # - Static files only, no special routing needed
    ```
 
-4. **Configure CORS in API:**
-   ```javascript
-   // In api/index.js, update CORS configuration:
-   const corsOptions = {
-     origin: [
-       'https://app.pint.com',
-       'https://partners.pint.com', 
-       'https://admin.pint.com',
-       'https://www.pint.com'
-     ],
-     credentials: true
-   };
+5. **Firebase Production Configuration:**
+   ```bash
+   # Update Firebase configuration for production
+   # - Add production domains to authorized domains
+   # - Configure Firestore indexes for production queries
+   # - Set up Firebase hosting rules if using Firebase Hosting
    ```
 
 ### Post-Deployment Verification
 
-1. **Health Checks:**
+1. **Firebase Health Checks:**
    ```bash
-   # API Health Check
-   curl https://api.pint.com/health
+   # Test Firebase Authentication
+   # - Try Google sign-in on app.pint.com
+   # - Try Apple sign-in on app.pint.com
    
-   # Database Connectivity
-   curl https://api.pint.com/api/health/db
+   # Test Firestore connectivity
+   # - Create a test pint session
+   # - Verify real-time updates work
+   
+   # API Health Check (if using minimal API)
+   curl https://api.pint.com/health
    ```
 
 2. **Admin Access Verification:**
    - Navigate to `https://admin.pint.com`
-   - Login with the admin credentials set during seeding
+   - Sign in with Google/Apple (ensure admin role in Firestore)
    - Verify admin dashboard functionality
 
 3. **Cross-Application Integration Test:**
-   - Test the master E2E flow across all applications
-   - Verify CORS is working correctly
-   - Check that all applications can communicate with the API
+   - Test real-time data sync between applications
+   - Verify Firestore security rules are working
+   - Check geospatial session discovery
 
 ### Monitoring
 
-- **Error Tracking**: Sentry integration for both frontend and backend
+- **Error Tracking**: Sentry integration for frontend applications
 - **Performance**: Lighthouse scores, bundle size monitoring
-- **Uptime**: Configure health check endpoints (`/health`, `/api/health/db`)
-- **Database**: Monitor query performance and connection pool
-- **Security**: Monitor failed authentication attempts
+- **Firebase Monitoring**: Built-in Firebase console monitoring
+- **Real-time Data**: Monitor Firestore read/write operations
+- **Authentication**: Track sign-in success rates and provider usage
+- **Security**: Monitor failed authentication attempts via Firebase Auth
 
 ### Backup and Recovery
 
-1. **Database Backups:**
+1. **Firestore Backups:**
    ```bash
-   # Daily automated backups
-   pg_dump -h $DB_HOST -U $DB_USER $DB_NAME > backup_$(date +%Y%m%d).sql
+   # Enable automatic daily backups in Firebase Console
+   # Export specific collections for additional backup
+   gcloud firestore export gs://your-backup-bucket
    ```
 
 2. **Configuration Backup:**
-   - Store environment variables in secure configuration management
+   - Store Firebase configuration in secure configuration management
+   - Backup Firestore security rules
+   - Document Firebase project settings
    - Backup DNS and SSL certificate configurations
-   - Document deployment procedures
 
 ### Scaling Considerations
 
-- **API**: Use load balancers for multiple Node.js instances
-- **Database**: Implement read replicas for heavy read workloads
-- **CDN**: Use CDN for static assets and frontend bundles
-- **Monitoring**: Set up alerts for high CPU, memory, or response times
+- **Firestore**: Automatic scaling handled by Firebase
+- **Authentication**: Firebase Auth scales automatically
+- **Frontend**: Use CDN for static assets and frontend bundles
+- **Real-time Data**: Monitor Firestore concurrent connections
+- **Geospatial Queries**: Optimize geohash precision for performance
+- **API**: Scale minimal API endpoints for payments/admin functions
 
 ### Emergency Procedures
 
 - **Rollback**: Keep previous builds for quick rollback if needed
-- **Database**: Have tested database rollback procedures
-- **Monitoring**: Set up alerts for critical failures
+- **Firebase**: Use Firebase Console for emergency configuration changes
+- **Security Rules**: Have tested security rule rollback procedures
+- **Monitoring**: Set up alerts for critical failures via Firebase Monitoring
 - **Support**: Document escalation procedures for production issues
 
 ## Features
 
-- User authentication and profiles
-- Location-based pub session discovery
+- Firebase Authentication with Google & Apple sign-in
+- Real-time session discovery and updates via Firestore
+- Location-based pub session discovery with geohashing
 - Create and join drinking meetups
-- Real-time session management
-- Mobile-responsive design
+- Mobile-responsive design with Ionic
 - Partner dashboard for pub owners
 - Admin dashboard for platform management
-- Subscription management
+- Subscription management (via Stripe integration)
 - Achievement system
 - Real-time chat functionality
 - Pub partner onboarding and approval system
+- Serverless architecture with Firebase
 
 ## Development Guidelines
 

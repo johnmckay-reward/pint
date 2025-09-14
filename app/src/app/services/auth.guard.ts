@@ -2,13 +2,13 @@ import { Injectable, inject } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map, take } from 'rxjs/operators';
-import { AuthService } from './auth.service';
+import { FirebaseAuthService } from './firebase-auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthGuard implements CanActivate {
-  private authService = inject(AuthService);
+  private authService = inject(FirebaseAuthService);
   private router = inject(Router);
 
 
