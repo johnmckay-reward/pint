@@ -1,7 +1,8 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { NavController, ToastController, LoadingController, AlertController } from '@ionic/angular';
-import { ApiService, CreateSessionRequest } from '../services/api.service';
+import { FirestoreService } from '../services/firestore.service';
+import { FirebaseAuthService } from '../services/firebase-auth.service';
 import { finalize } from 'rxjs/operators';
 
 // Re-using the Pub interface from the previous page
@@ -27,10 +28,10 @@ export class ConfirmPintPage implements OnInit {
   private router = inject(Router);
   private navCtrl = inject(NavController);
   private toastController = inject(ToastController);
-  private apiService = inject(ApiService);
+  private firestoreService = inject(FirestoreService);
+  private authService = inject(FirebaseAuthService);
   private loadingController = inject(LoadingController);
   private alertController = inject(AlertController);
-
 
   selectedPub: Pub | null = null;
   eta: string = 'now'; // Default ETA value
@@ -44,17 +45,23 @@ export class ConfirmPintPage implements OnInit {
   }
 
   ngOnInit() {
-    // Check if we received a pub, if not, the user might have refreshed the page.
+    // Check if we received a pub and user is authenticated
     if (!this.selectedPub) {
       console.error('No pub data found. Navigating back.');
-      // Optional: Navigate back if no data is present
-      // this.navCtrl.back();
+      this.navCtrl.back();
+      return;
+    }
+
+    if (!this.authService.isAuthenticated) {
+      console.error('User not authenticated. Navigating to login.');
+      this.navCtrl.navigateRoot('/login');
+      return;
     }
   }
 
   /**
    * @description
-   * Creates a pint session via the API and navigates back to the dashboard.
+   * Creates a pint session via Firebase and navigates back to the dashboard.
    */
   async sendInvite(): Promise<void> {
     if (!this.selectedPub) return;
@@ -65,40 +72,36 @@ export class ConfirmPintPage implements OnInit {
     });
     await loading.present();
 
-    const sessionData: CreateSessionRequest = {
-      pubName: this.selectedPub.name,
-      eta: this.eta,
-      location: {
-        lat: this.selectedPub.position.lat,
-        lng: this.selectedPub.position.lng
-      }
-    };
-
-    this.apiService.createSession(sessionData)
-      .pipe(
-        finalize(() => loading.dismiss())
-      )
-      .subscribe({
-        next: async (session) => {
-          console.log('Session created successfully:', session);
-          
-          // Show a success toast message
-          const toast = await this.toastController.create({
-            message: `Your pint at ${this.selectedPub!.name} has been started!`,
-            duration: 3000,
-            position: 'top',
-            color: 'success'
-          });
-          toast.present();
-
-          // Navigate back to the dashboard
-          this.navCtrl.navigateRoot('/dashboard');
+    try {
+      const sessionId = await this.firestoreService.createSession({
+        pubName: this.selectedPub.name,
+        eta: this.eta,
+        location: {
+          lat: this.selectedPub.position.lat,
+          lng: this.selectedPub.position.lng
         },
-        error: async (err) => {
-          console.error('Failed to create session:', err);
-          await this.presentErrorAlert('Error', 'Failed to create pint session. Please try again.');
-        }
+        isPrivate: false
       });
+
+      console.log('Session created successfully with ID:', sessionId);
+      
+      // Show a success toast message
+      const toast = await this.toastController.create({
+        message: `Your pint at ${this.selectedPub.name} has been started!`,
+        duration: 3000,
+        position: 'top',
+        color: 'success'
+      });
+      await toast.present();
+
+      // Navigate back to the dashboard
+      this.navCtrl.navigateRoot('/dashboard');
+    } catch (error) {
+      console.error('Failed to create session:', error);
+      await this.presentErrorAlert('Error', 'Failed to create pint session. Please try again.');
+    } finally {
+      loading.dismiss();
+    }
   }
 
   /**

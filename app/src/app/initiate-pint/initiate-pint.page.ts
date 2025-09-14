@@ -1,5 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { NavController, LoadingController, AlertController } from '@ionic/angular';
+import { FirebaseAuthService } from '../services/firebase-auth.service';
 
 // Interface for a Pub object
 interface Pub {
@@ -22,17 +23,59 @@ interface Pub {
 })
 export class InitiatePintPage implements OnInit {
   private navCtrl = inject(NavController);
-
+  private authService = inject(FirebaseAuthService);
+  private loadingController = inject(LoadingController);
+  private alertController = inject(AlertController);
 
   mapCenter!: google.maps.LatLngLiteral;
   mapZoom = 15;
   nearbyPubs: Pub[] = [];
+  isLoading = false;
 
   ngOnInit() {
-    // In a real app, you'd get the user's current location.
-    // We'll use coordinates for Bangor, Northern Ireland as a default.
-    this.mapCenter = { lat: 54.6616, lng: -5.6736 };
+    this.checkAuthenticationAndLoadLocation();
+  }
+
+  private async checkAuthenticationAndLoadLocation(): Promise<void> {
+    // Ensure user is authenticated
+    if (!this.authService.isAuthenticated) {
+      await this.presentErrorAlert('Authentication Required', 'Please sign in to create a pint session.');
+      this.navCtrl.navigateRoot('/login');
+      return;
+    }
+
+    await this.loadUserLocation();
     this.loadNearbyPubs();
+  }
+
+  private async loadUserLocation(): Promise<void> {
+    try {
+      // Try to get user's current location
+      if (navigator.geolocation) {
+        const position = await this.getCurrentPosition();
+        this.mapCenter = { 
+          lat: position.coords.latitude, 
+          lng: position.coords.longitude 
+        };
+      } else {
+        // Fallback to default location (Bangor, Northern Ireland)
+        this.mapCenter = { lat: 54.6616, lng: -5.6736 };
+      }
+    } catch (error) {
+      console.log('Geolocation error, using default location:', error);
+      // Fallback to default location
+      this.mapCenter = { lat: 54.6616, lng: -5.6736 };
+    }
+  }
+
+  private getCurrentPosition(): Promise<GeolocationPosition> {
+    return new Promise((resolve, reject) => {
+      navigator.geolocation.getCurrentPosition(resolve, reject, {
+        enableHighAccuracy: true,
+        timeout: 10000,
+        maximumAge: 300000 // 5 minutes
+      });
+    });
   }
 
   /**
@@ -73,5 +116,19 @@ export class InitiatePintPage implements OnInit {
         selectedPub: pub
       }
     });
+  }
+
+  /**
+   * @description Presents a generic error alert to the user.
+   * @param header The title of the alert.
+   * @param message The main message of the alert.
+   */
+  private async presentErrorAlert(header: string, message: string): Promise<void> {
+    const alert = await this.alertController.create({
+      header,
+      message,
+      buttons: ['OK'],
+    });
+    await alert.present();
   }
 }
