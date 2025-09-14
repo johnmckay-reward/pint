@@ -1,15 +1,7 @@
 // src/app/pages/login/login.page.ts
 import { Component, OnInit, inject } from '@angular/core';
 import { NavController, AlertController, LoadingController } from '@ionic/angular';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ApiService, AuthResponse, LoginRequest } from '../services/api.service';
-import { AuthService } from '../services/auth.service';
-import { finalize } from 'rxjs/operators';
-
-/*
-* To use Reactive Forms, you need to import `ReactiveFormsModule` into the
-* module that declares this component (e.g., `LoginPageModule`).
-*/
+import { FirebaseAuthService } from '../services/firebase-auth.service';
 
 @Component({
   selector: 'app-login',
@@ -19,71 +11,63 @@ import { finalize } from 'rxjs/operators';
 })
 export class LoginPage implements OnInit {
   private navCtrl = inject(NavController);
-  private apiService = inject(ApiService);
-  private authService = inject(AuthService);
-  private formBuilder = inject(FormBuilder);
+  private authService = inject(FirebaseAuthService);
   private alertController = inject(AlertController);
-  private loadingController = inject(LoadingController);
 
+  isLoading = false;
+  errorMessage = '';
 
-  loginForm: FormGroup;
-
-  constructor() {
-    // Initialize the form group in the constructor
-    this.loginForm = this.formBuilder.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
-    });
-  }
+  constructor() {}
 
   ngOnInit() {
-    // Initialize any additional setup here if needed
     console.log('LoginPage initialized');
-  }
-
-  /**
-   * @description Handles the form submission for user login.
-   * It validates the form, calls the API service, and handles success or error responses.
-   */
-  async login(): Promise<void> {
-    if (this.loginForm.invalid) {
-      this.loginForm.markAllAsTouched(); // Mark all fields as touched to show errors
-      return;
-    }
-
-    // Create and present a loading indicator
-    const loading = await this.loadingController.create({
-      message: 'Signing in...',
-      spinner: 'crescent'
+    
+    // Check if user is already authenticated
+    this.authService.isAuthenticated$.subscribe(isAuth => {
+      if (isAuth) {
+        this.navCtrl.navigateRoot('/dashboard');
+      }
     });
-    await loading.present();
-
-    this.apiService.login(this.loginForm.value as LoginRequest)
-      .pipe(
-        // Ensure the loading indicator is dismissed on completion
-        finalize(() => loading.dismiss())
-      )
-      .subscribe({
-        next: (response: AuthResponse) => {
-          console.log('Login successful', response);
-          // Set authentication state
-          this.authService.setAuthenticationState(response);
-          // Navigate to the main part of the app
-          this.navCtrl.navigateRoot('/dashboard');
-        },
-        error: (err) => {
-          console.error('Login failed', err);
-          this.presentErrorAlert('Login Failed', 'Invalid email or password. Please try again.');
-        }
-      });
   }
 
   /**
-   * @description Navigates the user to the registration page.
+   * @description Handles Google sign-in using Firebase Auth
    */
-  navigateToRegister(): void {
-    // Assuming you have a '/register' route defined in your routing module
-    this.navCtrl.navigateForward('/register');
+  async signInWithGoogle(): Promise<void> {
+    this.isLoading = true;
+    this.errorMessage = '';
+
+    try {
+      await this.authService.signInWithGoogle();
+      // Navigation will be handled by auth state listener
+      this.navCtrl.navigateRoot('/dashboard');
+    } catch (error: any) {
+      console.error('Google sign-in failed', error);
+      this.errorMessage = 'Failed to sign in with Google. Please try again.';
+      this.presentErrorAlert('Sign-in Failed', this.errorMessage);
+    } finally {
+      this.isLoading = false;
+    }
+  }
+
+  /**
+   * @description Handles Apple sign-in using Firebase Auth
+   */
+  async signInWithApple(): Promise<void> {
+    this.isLoading = true;
+    this.errorMessage = '';
+
+    try {
+      await this.authService.signInWithApple();
+      // Navigation will be handled by auth state listener
+      this.navCtrl.navigateRoot('/dashboard');
+    } catch (error: any) {
+      console.error('Apple sign-in failed', error);
+      this.errorMessage = 'Failed to sign in with Apple. Please try again.';
+      this.presentErrorAlert('Sign-in Failed', this.errorMessage);
+    } finally {
+      this.isLoading = false;
+    }
   }
 
   /**

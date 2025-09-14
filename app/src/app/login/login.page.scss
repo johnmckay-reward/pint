@@ -57,6 +57,94 @@ ion-content {
   padding-bottom: 5vh;
 }
 
+/* -------- Social Sign-In Section -------- */
+.signin-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 20px;
+  gap: 16px;
+  max-width: 400px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.social-button {
+  --border-radius: 12px;
+  --padding-start: 20px;
+  --padding-end: 20px;
+  height: 56px;
+  font-weight: 600;
+  font-size: 1rem;
+  text-transform: none;
+  transition: all 0.2s ease-in-out;
+
+  ion-icon {
+    margin-right: 12px;
+    font-size: 1.2rem;
+  }
+}
+
+.google-button {
+  --color: #1a73e8;
+  --border-color: #dadce0;
+  --background: #ffffff;
+
+  &:hover {
+    --background: #f8f9fa;
+    --border-color: #1a73e8;
+  }
+}
+
+.apple-button {
+  --color: #000000;
+  --border-color: #d2d2d7;
+  --background: #ffffff;
+
+  &:hover {
+    --background: #f5f5f7;
+    --border-color: #000000;
+  }
+}
+
+.loading-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin: 20px 0;
+  
+  p {
+    margin: 0;
+    color: var(--ion-color-medium);
+    font-size: 0.9rem;
+  }
+}
+
+.error-text {
+  text-align: center;
+  margin-top: 16px;
+  
+  p {
+    margin: 0;
+    font-size: 0.9rem;
+  }
+}
+
+/* -------- Terms Section -------- */
+.terms-section {
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.terms-text {
+  font-size: 0.8rem;
+  color: var(--ion-color-medium);
+  line-height: 1.4;
+  margin: 0;
+}
+
 ion-list {
   background: transparent;
   padding: 0;

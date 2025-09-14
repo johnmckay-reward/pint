@@ -2,8 +2,11 @@
 // `ng build` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
+import { firebaseConfig } from './firebase.config';
+
 export const environment = {
   production: false,
+  firebase: firebaseConfig,
   sentry: {
     dsn: '', // Set SENTRY_DSN in production environment
     enableInDev: false // Set to true to enable Sentry in development
