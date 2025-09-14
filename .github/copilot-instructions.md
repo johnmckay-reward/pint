@@ -8,11 +8,13 @@ Pint is a comprehensive social drinking platform that connects people through pu
 
 ### Tech Stack
 - **Frontend**: Angular 20 + Ionic 8 (TypeScript)
-- **Backend**: Node.js + Express (JavaScript)
-- **Database**: PostgreSQL with Sequelize ORM
+- **Authentication**: Firebase Authentication (Google & Apple sign-in)
+- **Database**: Cloud Firestore with real-time capabilities
+- **Geospatial**: Geohashing with geofire-common for location queries
 - **Mobile**: Capacitor for iOS/Android deployment
 - **Admin**: Angular 20 (TypeScript)
 - **Website**: Static HTML/CSS/JavaScript
+- **Payments**: Minimal Node.js + Express API for Stripe integration
 
 ### Project Structure
 ```
@@ -20,33 +22,35 @@ Pint is a comprehensive social drinking platform that connects people through pu
 ├── app/                # Angular/Ionic user-facing application
 │   ├── src/
 │   │   ├── app/
-│   │   │   ├── services/    # API services and business logic
+│   │   │   ├── services/    # Firebase and business logic services
+│   │   │   │   ├── firebase-auth.service.ts
+│   │   │   │   └── firestore.service.ts
 │   │   │   └── [pages]/     # Ionic page components
+│   │   ├── environments/    # Firebase configuration
 │   │   └── theme/           # Global styles and theming
-├── api/                # Node.js/Express backend
-│   ├── models/         # Sequelize database models
+├── api/                # Minimal Node.js/Express API (payments/admin)
 │   ├── routes/         # Express route handlers
-│   │   ├── auth.js     # User authentication
-│   │   ├── users.js    # User management
-│   │   ├── partner.js  # Partner-specific routes
-│   │   └── admin.js    # Admin-only routes
-│   ├── middleware/     # Authentication and authorization
-│   └── services/       # Business logic services
+│   │   ├── payments.js # Stripe payment processing
+│   │   └── admin.js    # Admin-only server functions
+│   └── middleware/     # Authentication and authorization
 ├── pint-dashboard/     # Angular partner dashboard for pub owners
 │   ├── src/
 │   │   ├── app/
-│   │   │   ├── services/    # Partner API services
+│   │   │   ├── services/    # Firebase services
 │   │   │   └── [pages]/     # Dashboard pages
+│   │   ├── environments/    # Firebase configuration
 │   │   └── assets/          # Partner-specific assets
 ├── admin-dashboard/    # Angular admin dashboard for platform management
 │   ├── src/
 │   │   ├── app/
-│   │   │   ├── services/    # Admin API services
+│   │   │   ├── services/    # Firebase admin services
 │   │   │   └── pages/       # Admin dashboard pages
+│   │   ├── environments/    # Firebase configuration
 │   │   └── assets/          # Admin-specific assets
-└── website/            # Marketing website and pub onboarding
-    ├── index.html      # Main landing page
-    └── pubs.html       # Pub partner onboarding page
+├── website/            # Marketing website and pub onboarding
+│   ├── index.html      # Main landing page
+│   └── pubs.html       # Pub partner onboarding page
+└── firestore.rules     # Firestore security rules
 ```
 
 ## Application Purposes
@@ -76,67 +80,142 @@ Pint is a comprehensive social drinking platform that connects people through pu
 - Technology: Static HTML/CSS/JavaScript
 
 ### API (`/api`)
-- Centralized backend serving all applications
-- Features: Authentication, data management, business logic
-- Serves: All frontend applications with role-based endpoints
-- Technology: Node.js + Express + PostgreSQL
+- Minimal backend for server-side functions
+- Features: Payment processing (Stripe), admin server functions
+- Serves: Payment webhooks, admin-only server operations
+- Technology: Node.js + Express (minimal footprint)
 
-## Core Domain Models
+## Core Data Models (Firestore)
 
-### User Model
-- UUID primary key
-- Email (unique, validated)
-- Hashed password (bcrypt)
-- Display name
-- Favorite tipple (drink preference)
-- Profile picture URL
-- Role (user, pub_owner, admin)
-- Subscription tier (free, plus)
+### Users Collection (`users/{userId}`)
+```typescript
+interface PintUser {
+  id: string;                    // Firebase Auth UID
+  email: string;                 // From Firebase Auth
+  displayName: string;           // User's display name
+  favouriteTipple?: string;      // Preferred drink
+  profilePictureUrl?: string;    // Profile image URL
+  subscriptionTier: 'free' | 'plus';
+  role: 'user' | 'pub_owner' | 'admin';
+  createdAt: Date;
+  lastLoginAt: Date;
+}
+```
 
-### PintSession Model
-- UUID primary key
-- Pub name
-- ETA (estimated time of arrival)
-- Location (PostGIS GEOMETRY point)
-- Relationships: User (initiator), Users (attendees)
+### PintSessions Collection (`pintSessions/{sessionId}`)
+```typescript
+interface PintSessionDoc {
+  id: string;                    // Auto-generated Firestore ID
+  pubName: string;               // Name of the pub
+  eta: string;                   // Estimated time of arrival
+  location: GeoPoint;            // Firestore GeoPoint
+  geohash: string;               // For geospatial queries
+  initiatorId: string;           // User ID who created session
+  attendeeIds: string[];         // Array of user IDs
+  createdAt: Timestamp;          // Firestore timestamp
+  isPrivate: boolean;
+  isFeatured?: boolean;
+  pubId?: string;                // Reference to pub document
+}
+```
 
-### Friendship Model
-- UUID primary key
-- Requester and requested user IDs
-- Status (pending, accepted, declined)
-- Created and updated timestamps
+### Chat Messages SubCollection (`pintSessions/{sessionId}/messages/{messageId}`)
+```typescript
+interface ChatMessageDoc {
+  id: string;                    // Auto-generated ID
+  content: string;               // Message content
+  senderId: string;              // User ID of sender
+  sessionId: string;             // Parent session ID
+  createdAt: Timestamp;          // When message was sent
+}
+```
 
-### Achievement Model
-- UUID primary key
-- Name, description, icon
-- Point value
-- Achievement criteria
+### Friendships Collection (`friendships/{friendshipId}`)
+```typescript
+interface FriendshipDoc {
+  id: string;                    // Auto-generated ID
+  requesterId: string;           // User who sent request
+  addresseeId: string;           // User who received request
+  status: 'pending' | 'accepted' | 'declined';
+  createdAt: Timestamp;
+}
+```
 
-### UserAchievement Model
-- Junction table for users and achievements
-- Earned timestamp
+### Pubs Collection (`pubs/{pubId}`)
+```typescript
+interface PubDoc {
+  id: string;                    // Auto-generated ID
+  name: string;                  // Pub name
+  address?: string;              // Physical address
+  location?: GeoPoint;           // Geolocation
+  partnershipTier: 'none' | 'basic' | 'premium';
+  ownerId?: string;              // Reference to user
+  createdAt: Timestamp;
+}
+```
 
-### ChatMessage Model
-- UUID primary key
-- Content, sender ID, session ID
-- Created timestamp
-- Relationships: User (sender), PintSession
+### PubOwners Collection (`pubOwners/{ownerId}`)
+```typescript
+interface PubOwnerDoc {
+  id: string;                    // Auto-generated ID
+  userId: string;                // Reference to user
+  pubName: string;               // Name of owned pub
+  businessAddress: string;       // Business address
+  status: 'pending' | 'approved' | 'rejected';
+  verificationDetails: any;      // Business verification data
+  createdAt: Timestamp;
+}
+```
 
-### PubOwner Model
-- UUID primary key
-- User ID (who owns/manages the pub)
-- Pub name and address
-- Status (pending, approved, rejected)
-- Business verification details
-- Approval/rejection metadata
-
-### Pub Model
-- UUID primary key
-- Name, address, location coordinates
-- Operating hours, contact details
-- Associated PubOwner
+### Achievements Collection (`achievements/{achievementId}`)
+```typescript
+interface AchievementDoc {
+  id: string;                    // Auto-generated ID
+  name: string;                  // Achievement name
+  description: string;           // Achievement description
+  iconUrl: string;               // Achievement icon
+  key: string;                   // Unique achievement key
+  pointValue: number;            // Points awarded
+}
+```
 
 ## Development Conventions
+
+### Authentication Flow (Firebase)
+
+**Authentication Service Pattern:**
+```typescript
+// FirebaseAuthService handles all authentication
+signInWithGoogle(): Promise<void>
+signInWithApple(): Promise<void>
+signOut(): Promise<void>
+currentUser$: Observable<PintUser | null>
+isAuthenticated$: Observable<boolean>
+```
+
+**Authentication State Management:**
+- Use Firebase Auth state listener for automatic session management
+- No manual token storage required
+- Role-based access controlled via Firestore user documents
+- Social sign-in only (Google & Apple) - no email/password
+
+### Data Access Patterns (Firestore)
+
+**Service Structure:**
+```typescript
+// FirestoreService handles all data operations
+createSession(data): Promise<string>
+getNearbySessions(location, radius): Observable<PintSession[]>
+getAllSessions(): Observable<PintSession[]>
+sendMessage(sessionId, content): Promise<void>
+getSessionMessages(sessionId): Observable<ChatMessage[]>
+```
+
+**Real-time Data Patterns:**
+- Use Firestore observables for real-time updates
+- Implement geohashing for location-based queries
+- Use subcollections for related data (e.g., chat messages)
+- Leverage Firestore's offline capabilities
 
 ### Frontend (Angular/Ionic)
 
@@ -146,10 +225,10 @@ Pint is a comprehensive social drinking platform that connects people through pu
 - Use kebab-case for selectors, camelCase for properties
 
 **Services:**
-- Place all API calls in `ApiService`
-- Use RxJS Observables for async operations
-- Store authentication tokens using Capacitor Preferences
-- Define TypeScript interfaces for API responses
+- Use `FirebaseAuthService` for authentication
+- Use `FirestoreService` for data operations
+- Use RxJS Observables for real-time data streams
+- Define TypeScript interfaces matching Firestore documents
 
 **Styling:**
 - Use SCSS for component styles
@@ -160,36 +239,168 @@ Pint is a comprehensive social drinking platform that connects people through pu
 **Routing:**
 - Use Angular Router with lazy-loaded modules
 - Each page should have its own module for code splitting
+- Protected routes use Firebase Auth guards
 
-### Backend (Node.js/Express)
+### Geospatial Queries
 
-**API Structure:**
-- RESTful endpoints under `/api` prefix
-- Group routes by domain and user type:
-  - `/api/auth` - Authentication endpoints
-  - `/api/users` - User management
-  - `/api/sessions` - Pint session management
-  - `/api/friends` - Friend system
-  - `/api/subscriptions` - Subscription management
-  - `/api/partner/*` - Partner-specific endpoints (pub owners)
-  - `/api/admin/*` - Admin-only endpoints (platform management)
-- Use Express Router for modular route organization
+**Location-based Session Discovery:**
+```typescript
+// Use geohashing for efficient location queries
+const center: [number, number] = [lat, lng];
+const geohash = geohashForLocation(center);
+const bounds = geohashQueryBounds(center, radiusInMeters);
 
-**Database:**
-- Use Sequelize ORM for all database operations
-- Define models in separate files under `/models`
-- Use UUID v4 for all primary keys
-- Implement proper associations between models
-- Use hooks for password hashing and data validation
+// Query Firestore with geohash bounds
+const queries = bounds.map(bound => 
+  query(collection, 
+    where('geohash', '>=', bound[0]),
+    where('geohash', '<=', bound[1])
+  )
+);
+```
 
-**Authentication:**
-- JWT-based authentication
-- Role-based authorization with three user types:
-  - `user` - Regular app users
-  - `pub_owner` - Pub owners with partner dashboard access
-  - `admin` - Platform administrators with full access
-- Middleware for protected routes:
-  - `authenticateToken` - Validates JWT for any authenticated user
+**Best Practices:**
+- Use appropriate geohash precision for query area
+- Filter results by actual distance for accuracy
+- Implement caching for frequently accessed locations
+- Use CSS custom properties for theming
+
+**Routing:**
+- Use Angular Router with lazy-loaded modules
+- Each page should have its own module for code splitting
+
+### Firestore Security Rules
+
+**Role-based Access Control:**
+```javascript
+// Users can read any profile, but only edit their own
+match /users/{userId} {
+  allow read: if request.auth != null;
+  allow create, update: if request.auth != null 
+    && request.auth.uid == userId;
+}
+
+// Sessions are readable by all, editable by creator
+match /pintSessions/{sessionId} {
+  allow read: if request.auth != null;
+  allow create: if request.auth != null 
+    && request.resource.data.initiatorId == request.auth.uid;
+  allow update, delete: if request.auth != null 
+    && resource.data.initiatorId == request.auth.uid;
+}
+
+// Admin-only collections
+match /adminUsers/{adminId} {
+  allow read, write: if request.auth != null && isAdmin();
+}
+```
+
+**Helper Functions:**
+```javascript
+function isAdmin() {
+  return get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+}
+
+function validateUserData(data) {
+  return data.keys().hasAll(['id', 'email', 'displayName', 'role'])
+    && data.id == request.auth.uid
+    && data.email == request.auth.token.email;
+}
+```
+
+### Error Handling
+
+**Firebase Auth Errors:**
+```typescript
+catch (error: any) {
+  switch (error.code) {
+    case 'auth/popup-closed-by-user':
+      this.handleUserCancellation();
+      break;
+    case 'auth/popup-blocked':
+      this.handlePopupBlocked();
+      break;
+    default:
+      this.handleGenericError(error);
+  }
+}
+```
+
+**Firestore Errors:**
+```typescript
+catch (error: any) {
+  switch (error.code) {
+    case 'permission-denied':
+      this.handlePermissionDenied();
+      break;
+    case 'unavailable':
+      this.handleOfflineMode();
+      break;
+    default:
+      this.handleDataError(error);
+  }
+}
+```
+
+### API Endpoints (Minimal Express)
+
+**Payment Processing:**
+```javascript
+// Stripe webhook endpoint
+POST /api/payments/webhook
+// Subscription management
+POST /api/payments/create-checkout-session
+GET /api/payments/portal-session
+```
+
+**Admin Functions:**
+```javascript
+// Server-side admin operations that can't be done client-side
+POST /api/admin/bulk-operations
+POST /api/admin/data-export
+```
+
+### Common Patterns
+
+**Real-time Data Subscription:**
+```typescript
+// Service method pattern for real-time data
+getSessionDetails(sessionId: string): Observable<PintSession | null> {
+  const sessionRef = doc(this.firestore, `pintSessions/${sessionId}`);
+  
+  return new Observable(observer => {
+    const unsubscribe = onSnapshot(sessionRef, (snapshot) => {
+      if (snapshot.exists()) {
+        const sessionData = { id: snapshot.id, ...snapshot.data() };
+        observer.next(this.populateSessionWithUserData(sessionData));
+      } else {
+        observer.next(null);
+      }
+    });
+    
+    return () => unsubscribe();
+  });
+}
+```
+
+**Geohash Query Pattern:**
+```typescript
+// Firestore geospatial query pattern
+getNearbySessions(location: {lat: number, lng: number}, radius: number) {
+  const center: [number, number] = [location.lat, location.lng];
+  const bounds = geohashQueryBounds(center, radius * 1000);
+  
+  const queries = bounds.map(bound => 
+    query(this.sessionsCollection,
+      where('geohash', '>=', bound[0]),
+      where('geohash', '<=', bound[1]),
+      orderBy('geohash'),
+      orderBy('createdAt', 'desc')
+    )
+  );
+  
+  return from(Promise.all(queries.map(q => getDocs(q))));
+}
   - `isAdmin` - Restricts access to admin-only routes
   - Partner routes use standard authentication + role checking
 - Store hashed passwords using bcrypt
