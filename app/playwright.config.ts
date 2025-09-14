@@ -1,19 +1,19 @@
 import { defineConfig, devices } from '@playwright/test';
 
 /**
- * Enhanced Playwright configuration for V-Final platform hardening
- * Supports multi-application testing across all Pint platform apps
+ * Enhanced Playwright configuration for Firebase integration validation
+ * Supports comprehensive testing of real-time sync, security rules, and geospatial queries
  */
 export default defineConfig({
   testDir: './e2e',
-  /* Run tests in files in parallel */
-  fullyParallel: false, // Disabled for master business flow tests that need coordination
+  /* Run tests in files in parallel - carefully managed for Firebase tests */
+  fullyParallel: false, // Disabled for Firebase integration tests that share state
   /* Fail the build on CI if you accidentally left test.only in the source code. */
-  forbidOnly: !!process.env.CI,
+  forbidOnly: !!process.env['CI'],
   /* Retry on CI only */
-  retries: process.env.CI ? 2 : 0,
-  /* Opt out of parallel tests on CI. */
-  workers: process.env.CI ? 1 : undefined,
+  retries: process.env['CI'] ? 2 : 0,
+  /* Limited workers for Firebase tests to avoid conflicts */
+  workers: process.env['CI'] ? 1 : 2,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: [
     ['html'],
@@ -33,9 +33,9 @@ export default defineConfig({
     /* Video recording for debugging */
     video: 'retain-on-failure',
     
-    /* Increased timeout for multi-app coordination */
-    actionTimeout: 15000,
-    navigationTimeout: 30000,
+    /* Increased timeout for Firebase real-time operations */
+    actionTimeout: 20000,
+    navigationTimeout: 45000,
   },
 
   /* Configure projects for major browsers */
@@ -97,7 +97,7 @@ export default defineConfig({
     {
       command: 'npm start',
       url: 'http://localhost:8100',
-      reuseExistingServer: !process.env.CI,
+      reuseExistingServer: !process.env['CI'],
       timeout: 120 * 1000,
     },
     // Note: For full integration tests, you would also start:

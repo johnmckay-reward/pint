@@ -16,7 +16,16 @@
     "e2e:master": "playwright test master-business-flow.spec.ts",
     "e2e:cross-browser": "playwright test --project=chromium-desktop --project=firefox-desktop --project=webkit-desktop",
     "e2e:mobile": "playwright test --project=mobile-chrome --project=mobile-safari",
-    "e2e:report": "playwright show-report"
+    "e2e:report": "playwright show-report",
+    "e2e:firebase": "./run-firebase-validation.sh",
+    "e2e:firebase:quick": "./run-firebase-validation.sh --quick",
+    "e2e:firebase:security": "./run-firebase-validation.sh --security",
+    "e2e:firebase:geospatial": "./run-firebase-validation.sh --geospatial",
+    "e2e:firebase:realtime": "./run-firebase-validation.sh --realtime",
+    "e2e:security": "playwright test security-rules-validation.spec.ts",
+    "e2e:geospatial": "playwright test geospatial-validation.spec.ts",
+    "e2e:realtime": "playwright test realtime-sync-validation.spec.ts",
+    "e2e:integration": "playwright test firebase-integration-validation.spec.ts"
   },
   "private": true,
   "dependencies": {
