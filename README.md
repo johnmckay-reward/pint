@@ -22,8 +22,8 @@ A social drinking application that connects people through pub meetups. Create a
    # Admin Dashboard
    cd ../admin-dashboard && npm install
    
-   # API (minimal - mainly for payments/admin functions)
-   cd ../api && npm install
+   # Firebase Functions (for payments and admin operations)
+   cd ../functions && npm install
    ```
 
 2. **Firebase Configuration:**
@@ -56,28 +56,45 @@ A social drinking application that connects people through pub meetups. Create a
    # Start admin dashboard (terminal 3)
    cd admin-dashboard && npm start
    
-   # Start API (optional - for payments/admin) (terminal 4)
-   cd api && node index.js
+   # Start Firebase Functions locally (terminal 4) - for payments/admin
+   cd functions && npm run serve
    ```
+
+## Firebase Functions Deployment
+
+For production deployment of server-side functionality:
+
+```bash
+# Build and deploy Firebase Functions
+cd functions
+npm run build
+firebase deploy --only functions
+```
+
+See [FIREBASE_DEPLOYMENT.md](./FIREBASE_DEPLOYMENT.md) for detailed deployment instructions.
 
 ## Project Structure
 
 - `app/` - Angular/Ionic frontend application (main user app)
-- `api/` - Node.js/Express API (minimal - payments/admin functions only)
+- `functions/` - Firebase Functions for server-side operations (payments, admin)
+- `api/` - Legacy Node.js/Express API (being phased out)
 - `pint-dashboard/` - Angular partner dashboard for pub owners
 - `admin-dashboard/` - Angular admin dashboard for platform management
 - `website/` - Marketing website and pub partner onboarding
 - `firestore.rules` - Firestore security rules
+- `firebase.json` - Firebase project configuration
 
 ## Tech Stack
 
 - **Frontend**: Angular 20, Ionic 8, TypeScript
+- **Backend**: Firebase Functions (Node.js/TypeScript)
 - **Authentication**: Firebase Authentication (Google & Apple sign-in)
 - **Database**: Cloud Firestore with real-time capabilities
+- **Payments**: Stripe integration via Firebase Functions
 - **Geospatial**: Geohashing with geofire-common for location queries
 - **Mobile**: Capacitor for native app deployment
 - **Testing**: Playwright (E2E), Karma/Jasmine (Unit)
-- **Monitoring**: Sentry for error tracking
+- **Monitoring**: Firebase Console, Sentry for error tracking
 - **Payments**: Stripe integration via minimal Express API
 
 ## Development
