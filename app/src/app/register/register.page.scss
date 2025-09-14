@@ -1,42 +1,132 @@
-// Register Page SCSS - Optimized
-:host { --primary-rgb-01: rgba(var(--ion-color-primary-rgb), 0.1); --secondary-rgb-005: rgba(var(--ion-color-secondary-rgb), 0.05); --secondary-rgb-08: rgba(var(--ion-color-secondary-rgb), 0.8); }
-
-ion-content { --background: var(--ion-color-tertiary); }
-
-.form-container { display: flex; flex-direction: column; justify-content: flex-start; height: 100%; text-align: center; }
-
-.logo-section { margin: 8vh 0 2vh; }
-.app-title { font-size: 2.5rem; font-weight: 700; color: var(--ion-color-secondary); margin: 0; font-family: 'Roboto Slab', serif; }
-.tagline { font-size: 1rem; color: var(--secondary-rgb-08); margin-top: 8px; }
-
-.form-section { flex: 1; padding: 0 32px; margin-bottom: 32px; }
-.form-card { --background: white; border-radius: 16px; box-shadow: 0 4px 20px var(--secondary-rgb-005); margin: 0; overflow: hidden; }
-
-.form-item { --background: transparent; --padding-start: 0; --padding-end: 0; margin-bottom: 20px;
-  ion-label { font-weight: 600; color: var(--ion-color-dark); margin-bottom: 8px; }
-  ion-input, ion-select { --background: var(--ion-color-light); --padding-start: 16px; --padding-end: 16px; --padding-top: 12px; --padding-bottom: 12px; border-radius: 8px; font-size: 1rem; }
+/*
+ * Pint? App: Register Page Styles
+ * Description: Styles for the register page redirect to social sign-in.
+ */
+:host {
+  --ion-color-primary-rgb-_01: rgba(var(--ion-color-primary-rgb), 0.1);
+  --ion-color-secondary-rgb-005: rgba(var(--ion-color-secondary-rgb), 0.05);
+  --ion-color-secondary-rgb-08: rgba(var(--ion-color-secondary-rgb), 0.8);
 }
 
-.password-item { position: relative; }
-.show-password-button { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); --color: var(--ion-color-medium); z-index: 10; }
-
-.submit-button { --background: var(--ion-color-primary); --color: white; --border-radius: 8px; --padding-top: 12px; --padding-bottom: 12px; margin: 20px 0; font-weight: 600; font-size: 1rem; }
-
-.login-link { margin-top: 16px; color: var(--ion-color-medium);
-  a { color: var(--ion-color-primary); text-decoration: none; font-weight: 600; }
+ion-content {
+  --background: var(--ion-color-tertiary);
 }
 
-.terms-section { margin-top: 16px; padding: 16px; font-size: 0.85rem; color: var(--ion-color-medium); line-height: 1.4;
-  a { color: var(--ion-color-primary); }
+.redirect-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  text-align: center;
+  padding: 20px;
 }
 
-.error-message { color: var(--ion-color-danger); font-size: 0.85rem; margin-top: 8px; text-align: left; }
+/* -------- Logo and Branding -------- */
+.logo-section {
+  margin-top: 10vh;
+  margin-bottom: 40px;
+}
 
-.invalid ion-input, .invalid ion-select { --border-color: var(--ion-color-danger); border: 1px solid var(--ion-color-danger); }
+.pint-icon {
+  width: 90px;
+  height: auto;
+  margin-bottom: 16px;
+}
 
-.loading .submit-button { --background: var(--ion-color-medium); }
+.app-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--ion-color-secondary);
+  margin: 0;
+  font-family: 'Roboto Slab', serif;
+}
 
+.tagline {
+  font-size: 1rem;
+  color: var(--ion-color-secondary-rgb-08);
+  margin-top: 8px;
+}
+
+/* -------- Message Section -------- */
+.message-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 20px;
+  margin-bottom: 40px;
+}
+
+.message-section p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin: 8px 0;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* -------- Action Section -------- */
+.action-section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 400px;
+  margin: 0 auto;
+  width: 100%;
+  padding-bottom: 40px;
+}
+
+.redirect-button {
+  --border-radius: 12px;
+  --padding-start: 20px;
+  --padding-end: 20px;
+  height: 56px;
+  font-weight: 600;
+  font-size: 1rem;
+  text-transform: none;
+  --background: var(--ion-color-primary);
+  --color: white;
+  box-shadow: 0 4px 12px rgba(var(--ion-color-primary-rgb), 0.3);
+}
+
+.back-button {
+  --border-radius: 12px;
+  --padding-start: 20px;
+  --padding-end: 20px;
+  height: 48px;
+  font-weight: 500;
+  font-size: 0.9rem;
+  text-transform: none;
+  --color: var(--ion-color-medium);
+}
+
+/* -------- Responsive Design -------- */
 @media (max-width: 768px) {
-  .form-section { padding: 0 24px; }
-  .app-title { font-size: 2rem; }
+  .logo-section {
+    margin-top: 5vh;
+  }
+  
+  .app-title {
+    font-size: 2rem;
+  }
+  
+  .message-section p {
+    font-size: 1rem;
+  }
+}
+
+/* -------- Dark Mode Adjustments -------- */
+body.dark {
+  ion-content {
+    --background: #121212;
+  }
+
+  .app-title {
+    color: var(--ion-color-primary-tint);
+  }
+
+  .tagline {
+    color: var(--ion-color-tertiary-shade);
+  }
 }
