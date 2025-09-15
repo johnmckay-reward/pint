@@ -31,6 +31,7 @@ export class DashboardPage implements OnInit, OnDestroy {
   currentLocation: string = '';
 
   private subscriptions = new Subscription();
+  private userLocation: { lat: number; lng: number } | null = null;
 
   // Use inject() function for dependency injection
   private navCtrl = inject(NavController);
@@ -45,7 +46,7 @@ export class DashboardPage implements OnInit, OnDestroy {
   ngOnInit() {
     this.loadPersonalizedContent();
     this.loadUserInfo();
-    this.loadSessions();
+    this.loadUserLocationAndSessions();
   }
 
   ngOnDestroy() {
@@ -74,15 +75,65 @@ export class DashboardPage implements OnInit, OnDestroy {
 
   /**
    * @description
-   * Loads session data from Firestore with optional filtering.
+   * Load user location and then sessions based on location
+   */
+  private async loadUserLocationAndSessions(): Promise<void> {
+    try {
+      // Try to get user's current location
+      if (navigator.geolocation) {
+        const position = await this.getCurrentPosition();
+        this.userLocation = { 
+          lat: position.coords.latitude, 
+          lng: position.coords.longitude 
+        };
+        console.log('User location loaded:', this.userLocation);
+      } else {
+        // Fallback to default location (Bangor, Northern Ireland)
+        this.userLocation = { lat: 54.6616, lng: -5.6736 };
+        console.log('Using default location:', this.userLocation);
+      }
+    } catch (error) {
+      console.log('Geolocation error, using default location:', error);
+      // Fallback to default location
+      this.userLocation = { lat: 54.6616, lng: -5.6736 };
+    }
+
+    // Load sessions based on location
+    await this.loadSessions();
+  }
+
+  private getCurrentPosition(): Promise<GeolocationPosition> {
+    return new Promise((resolve, reject) => {
+      navigator.geolocation.getCurrentPosition(resolve, reject, {
+        enableHighAccuracy: true,
+        timeout: 10000,
+        maximumAge: 300000 // 5 minutes
+      });
+    });
+  }
+
+  /**
+   * @description
+   * Loads session data from Firestore with optional filtering and geospatial queries.
    */
   async loadSessions(): Promise<void> {
     this.isLoading = true;
 
     try {
+      let sessionsObservable;
+
+      // Use geospatial query if user location is available
+      if (this.userLocation) {
+        console.log('Loading nearby sessions for location:', this.userLocation);
+        sessionsObservable = this.firestoreService.getNearbySessions(this.userLocation, 5); // 5km radius
+      } else {
+        console.log('Loading all sessions (no location available)');
+        sessionsObservable = this.firestoreService.getAllSessions();
+      }
+
       // Subscribe to real-time sessions from Firestore
       this.subscriptions.add(
-        this.firestoreService.getAllSessions().subscribe({
+        sessionsObservable.subscribe({
           next: (sessions) => {
             let filteredSessions = sessions;
             
@@ -106,11 +157,12 @@ export class DashboardPage implements OnInit, OnDestroy {
             
             this.nearbyPints = filteredSessions;
             this.isLoading = false;
+            console.log('Loaded sessions:', this.nearbyPints.length);
           },
           error: (error) => {
             console.error('Failed to load sessions:', error);
             this.loadMockData();
-            this.presentErrorAlert('Error', 'Failed to load sessions. Showing sample data.');
+            this.presentErrorAlert('Error', 'Failed to load sessions from Firebase. Showing sample data.');
             this.isLoading = false;
           }
         })
@@ -118,7 +170,7 @@ export class DashboardPage implements OnInit, OnDestroy {
     } catch (error) {
       console.error('Failed to load sessions:', error);
       this.loadMockData();
-      await this.presentErrorAlert('Error', 'Failed to load sessions. Showing sample data.');
+      await this.presentErrorAlert('Error', 'Failed to load sessions from Firebase. Showing sample data.');
       this.isLoading = false;
     }
   }

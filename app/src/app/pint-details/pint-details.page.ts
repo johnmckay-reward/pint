@@ -1,9 +1,9 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NavController, ToastController, LoadingController, AlertController } from '@ionic/angular';
-import { ApiService, PintSession } from '../services/api.service';
-import { AuthService } from '../services/auth.service';
-import { finalize } from 'rxjs/operators';
+import { FirestoreService, PintSession } from '../services/firestore.service';
+import { FirebaseAuthService } from '../services/firebase-auth.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-pint-details',
@@ -11,19 +11,19 @@ import { finalize } from 'rxjs/operators';
   styleUrls: ['./pint-details.page.scss'],
   standalone: false
 })
-export class PintDetailsPage implements OnInit {
+export class PintDetailsPage implements OnInit, OnDestroy {
   private route = inject(ActivatedRoute);
   private navCtrl = inject(NavController);
   private toastController = inject(ToastController);
-  private apiService = inject(ApiService);
-  private authService = inject(AuthService);
+  private firestoreService = inject(FirestoreService);
+  private authService = inject(FirebaseAuthService);
   private loadingController = inject(LoadingController);
   private alertController = inject(AlertController);
-
 
   pintSession: PintSession | null = null;
   isLoading = false;
   isJoining = false;
+  private subscription = new Subscription();
 
   ngOnInit() {
     const pintId = this.route.snapshot.paramMap.get('pintId');
@@ -31,12 +31,16 @@ export class PintDetailsPage implements OnInit {
     this.loadPintSessionData(pintId);
   }
 
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
+
   /**
    * @description
-   * Loads session data from the API.
+   * Loads session data from Firebase with real-time updates.
    * @param pintId The ID of the session to load.
    */
-  async loadPintSessionData(pintId: string | null): Promise<void> {
+  loadPintSessionData(pintId: string | null): void {
     if (!pintId) {
       console.error('No pint ID provided');
       this.navCtrl.navigateRoot('/dashboard');
@@ -45,15 +49,21 @@ export class PintDetailsPage implements OnInit {
 
     this.isLoading = true;
     
-    try {
-      this.pintSession = await this.apiService.getSessionDetails(pintId).toPromise() || null;
-    } catch (error) {
-      console.error('Failed to load session details:', error);
-      await this.presentErrorAlert('Error', 'Failed to load session details.');
-      this.navCtrl.navigateRoot('/dashboard');
-    } finally {
-      this.isLoading = false;
-    }
+    // Subscribe to real-time session updates
+    this.subscription.add(
+      this.firestoreService.getSessionDetails(pintId).subscribe({
+        next: (session) => {
+          this.pintSession = session;
+          this.isLoading = false;
+        },
+        error: (error) => {
+          console.error('Failed to load session details:', error);
+          this.presentErrorAlert('Error', 'Failed to load session details.');
+          this.navCtrl.navigateRoot('/dashboard');
+          this.isLoading = false;
+        }
+      })
+    );
   }
 
   /**
@@ -72,7 +82,7 @@ export class PintDetailsPage implements OnInit {
         position: 'top',
         color: 'warning'
       });
-      toast.present();
+      await toast.present();
       return;
     }
 
@@ -83,34 +93,27 @@ export class PintDetailsPage implements OnInit {
     });
     await loading.present();
 
-    this.apiService.joinSession(this.pintSession.id)
-      .pipe(
-        finalize(() => {
-          loading.dismiss();
-          this.isJoining = false;
-        })
-      )
-      .subscribe({
-        next: async (response) => {
-          console.log('Successfully joined session:', response);
-          
-          const toast = await this.toastController.create({
-            message: `Great! See you at ${this.pintSession?.pubName}.`,
-            duration: 3000,
-            position: 'top',
-            color: 'success'
-          });
-          toast.present();
-
-          // Refresh the session data to show updated attendees
-          await this.loadPintSessionData(this.pintSession!.id);
-        },
-        error: async (err) => {
-          console.error('Failed to join session:', err);
-          const message = err.error?.error || 'Failed to join session. Please try again.';
-          await this.presentErrorAlert('Error', message);
-        }
+    try {
+      await this.firestoreService.joinSession(this.pintSession.id);
+      
+      console.log('Successfully joined session');
+      
+      const toast = await this.toastController.create({
+        message: `Great! See you at ${this.pintSession.pubName}.`,
+        duration: 3000,
+        position: 'top',
+        color: 'success'
       });
+      await toast.present();
+      
+      // Session data will be updated automatically via real-time subscription
+    } catch (error) {
+      console.error('Failed to join session:', error);
+      await this.presentErrorAlert('Error', 'Failed to join session. Please try again.');
+    } finally {
+      loading.dismiss();
+      this.isJoining = false;
+    }
   }
 
   /**
@@ -142,23 +145,11 @@ export class PintDetailsPage implements OnInit {
   getMapCenter(): google.maps.LatLngLiteral | null {
     if (!this.pintSession?.location) return null;
     
-    // Handle PostGIS GEOMETRY point format
-    if (this.pintSession.location.coordinates) {
-      return {
-        lng: this.pintSession.location.coordinates[0],
-        lat: this.pintSession.location.coordinates[1]
-      };
-    }
-    
-    // Handle simple {lat, lng} format
-    if (this.pintSession.location.lat && this.pintSession.location.lng) {
-      return {
-        lat: this.pintSession.location.lat,
-        lng: this.pintSession.location.lng
-      };
-    }
-    
-    return null;
+    // Firebase uses simple {lat, lng} format from our Firestore service
+    return {
+      lat: this.pintSession.location.lat,
+      lng: this.pintSession.location.lng
+    };
   }
 
   /**
